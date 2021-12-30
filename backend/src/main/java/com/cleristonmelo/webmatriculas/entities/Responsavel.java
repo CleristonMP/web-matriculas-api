@@ -31,7 +31,6 @@ public class Responsavel implements Serializable {
 	private String rgOuCpf;
 	private String telefone;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy = "responsavel")
 	private Set<Aluno> alunos = new HashSet<>();
 	

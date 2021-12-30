@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.cleristonmelo.webmatriculas.entities.Aluno;
-import com.cleristonmelo.webmatriculas.entities.Endereco;
-import com.cleristonmelo.webmatriculas.entities.Responsavel;
-import com.cleristonmelo.webmatriculas.entities.Turma;
 
 public class AlunoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -17,36 +14,39 @@ public class AlunoDTO implements Serializable {
 	private String rgOuCpf;
 	private Date dataNascimento;
 
-	private Endereco endereco;
+	private Long enderecoId;
 
-	private Turma turma;
+	private Long turmaId;
 
-	private Responsavel responsavel;
+	private Long responsavelId;
 	
 	public AlunoDTO() {
 	}
-
-	public AlunoDTO(Long matricula, String nome, String sobrenome, String rgOuCpf, Date dataNascimento,
-			Endereco endereco, Turma turma, Responsavel responsavel) {
+	
+	public AlunoDTO(Long matricula, String nome, String sobrenome, String rgOuCpf, Date dataNascimento, Long enderecoId,
+			Long turmaId, Long responsavelId) {
+		super();
 		this.matricula = matricula;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.rgOuCpf = rgOuCpf;
 		this.dataNascimento = dataNascimento;
-		this.endereco = endereco;
-		this.turma = turma;
-		this.responsavel = responsavel;
+		this.enderecoId = enderecoId;
+		this.turmaId = turmaId;
+		this.responsavelId = responsavelId;
 	}
-	
+
+
+
 	public AlunoDTO(Aluno entity) {
 		this.matricula = entity.getMatricula();
 		this.nome = entity.getNome();
 		this.sobrenome = entity.getSobrenome();
 		this.rgOuCpf = entity.getRgOuCpf();
 		this.dataNascimento = entity.getDataNascimento();
-		this.endereco = entity.getEndereco();
-		this.turma = entity.getTurma();
-		this.responsavel = entity.getResponsavel();
+		this.enderecoId = entity.getEndereco().getId();
+		this.turmaId = entity.getTurma().getId();
+		this.responsavelId = entity.getResponsavel().getId();
 	}
 
 	public Long getMatricula() {
@@ -89,27 +89,27 @@ public class AlunoDTO implements Serializable {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public Endereco getEndereco() {
-		return endereco;
+	public Long getEnderecoId() {
+		return enderecoId;
 	}
 
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
+	public void setEnderecoId(Long enderecoId) {
+		this.enderecoId = enderecoId;
 	}
 
-	public Turma getTurma() {
-		return turma;
+	public Long getTurmaId() {
+		return turmaId;
 	}
 
-	public void setTurma(Turma turma) {
-		this.turma = turma;
+	public void setTurmaId(Long turmaId) {
+		this.turmaId = turmaId;
 	}
 
-	public Responsavel getResponsavel() {
-		return responsavel;
+	public Long getResponsavelId() {
+		return responsavelId;
 	}
 
-	public void setResponsavel(Responsavel responsavel) {
-		this.responsavel = responsavel;
+	public void setResponsavelId(Long responsavelId) {
+		this.responsavelId = responsavelId;
 	}
 }

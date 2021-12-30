@@ -29,7 +29,6 @@ public class Turma implements Serializable {
 	private String nome;
 	private String periodo;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy = "turma")
 	private Set<Aluno> alunos = new HashSet<>();
 	

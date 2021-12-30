@@ -38,7 +38,6 @@ public class Endereco implements Serializable {
 	@JoinColumn(name = "municipio_id")
 	private Municipio municipio;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy = "endereco")
 	private Set<Aluno> alunos = new HashSet<>();
 	
