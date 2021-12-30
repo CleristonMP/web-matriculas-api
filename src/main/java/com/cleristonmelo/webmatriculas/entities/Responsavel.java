@@ -5,15 +5,27 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "tb_responsavel")
 public class Responsavel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
 	private String sobrenome;
 	private String rgOuCpf;
 	private Integer telefone;
 	
+	@OneToMany(mappedBy = "responsavel")
 	private Set<Aluno> alunos = new HashSet<>();
 	
 	public Responsavel() {

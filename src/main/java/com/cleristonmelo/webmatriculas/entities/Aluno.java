@@ -3,18 +3,36 @@ package com.cleristonmelo.webmatriculas.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "tb_aluno")
 public class Aluno implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long matricula;
 	private String nome;
 	private String sobrenome;
 	private String rgOuCpf;
 	
+	@ManyToOne
+	@JoinColumn(name = "endereco_id")
 	private Endereco endereco;
 	
+	@ManyToOne
+	@JoinColumn(name = "turma_id")
 	private Turma turma;
 	
+	@ManyToOne
+	@JoinColumn(name = "responsavel_id")
 	private Responsavel responsavel;
 	
 	public Aluno() {
