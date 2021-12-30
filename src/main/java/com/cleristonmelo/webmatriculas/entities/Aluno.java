@@ -6,36 +6,37 @@ import java.util.Objects;
 public class Aluno implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private Long id;
+	private Long matricula;
 	private String nome;
 	private String sobrenome;
-	private String cpf;
-	private Integer matricula;
+	private String rgOuCpf;
 	
 	private Endereco endereco;
 	
 	private Turma turma;
 	
+	private Responsavel responsavel;
+	
 	public Aluno() {
 	}
 
-	public Aluno(Long id, String nome, String sobrenome, String cpf, Integer matricula, Endereco endereco,
-			Turma turma) {
-		this.id = id;
+	public Aluno(Long matricula, String nome, String sobrenome, String rgOuCpf, Endereco endereco, Turma turma,
+			Responsavel responsavel) {
+		this.matricula = matricula;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
-		this.cpf = cpf;
-		this.matricula = matricula;
+		this.rgOuCpf = rgOuCpf;
 		this.endereco = endereco;
-		this.setTurma(turma);
+		this.turma = turma;
+		this.responsavel = responsavel;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getMatricula() {
+		return matricula;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setMatricula(Long matricula) {
+		this.matricula = matricula;
 	}
 
 	public String getNome() {
@@ -54,20 +55,12 @@ public class Aluno implements Serializable {
 		this.sobrenome = sobrenome;
 	}
 
-	public String getCpf() {
-		return cpf;
+	public String getRgOuCpf() {
+		return rgOuCpf;
 	}
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public Integer getMatricula() {
-		return matricula;
-	}
-
-	public void setMatricula(Integer matricula) {
-		this.matricula = matricula;
+	public void setRgOuCpf(String rgOuCpf) {
+		this.rgOuCpf = rgOuCpf;
 	}
 
 	public Endereco getEndereco() {
@@ -86,9 +79,17 @@ public class Aluno implements Serializable {
 		this.turma = turma;
 	}
 
+	public Responsavel getResponsavel() {
+		return responsavel;
+	}
+
+	public void setResponsavel(Responsavel responsavel) {
+		this.responsavel = responsavel;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(matricula);
 	}
 
 	@Override
@@ -100,6 +101,6 @@ public class Aluno implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Aluno other = (Aluno) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(matricula, other.matricula);
 	}
 }

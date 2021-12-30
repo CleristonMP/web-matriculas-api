@@ -1,7 +1,9 @@
 package com.cleristonmelo.webmatriculas.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Endereco implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -15,21 +17,20 @@ public class Endereco implements Serializable {
 	
 	private Municipio municipio;
 	
-	private Aluno aluno;
+	private Set<Aluno> alunos = new HashSet<>();
 	
 	public Endereco() {
 	}
 
 	public Endereco(Long id, String logradouro, String numero, String complemento, String cep, String bairro,
-			Municipio municipio, Aluno aluno) {
+			Municipio municipio) {
 		this.id = id;
 		this.logradouro = logradouro;
 		this.numero = numero;
 		this.complemento = complemento;
-		this.setCep(cep);
+		this.cep = cep;
 		this.bairro = bairro;
 		this.municipio = municipio;
-		this.setAluno(aluno);
 	}
 
 	public Long getId() {
@@ -88,12 +89,8 @@ public class Endereco implements Serializable {
 		this.municipio = municipio;
 	}
 
-	public Aluno getAluno() {
-		return aluno;
-	}
-
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
+	public Set<Aluno> getAlunos() {
+		return alunos;
 	}
 
 	@Override
