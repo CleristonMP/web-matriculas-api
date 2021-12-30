@@ -1,47 +1,33 @@
-package com.cleristonmelo.webmatriculas.entities;
+package com.cleristonmelo.webmatriculas.dtos;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import com.cleristonmelo.webmatriculas.entities.Aluno;
+import com.cleristonmelo.webmatriculas.entities.Endereco;
+import com.cleristonmelo.webmatriculas.entities.Responsavel;
+import com.cleristonmelo.webmatriculas.entities.Turma;
 
-@Entity
-@Table(name = "tb_aluno")
-public class Aluno implements Serializable {
+public class AlunoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long matricula;
 	private String nome;
 	private String sobrenome;
 	private String rgOuCpf;
 	private Date dataNascimento;
-	
-	@ManyToOne
-	@JoinColumn(name = "endereco_id")
+
 	private Endereco endereco;
-	
-	@ManyToOne
-	@JoinColumn(name = "turma_id")
+
 	private Turma turma;
-	
-	@ManyToOne
-	@JoinColumn(name = "responsavel_id")
+
 	private Responsavel responsavel;
 	
-	public Aluno() {
+	public AlunoDTO() {
 	}
 
-	public Aluno(Long matricula, String nome, String sobrenome, String rgOuCpf, Date dataNascimento, Endereco endereco, Turma turma,
-			Responsavel responsavel) {
+	public AlunoDTO(Long matricula, String nome, String sobrenome, String rgOuCpf, Date dataNascimento,
+			Endereco endereco, Turma turma, Responsavel responsavel) {
 		this.matricula = matricula;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
@@ -50,6 +36,17 @@ public class Aluno implements Serializable {
 		this.endereco = endereco;
 		this.turma = turma;
 		this.responsavel = responsavel;
+	}
+	
+	public AlunoDTO(Aluno entity) {
+		this.matricula = entity.getMatricula();
+		this.nome = entity.getNome();
+		this.sobrenome = entity.getSobrenome();
+		this.rgOuCpf = entity.getRgOuCpf();
+		this.dataNascimento = entity.getDataNascimento();
+		this.endereco = entity.getEndereco();
+		this.turma = entity.getTurma();
+		this.responsavel = entity.getResponsavel();
 	}
 
 	public Long getMatricula() {
@@ -114,22 +111,5 @@ public class Aluno implements Serializable {
 
 	public void setResponsavel(Responsavel responsavel) {
 		this.responsavel = responsavel;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(matricula);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Aluno other = (Aluno) obj;
-		return Objects.equals(matricula, other.matricula);
 	}
 }

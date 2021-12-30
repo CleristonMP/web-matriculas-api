@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tb_turma")
 public class Turma implements Serializable {
@@ -23,6 +25,7 @@ public class Turma implements Serializable {
 	private String nome;
 	private String periodo;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "turma")
 	private Set<Aluno> alunos = new HashSet<>();
 	

@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tb_responsavel")
 public class Responsavel implements Serializable {
@@ -23,15 +25,16 @@ public class Responsavel implements Serializable {
 	private String nome;
 	private String sobrenome;
 	private String rgOuCpf;
-	private Integer telefone;
+	private String telefone;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "responsavel")
 	private Set<Aluno> alunos = new HashSet<>();
 	
 	public Responsavel() {
 	}
 
-	public Responsavel(Long id, String nome, String sobrenome, String rgOuCpf, Integer telefone) {
+	public Responsavel(Long id, String nome, String sobrenome, String rgOuCpf, String telefone) {
 		this.id = id;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
@@ -71,11 +74,11 @@ public class Responsavel implements Serializable {
 		this.rgOuCpf = rgOuCpf;
 	}
 
-	public Integer getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
 
-	public void setTelefone(Integer telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 
