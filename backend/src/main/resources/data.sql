@@ -1,3 +1,14 @@
+INSERT INTO tb_usuario (nome, sobrenome, email, senha) VALUES ('Alex', 'Brown', 'alex@gmail.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG');
+INSERT INTO tb_usuario (nome, sobrenome, email, senha) VALUES ('Maria', 'Green', 'maria@gmail.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG');
+
+INSERT INTO tb_cargo (autoridade) VALUES ('ROLE_OPERATOR');
+INSERT INTO tb_cargo (autoridade) VALUES ('ROLE_ADMIN');
+
+INSERT INTO tb_usuario_cargo (usuario_id, cargo_id) VALUES (1, 1);
+INSERT INTO tb_usuario_cargo (usuario_id, cargo_id) VALUES (2, 1);
+INSERT INTO tb_usuario_cargo (usuario_id, cargo_id) VALUES (2, 2);
+
+
 INSERT INTO tb_municipio (nome, estado) VALUES ('São José de Ribamar', 'MA');
 
 INSERT INTO tb_endereco (logradouro, numero, complemento, cep, bairro, municipio_id) VALUES ('Rua H', '31', 'Qda 10', '65000123', 'Novo Cohatrac', 1);
