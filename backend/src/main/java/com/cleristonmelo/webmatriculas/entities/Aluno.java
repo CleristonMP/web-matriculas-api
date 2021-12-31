@@ -27,6 +27,8 @@ public class Aluno implements Serializable {
 	private String nome;
 	private String sobrenome;
 	private String rgOuCpf;
+	
+	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Date dataNascimento;
 	
 	@ManyToOne
