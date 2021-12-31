@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.cleristonmelo.webmatriculas.entities.Aluno;
 import com.cleristonmelo.webmatriculas.entities.Endereco;
 
 public class EnderecoDTO implements Serializable {
@@ -43,6 +44,11 @@ public class EnderecoDTO implements Serializable {
 		this.cep = entity.getCep();
 		this.bairro = entity.getBairro();
 		this.municipioId = entity.getMunicipio().getId();
+	}
+	
+	public EnderecoDTO(Endereco entity, Set<Aluno> alunos) {
+		this(entity);
+		alunos.forEach(aluno -> this.alunos.add(new AlunoDTO(aluno)));
 	}
 
 	public Long getId() {

@@ -44,7 +44,7 @@ public class EnderecoService {
 	public EnderecoDTO findById(Long id) {
 		Optional<Endereco> obj = repository.findById(id);
 		Endereco entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
-		return new EnderecoDTO(entity);
+		return new EnderecoDTO(entity, entity.getAlunos());
 	}
 	
 	@Transactional

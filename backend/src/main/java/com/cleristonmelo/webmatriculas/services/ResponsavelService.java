@@ -40,7 +40,7 @@ public class ResponsavelService {
 	public ResponsavelDTO findById(Long id) {
 		Optional<Responsavel> obj = repository.findById(id);
 		Responsavel entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
-		return new ResponsavelDTO(entity);
+		return new ResponsavelDTO(entity, entity.getAlunos());
 	}
 	
 	@Transactional

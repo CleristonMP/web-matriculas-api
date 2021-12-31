@@ -40,7 +40,7 @@ public class TurmaService {
 	public TurmaDTO findById(Long id) {
 		Optional<Turma> obj = repository.findById(id);
 		Turma entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
-		return new TurmaDTO(entity);
+		return new TurmaDTO(entity, entity.getAlunos());
 	}
 	
 	@Transactional
