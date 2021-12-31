@@ -8,6 +8,7 @@ import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 
 import com.cleristonmelo.webmatriculas.entities.Aluno;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class AlunoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -23,6 +24,7 @@ public class AlunoDTO implements Serializable {
 	private String sobrenome;
 	private String rgOuCpf;
 	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	@PastOrPresent(message = "A data de nascimento não pode ser futura")
 	private Date dataNascimento;
 
