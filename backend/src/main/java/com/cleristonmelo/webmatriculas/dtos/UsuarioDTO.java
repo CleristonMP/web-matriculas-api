@@ -4,14 +4,23 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 import com.cleristonmelo.webmatriculas.entities.Usuario;
 
 public class UsuarioDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
+	
+	@NotBlank(message = "Campo obrigatório")
 	private String nome;
+	
+	@NotBlank(message = "Campo obrigatório")
 	private String sobrenome;
+	
+	@Email(message = "Favor inserir um e-mail válido")
 	private String email;
 	
 	private Set<CargoDTO> cargos = new HashSet<>();
