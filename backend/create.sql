@@ -1,0 +1,15 @@
+create table tb_aluno (matricula  bigserial not null, created_at TIMESTAMP WITHOUT TIME ZONE, data_nascimento TIMESTAMP WITHOUT TIME ZONE, nome varchar(255), rg_ou_cpf varchar(255), sobrenome varchar(255), updated_at TIMESTAMP WITHOUT TIME ZONE, endereco_id int8, responsavel_id int8, turma_id int8, primary key (matricula));
+create table tb_cargo (id  bigserial not null, autoridade varchar(255), primary key (id));
+create table tb_endereco (id  bigserial not null, bairro varchar(255), cep varchar(255), complemento varchar(255), created_at TIMESTAMP WITHOUT TIME ZONE, logradouro varchar(255), numero varchar(255), updated_at TIMESTAMP WITHOUT TIME ZONE, municipio_id int8, primary key (id));
+create table tb_municipio (id  bigserial not null, created_at TIMESTAMP WITHOUT TIME ZONE, estado varchar(255), nome varchar(255), updated_at TIMESTAMP WITHOUT TIME ZONE, primary key (id));
+create table tb_responsavel (id  bigserial not null, created_at TIMESTAMP WITHOUT TIME ZONE, nome varchar(255), rg_ou_cpf varchar(255), sobrenome varchar(255), telefone varchar(255), updated_at TIMESTAMP WITHOUT TIME ZONE, primary key (id));
+create table tb_turma (id  bigserial not null, created_at TIMESTAMP WITHOUT TIME ZONE, nome varchar(255), periodo varchar(255), updated_at TIMESTAMP WITHOUT TIME ZONE, primary key (id));
+create table tb_usuario (id  bigserial not null, email varchar(255), nome varchar(255), senha varchar(255), sobrenome varchar(255), primary key (id));
+create table tb_usuario_cargo (usuario_id int8 not null, cargo_id int8 not null, primary key (usuario_id, cargo_id));
+alter table tb_usuario add constraint UK_spmnyb4dsul95fjmr5kmdmvub unique (email);
+alter table tb_aluno add constraint FKpvtf9wys9yxfb4ywleaarewmn foreign key (endereco_id) references tb_endereco;
+alter table tb_aluno add constraint FK6wmwt18o9woj8o58ffsmhrrsx foreign key (responsavel_id) references tb_responsavel;
+alter table tb_aluno add constraint FKscdq304mic4a5tbvsyto6ha7t foreign key (turma_id) references tb_turma;
+alter table tb_endereco add constraint FK83gn3ib8pj10rj47w1yi1nefp foreign key (municipio_id) references tb_municipio;
+alter table tb_usuario_cargo add constraint FKfoxfmrp32u59p9yvguydp9ybj foreign key (cargo_id) references tb_cargo;
+alter table tb_usuario_cargo add constraint FKdaew2172j172duhsiyma5rfq5 foreign key (usuario_id) references tb_usuario;
