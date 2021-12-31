@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cleristonmelo.webmatriculas.dtos.CargoDTO;
 import com.cleristonmelo.webmatriculas.dtos.UsuarioDTO;
 import com.cleristonmelo.webmatriculas.dtos.UsuarioInsertDTO;
+import com.cleristonmelo.webmatriculas.dtos.UsuarioUpdateDTO;
 import com.cleristonmelo.webmatriculas.entities.Cargo;
 import com.cleristonmelo.webmatriculas.entities.Usuario;
 import com.cleristonmelo.webmatriculas.repositories.CargoRepository;
@@ -58,7 +59,7 @@ public class UsuarioService {
 	}
 
 	@Transactional
-	public UsuarioDTO update(Long id, UsuarioDTO dto) {
+	public UsuarioDTO update(Long id, UsuarioUpdateDTO dto) {
 		try {
 			Usuario entity = repository.getOne(id);
 			copyDtoToEntity(dto, entity);

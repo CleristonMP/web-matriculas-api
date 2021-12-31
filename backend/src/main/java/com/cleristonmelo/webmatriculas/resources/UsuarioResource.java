@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.cleristonmelo.webmatriculas.dtos.UsuarioDTO;
 import com.cleristonmelo.webmatriculas.dtos.UsuarioInsertDTO;
+import com.cleristonmelo.webmatriculas.dtos.UsuarioUpdateDTO;
 import com.cleristonmelo.webmatriculas.services.UsuarioService;
 
 @RestController
@@ -48,9 +49,9 @@ public class UsuarioResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<UsuarioDTO> update(@PathVariable Long id, @RequestBody UsuarioDTO dto) {
-		dto = service.update(id, dto);
-		return ResponseEntity.ok().body(dto);
+	public ResponseEntity<UsuarioDTO> update(@PathVariable Long id, @RequestBody UsuarioUpdateDTO dto) {
+		UsuarioDTO newDto = service.update(id, dto);
+		return ResponseEntity.ok().body(newDto);
 	}
 	
 	@DeleteMapping(value = "/{id}")
