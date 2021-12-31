@@ -2,6 +2,8 @@ package com.cleristonmelo.webmatriculas.resources;
 
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,7 +41,7 @@ public class AlunoResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<AlunoDTO> insert(@RequestBody AlunoDTO dto){
+	public ResponseEntity<AlunoDTO> insert(@Valid @RequestBody AlunoDTO dto){
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{matricula}")
 				.buildAndExpand(dto.getMatricula()).toUri();		
@@ -47,7 +49,7 @@ public class AlunoResource {
 	}
 	
 	@PutMapping(value = "/{matricula}")
-	public ResponseEntity<AlunoDTO> update(@PathVariable Long matricula, @RequestBody AlunoDTO dto) {
+	public ResponseEntity<AlunoDTO> update(@PathVariable Long matricula, @Valid @RequestBody AlunoDTO dto) {
 		dto = service.update(matricula, dto);
 		return ResponseEntity.ok().body(dto);
 	}

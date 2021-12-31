@@ -2,6 +2,8 @@ package com.cleristonmelo.webmatriculas.resources;
 
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,13 +35,13 @@ public class TurmaResource {
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<TurmaDTO> findByMatricula(@PathVariable Long id){
+	public ResponseEntity<TurmaDTO> findById(@PathVariable Long id){
 		TurmaDTO dto = service.findById(id);	
 		return ResponseEntity.ok().body(dto);
 	}
 	
 	@PostMapping
-	public ResponseEntity<TurmaDTO> insert(@RequestBody TurmaDTO dto){
+	public ResponseEntity<TurmaDTO> insert(@Valid @RequestBody TurmaDTO dto){
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(dto.getId()).toUri();		
@@ -47,7 +49,7 @@ public class TurmaResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<TurmaDTO> update(@PathVariable Long id, @RequestBody TurmaDTO dto) {
+	public ResponseEntity<TurmaDTO> update(@PathVariable Long id, @Valid @RequestBody TurmaDTO dto) {
 		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}

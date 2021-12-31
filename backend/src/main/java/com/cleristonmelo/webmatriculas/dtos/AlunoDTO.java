@@ -3,15 +3,27 @@ package com.cleristonmelo.webmatriculas.dtos;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
+
 import com.cleristonmelo.webmatriculas.entities.Aluno;
 
 public class AlunoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Long matricula;
+	
+	@Size(min = 3, max = 15, message = "O nome do aluno deve ter entre 3 e 15 caracteres")
+	@NotBlank(message = "Campo requerido")
 	private String nome;
+	
+	@Size(min = 3, max = 15, message = "O sobrenome do aluno deve ter entre 3 e 15 caracteres")
+	@NotBlank(message = "Campo requerido")
 	private String sobrenome;
 	private String rgOuCpf;
+	
+	@PastOrPresent(message = "A data de nascimento não pode ser futura")
 	private Date dataNascimento;
 
 	private Long enderecoId;

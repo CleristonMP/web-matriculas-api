@@ -2,6 +2,8 @@ package com.cleristonmelo.webmatriculas.resources;
 
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,13 +35,13 @@ public class ResponsavelResource {
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<ResponsavelDTO> findByMatricula(@PathVariable Long id){
+	public ResponseEntity<ResponsavelDTO> findById(@PathVariable Long id){
 		ResponsavelDTO dto = service.findById(id);	
 		return ResponseEntity.ok().body(dto);
 	}
 	
 	@PostMapping
-	public ResponseEntity<ResponsavelDTO> insert(@RequestBody ResponsavelDTO dto){
+	public ResponseEntity<ResponsavelDTO> insert(@Valid @RequestBody ResponsavelDTO dto){
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(dto.getId()).toUri();		
@@ -47,7 +49,7 @@ public class ResponsavelResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<ResponsavelDTO> update(@PathVariable Long id, @RequestBody ResponsavelDTO dto) {
+	public ResponseEntity<ResponsavelDTO> update(@PathVariable Long id, @Valid @RequestBody ResponsavelDTO dto) {
 		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}

@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import com.cleristonmelo.webmatriculas.entities.Aluno;
 import com.cleristonmelo.webmatriculas.entities.Responsavel;
 
@@ -11,9 +14,19 @@ public class ResponsavelDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
+	
+	@Size(min = 3, max = 15, message = "O nome do responsável deve ter entre 3 e 15 caracteres")
+	@NotBlank(message = "Campo requerido")
 	private String nome;
+	
+	@Size(min = 3, max = 15, message = "O sobrenome do responsável deve ter entre 3 e 15 caracteres")
+	@NotBlank(message = "Campo requerido")
 	private String sobrenome;
+	
+	@NotBlank(message = "Campo obrigatório")
 	private String rgOuCpf;
+	
+	@NotBlank(message = "Campo obrigatório")
 	private String telefone;
 
 	private Set<AlunoDTO> alunos = new HashSet<>();

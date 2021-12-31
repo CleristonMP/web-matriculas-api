@@ -2,6 +2,8 @@ package com.cleristonmelo.webmatriculas.resources;
 
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,13 +35,13 @@ public class EnderecoResource {
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<EnderecoDTO> findByMatricula(@PathVariable Long id){
+	public ResponseEntity<EnderecoDTO> findById(@PathVariable Long id){
 		EnderecoDTO dto = service.findById(id);	
 		return ResponseEntity.ok().body(dto);
 	}
 	
 	@PostMapping
-	public ResponseEntity<EnderecoDTO> insert(@RequestBody EnderecoDTO dto){
+	public ResponseEntity<EnderecoDTO> insert(@Valid @RequestBody EnderecoDTO dto){
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(dto.getId()).toUri();		
@@ -47,7 +49,7 @@ public class EnderecoResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<EnderecoDTO> update(@PathVariable Long id, @RequestBody EnderecoDTO dto) {
+	public ResponseEntity<EnderecoDTO> update(@PathVariable Long id, @Valid @RequestBody EnderecoDTO dto) {
 		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}

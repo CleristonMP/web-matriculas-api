@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.NotBlank;
+
 import com.cleristonmelo.webmatriculas.entities.Aluno;
 import com.cleristonmelo.webmatriculas.entities.Turma;
 
@@ -11,7 +13,11 @@ public class TurmaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
+	
+	@NotBlank(message = "Campo obrigatório")
 	private String nome;
+	
+	@NotBlank(message = "Campo obrigatório")
 	private String periodo;
 
 	private Set<AlunoDTO> alunos = new HashSet<>();

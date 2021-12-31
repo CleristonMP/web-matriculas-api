@@ -33,7 +33,7 @@ public class MunicipioResource {
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<MunicipioDTO> findByMatricula(@PathVariable Long id){
+	public ResponseEntity<MunicipioDTO> findById(@PathVariable Long id){
 		MunicipioDTO dto = service.findById(id);	
 		return ResponseEntity.ok().body(dto);
 	}

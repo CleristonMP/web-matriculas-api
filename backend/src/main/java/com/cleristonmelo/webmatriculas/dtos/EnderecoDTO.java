@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.NotBlank;
+
 import com.cleristonmelo.webmatriculas.entities.Aluno;
 import com.cleristonmelo.webmatriculas.entities.Endereco;
 
@@ -11,10 +13,15 @@ public class EnderecoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
+	
+	@NotBlank(message = "Campo obrigatório")
 	private String logradouro;
+	
 	private String numero;
 	private String complemento;
 	private String cep;
+	
+	@NotBlank(message = "Campo obrigatório")
 	private String bairro;
 
 	private Long municipioId;
