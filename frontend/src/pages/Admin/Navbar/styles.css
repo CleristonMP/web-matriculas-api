@@ -1,0 +1,36 @@
+.navbar-nav.admin-navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: 15px;
+}
+
+.admin-nav-item {
+  width: 30%;
+}
+
+.admin-nav-item a {
+  padding: 10px 0;
+}
+
+@media (min-width: 992px) {
+  .navbar-nav.admin-navbar {
+    flex-direction: column;
+    justify-content: unset;
+    padding: 0;
+  }
+
+  .admin-nav-item {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .admin-nav-item a {
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.25rem;
+  }
+}
