@@ -1,6 +1,8 @@
 import { ReactComponent as AddressMarkerIcon } from "assets/images/address-marker.svg";
 import { ReactComponent as EmailIcon } from "assets/images/email-icon.svg";
 import { ReactComponent as PhoneIcon } from "assets/images/phone-icon.svg";
+import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import "./styles.css";
 
@@ -9,9 +11,9 @@ const Footer = () => {
     <footer className="container-fluid bg-secondary text-white py-5 px-sm-3 px-md-5">
       <div className="row pt-5">
         <div className="col-lg-4 col-md-6 mb-5">
-          <a href="link" className="navbar-brand fw-bold text-primary mb-4">
+          <NavLink to="/" className="navbar-brand fw-bold text-primary mb-4">
             <span className="text-white">WebMatrículas</span>
-          </a>
+          </NavLink>
           <p>
             Labore dolor amet ipsum ea, erat sit ipsum duo eos. Volup amet ea
             dolor et magna dolor, elitr rebum duo est sed diam elitr. Stet elitr
@@ -52,27 +54,30 @@ const Footer = () => {
         <div className="col-lg-4 col-md-6 mb-5">
           <h3 className="text-primary mb-4">Links</h3>
           <div className="d-flex flex-column justify-content-start">
-            <a className="text-white mb-2 nav-link" href="link">
+            <NavLink to="/" className="text-white mb-2 nav-link">
               Home
-            </a>
-            <a className="text-white mb-2 nav-link" href="link">
+            </NavLink>
+            <NavLink to="/about" className="text-white mb-2 nav-link">
               Sobre
-            </a>
+            </NavLink>
             <a className="text-white mb-2 nav-link disabled" href="link">
               Professores
             </a>
-            <a className="text-white nav-link disabled" href="link">
+            <a className="text-white mb-2 nav-link disabled" href="link">
               Contato
             </a>
+            <NavLink to="/admin" className="text-white nav-link">
+              Login
+            </NavLink>
           </div>
         </div>
       </div>
       <div className="container-fluid pt-5">
         <p className="text-center text-white">
           &copy;
-          <a className="text-primary font-weight-bold" href="link">
+          <NavLink to="/" className="text-primary font-weight-bold">
             WebMatrículas
-          </a>
+          </NavLink>
           . All Rights Reserved. Designed by&nbsp;
           <a
             className="text-primary font-weight-bold"

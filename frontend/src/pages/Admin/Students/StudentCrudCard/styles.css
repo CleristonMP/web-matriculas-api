@@ -1,11 +1,11 @@
 @media (min-width: 576px) {
-  .std-card {
-    width: 49%;
+  .card.std-card {
+    width: 48%;
   }
 }
 
 @media (min-width: 1200px) {
-  .std-card {
-    width: 30%;
+  .card.std-card {
+    width: 32%;
   }
 }

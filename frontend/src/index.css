@@ -140,20 +140,6 @@ button:focus {
   .btn.btn-crud-add {
     width: 75%;
   }
-
-  .custom-card-body {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .custom-card-body h5, h6 {
-    margin-bottom: 0;
-  }
-
-  .custom-card-body p {
-    margin-bottom: 0;
-  }
 }
 
 @media (min-width: 768px) {

@@ -5,7 +5,7 @@ import "./styles.css";
 const List = () => {
   return (
     <div className="container mb-2 py-lg-3">
-      <div className="container mb-3 text-center text-md-start px-xl-5">
+      <div className="container mb-3 text-center text-lg-start px-xl-5">
         <a href="link">
           <button className="btn btn-primary text-white h-50px btn-crud-add">
             ADICIONAR
@@ -13,16 +13,16 @@ const List = () => {
         </a>
       </div>
       <div className="container">
-        <div className="row px-xl-5">
-          <SchoolClassesCrudCard name="6A" period="matutino" />
-          <SchoolClassesCrudCard name="7A" period="matutino" />
-          <SchoolClassesCrudCard name="8A" period="matutino" />
-          <SchoolClassesCrudCard name="6B" period="vespertino" />
-          <SchoolClassesCrudCard name="7B" period="vespertino" />
-          <SchoolClassesCrudCard name="8B" period="vespertino" />
-          <SchoolClassesCrudCard name="6C" period="noturno" />
-          <SchoolClassesCrudCard name="7C" period="noturno" />
-          <SchoolClassesCrudCard name="8C" period="noturno" />
+        <div className="row justify-content-sm-between px-xl-5">
+          <SchoolClassesCrudCard name="101 ECH" period="matutino" />
+          <SchoolClassesCrudCard name="102 HCD" period="matutino" />
+          <SchoolClassesCrudCard name="103 HPD" period="matutino" />
+          <SchoolClassesCrudCard name="201 ECH" period="vespertino" />
+          <SchoolClassesCrudCard name="202 HCD" period="vespertino" />
+          <SchoolClassesCrudCard name="203 HPD" period="vespertino" />
+          <SchoolClassesCrudCard name="301 ECH" period="noturno" />
+          <SchoolClassesCrudCard name="302 HCD" period="noturno" />
+          <SchoolClassesCrudCard name="303 HPD" period="noturno" />
         </div>
       </div>
     </div>
