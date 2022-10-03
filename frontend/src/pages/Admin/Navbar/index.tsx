@@ -16,9 +16,9 @@ const Navbar = () => {
           </NavLink>
         </li>
         <li className="nav-item text-center admin-nav-item">
-          <a className="nav-link list-group-item list-group-item-action" href="link">
+          <NavLink to="users" className="nav-link list-group-item list-group-item-action">
             Usuários
-          </a>
+          </NavLink>
         </li>
       </ul>
     </nav>

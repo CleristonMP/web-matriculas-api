@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
 import SchoolClassesCrudCard from "../SchoolClassesCrudCard";
 
 import "./styles.css";
 
-const List = () => {
+const SchoolClassesList = () => {
   return (
     <div className="container mb-2 py-lg-3">
       <div className="container mb-3 text-center text-lg-start px-xl-5">
@@ -14,7 +15,9 @@ const List = () => {
       </div>
       <div className="container">
         <div className="row justify-content-sm-between px-xl-5">
-          <SchoolClassesCrudCard name="101 ECH" period="matutino" />
+          <Link to="1">
+            <SchoolClassesCrudCard name="101 ECH" period="matutino" />
+          </Link>
           <SchoolClassesCrudCard name="102 HCD" period="matutino" />
           <SchoolClassesCrudCard name="103 HPD" period="matutino" />
           <SchoolClassesCrudCard name="201 ECH" period="vespertino" />
@@ -29,4 +32,4 @@ const List = () => {
   );
 };
 
-export default List;
+export default SchoolClassesList;

@@ -23,7 +23,8 @@ public class Student implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long enrollment;
+	private Long id;
+	private Integer enrollment;
 	private String name;
 	private String lastName;
 	private String cpf;
@@ -52,8 +53,9 @@ public class Student implements Serializable {
 	public Student() {
 	}
 
-	public Student(Long enrollment, String name, String lastName, String cpf, Date birthDate, Address address,
+	public Student(Long id, Integer enrollment, String name, String lastName, String cpf, Date birthDate, Address address,
 			SchoolClass schoolClass, Parent parent) {
+		this.id = id;
 		this.enrollment = enrollment;
 		this.name = name;
 		this.lastName = lastName;
@@ -64,11 +66,19 @@ public class Student implements Serializable {
 		this.parent = parent;
 	}
 
-	public Long getEnrollment() {
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Integer getEnrollment() {
 		return enrollment;
 	}
 
-	public void setEnrollment(Long enrollment) {
+	public void setEnrollment(Integer enrollment) {
 		this.enrollment = enrollment;
 	}
 

@@ -82,7 +82,7 @@ public class SchoolClassService {
 		
 		entity.getStudents().clear();
 		for (StudentDTO stuDto : dto.getStudents()) {
-			Student student = studentRepository.getOne(stuDto.getEnrollment());
+			Student student = studentRepository.getOne(stuDto.getId());
 			entity.getStudents().add(student);
 		}
 	}	

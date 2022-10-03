@@ -49,7 +49,7 @@ const Navbar = () => {
               </a>
             </li>
           </ul>
-          <NavLink to="/admin" className="btn btn-primary px-4">
+          <NavLink to="admin/auth" className="btn btn-primary px-4">
             Login
           </NavLink>
         </div>
