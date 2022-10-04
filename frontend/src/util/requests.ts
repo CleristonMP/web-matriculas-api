@@ -1,13 +1,13 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { rootNavigate } from "components/CustomRouter";
 import qs from "qs";
+import { history } from "./history";
 import { getAuthData } from "./storage";
 
 export const BASE_URL =
   process.env.REACT_APP_BACKEND_URL ?? "http://localhost:8080";
 
-const CLIENT_ID = process.env.REACT_APP_CLIENT_ID ?? "dscatalog";
-const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET ?? "dscatalog123";
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID ?? "web-matriculas";
+const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET ?? "web-matriculas123";
 
 type LoginData = {
   username: string;
@@ -62,7 +62,7 @@ axios.interceptors.response.use(
   },
   function (error) {
     if (error.response.status === 401) {
-      rootNavigate("/admin");
+      history.push("auth/login");
     }
     return Promise.reject(error);
   }

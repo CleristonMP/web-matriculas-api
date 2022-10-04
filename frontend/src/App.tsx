@@ -1,7 +1,6 @@
-import { AuthContext, AuthContextData } from "AuthContext";
+import AppRoutes from "AppRoutes";
+import { AuthContext, AuthContextData } from "contexts/AuthContext";
 import { useState } from "react";
-import { ToastContainer } from "react-toastify";
-import AppRoutes from "Routes";
 import "./assets/styles/custom.scss";
 
 function App() {
@@ -10,9 +9,8 @@ function App() {
   });
 
   return (
-    <AuthContext.Provider value={{ authContextData, setAuthContextData }}>
+    <AuthContext.Provider value={{authContextData, setAuthContextData}}>
       <AppRoutes />
-      <ToastContainer />
     </AuthContext.Provider>
   );
 }

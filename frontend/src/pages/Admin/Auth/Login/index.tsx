@@ -1,13 +1,13 @@
-import { rootNavigate } from "components/CustomRouter";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 import { requestBackendLogin } from "util/requests";
 import { saveAuthData } from "util/storage";
 import { getTokenData } from "util/token";
-import { AuthContext } from "AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 
 import "./styles.css";
+import { history } from "util/history";
 
 type CredentialsDTO = {
   username: string;
@@ -17,7 +17,7 @@ type CredentialsDTO = {
 const Login = () => {
   const location = useLocation();
 
-  const { from } = location.state || { from: { pathname: "/admin" } };
+  const { from } = location.state || { from: { pathname: "/admin/welcome" } };
 
   const { setAuthContextData } = useContext(AuthContext);
 
@@ -38,7 +38,7 @@ const Login = () => {
           authenticated: true,
           tokenData: getTokenData(),
         });
-        rootNavigate(from);
+        history.push(from);
       })
       .catch((error) => {
         setHasError(true);
