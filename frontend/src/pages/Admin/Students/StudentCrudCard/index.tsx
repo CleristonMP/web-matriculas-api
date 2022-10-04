@@ -1,27 +1,26 @@
+import { Link } from "react-router-dom";
+import { Student } from "types/student";
 import "./styles.css";
 
 type Props = {
-  name: string;
-  lastName: string;
-  cpf: string;
-  birthDate: string;
+  student: Student;
 };
 
-const StudentCrudCard = ({ name, lastName, cpf, birthDate }: Props) => {
+const StudentCrudCard = ({ student }: Props) => {
   return (
-    <div className="card base-card std-card mb-3 mb-xl-5 col-sm-6 col-xl-4">
-      <div className="card-body custom-card-body flex-sm-column text-sm-center">
+    <div className="card-body custom-card-body flex-sm-column text-sm-center">
+      <Link to={student.id.toString()}>
         <h5 className="card-title mb-sm-3">
-          {name} {lastName}
+          {`${student.name} ${student.lastName}`}
         </h5>
-        <h6 className="card-subtitle text-muted mb-sm-2">CPF: {cpf}</h6>
-        <p className="card-text mb-sm-3">Data de nascimento: {birthDate}</p>
-        <div className="d-flex justify-content-center">
-          <button className="btn btn-outline-danger card-link">EXCLUIR</button>
-          <a href="link" className="card-link">
-            <button className="btn btn-outline-secondary">EDITAR</button>
-          </a>
-        </div>
+        <h6 className="card-subtitle text-muted mb-sm-2">{`CPF: ${student.cpf}`}</h6>
+      </Link>
+      <p className="card-text mb-sm-3">{`Data de nascimento: ${student.birthDate}`}</p>
+      <div className="d-flex justify-content-center">
+        <button className="btn btn-outline-danger card-link">EXCLUIR</button>
+        <a href="link" className="card-link">
+          <button className="btn btn-outline-secondary">EDITAR</button>
+        </a>
       </div>
     </div>
   );

@@ -1,8 +1,13 @@
+import { SchoolClass } from "types/schoolClass";
+import { mockTableData } from "./mockTableData";
 import "./styles.css";
 
 const Table = () => {
+  const mockData: SchoolClass = mockTableData;
+
   return (
     <div className="mb-4 p-2 p-sm-3">
+      <h2>{`Turma: ${mockData.name} - ${mockData.period}`}</h2>
       <table className="table table-striped table-font">
         <thead>
           <tr>
@@ -14,33 +19,21 @@ const Table = () => {
             <th scope="col" className="d-none d-sm-table-cell">
               CPF
             </th>
-            <th scope="col" className="text-break">
+            <th scope="col" className="text-break d-none d-md-table-cell">
               Data de nascimento
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td className="d-none d-sm-table-cell">123.456.789-00</td>
-            <td>20/09/2012</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td className="d-none d-sm-table-cell">987.654.321-11</td>
-            <td>12/10/2012</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>James</td>
-            <td className="d-none d-sm-table-cell">456.789.123-22</td>
-            <td>10/09/2012</td>
-          </tr>
+          {mockData.students.map((std) => (
+            <tr key={std.id}>
+              <th scope="row">{std.enrollment}</th>
+              <td>{std.name}</td>
+              <td>{std.lastName}</td>
+              <td className="d-none d-sm-table-cell">{std.cpf}</td>
+              <td className="d-none d-md-table-cell">{std.birthDate}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

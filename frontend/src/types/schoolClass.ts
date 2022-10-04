@@ -1,6 +1,6 @@
 import { Student } from "./student";
 
-export type schoolClass = {
+export type SchoolClass = {
     id: number;
     name: string;
     period: string;

@@ -136,6 +136,10 @@ button:focus {
   width: 100%;
 }
 
+.custom-btn {
+max-width: 200px;
+}
+
 @media (min-width: 576px) {
   .btn.btn-crud-add {
     width: 75%;
