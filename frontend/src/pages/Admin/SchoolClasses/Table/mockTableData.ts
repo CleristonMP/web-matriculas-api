@@ -12,9 +12,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Baird",
       cpf: "34008072246",
       birthDate: "2012-02-20T02:00:00Z",
-      addressId: 64,
-      schoolClassId: 1,
-      parentId: 44,
     },
     {
       id: 104,
@@ -23,9 +20,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Hughes",
       cpf: "66097870264",
       birthDate: "2015-06-27T03:00:00Z",
-      addressId: 117,
-      schoolClassId: 1,
-      parentId: 2,
     },
     {
       id: 82,
@@ -34,9 +28,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Chambers",
       cpf: "13601407489",
       birthDate: "2012-04-06T03:00:00Z",
-      addressId: 106,
-      schoolClassId: 1,
-      parentId: 83,
     },
     {
       id: 200,
@@ -45,9 +36,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Garza",
       cpf: "70825070516",
       birthDate: "2010-10-21T02:00:00Z",
-      addressId: 15,
-      schoolClassId: 1,
-      parentId: 4,
     },
     {
       id: 95,
@@ -56,9 +44,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Cardenas",
       cpf: "38273358106",
       birthDate: "2010-02-20T02:00:00Z",
-      addressId: 100,
-      schoolClassId: 1,
-      parentId: 36,
     },
     {
       id: 93,
@@ -67,9 +52,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Moody",
       cpf: "67940100630",
       birthDate: "2010-10-24T02:00:00Z",
-      addressId: 112,
-      schoolClassId: 1,
-      parentId: 76,
     },
     {
       id: 97,
@@ -78,9 +60,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Thomas",
       cpf: "63857869116",
       birthDate: "2011-03-28T03:00:00Z",
-      addressId: 47,
-      schoolClassId: 1,
-      parentId: 114,
     },
     {
       id: 2,
@@ -89,9 +68,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Woodard",
       cpf: "12751149103",
       birthDate: "2011-11-04T02:00:00Z",
-      addressId: 84,
-      schoolClassId: 1,
-      parentId: 38,
     },
     {
       id: 214,
@@ -100,9 +76,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Santiago",
       cpf: "52120001400",
       birthDate: "2013-08-24T03:00:00Z",
-      addressId: 24,
-      schoolClassId: 1,
-      parentId: 15,
     },
     {
       id: 193,
@@ -111,9 +84,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Sullivan",
       cpf: "45051920404",
       birthDate: "2010-06-22T03:00:00Z",
-      addressId: 82,
-      schoolClassId: 1,
-      parentId: 77,
     },
     {
       id: 52,
@@ -122,9 +92,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Morales",
       cpf: "60705179764",
       birthDate: "2015-12-27T02:00:00Z",
-      addressId: 111,
-      schoolClassId: 1,
-      parentId: 89,
     },
     {
       id: 41,
@@ -133,9 +100,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Lara",
       cpf: "50434669713",
       birthDate: "2014-05-13T03:00:00Z",
-      addressId: 109,
-      schoolClassId: 1,
-      parentId: 101,
     },
     {
       id: 100,
@@ -144,9 +108,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Richmond",
       cpf: "98907494330",
       birthDate: "2013-03-10T03:00:00Z",
-      addressId: 108,
-      schoolClassId: 1,
-      parentId: 67,
     },
     {
       id: 130,
@@ -155,9 +116,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Atkins",
       cpf: "84267666111",
       birthDate: "2014-02-22T03:00:00Z",
-      addressId: 31,
-      schoolClassId: 1,
-      parentId: 91,
     },
     {
       id: 208,
@@ -166,9 +124,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Nichols",
       cpf: "43706834593",
       birthDate: "2012-12-10T02:00:00Z",
-      addressId: 90,
-      schoolClassId: 1,
-      parentId: 92,
     },
     {
       id: 12,
@@ -177,9 +132,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Larsen",
       cpf: "48606234083",
       birthDate: "2013-01-08T02:00:00Z",
-      addressId: 41,
-      schoolClassId: 1,
-      parentId: 48,
     },
     {
       id: 131,
@@ -188,9 +140,6 @@ export const mockTableData: SchoolClass = {
       lastName: "James",
       cpf: "68153273988",
       birthDate: "2013-12-15T02:00:00Z",
-      addressId: 2,
-      schoolClassId: 1,
-      parentId: 18,
     },
     {
       id: 81,
@@ -199,9 +148,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Austin",
       cpf: "44917037138",
       birthDate: "2015-11-22T02:00:00Z",
-      addressId: 23,
-      schoolClassId: 1,
-      parentId: 28,
     },
     {
       id: 86,
@@ -210,9 +156,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Padilla",
       cpf: "70774031836",
       birthDate: "2012-12-29T02:00:00Z",
-      addressId: 20,
-      schoolClassId: 1,
-      parentId: 18,
     },
     {
       id: 42,
@@ -221,9 +164,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Wynn",
       cpf: "38849093937",
       birthDate: "2010-07-08T03:00:00Z",
-      addressId: 92,
-      schoolClassId: 1,
-      parentId: 66,
     },
     {
       id: 105,
@@ -232,9 +172,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Sears",
       cpf: "28841092695",
       birthDate: "2010-01-31T02:00:00Z",
-      addressId: 39,
-      schoolClassId: 1,
-      parentId: 9,
     },
     {
       id: 70,
@@ -243,9 +180,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Goff",
       cpf: "14019218031",
       birthDate: "2010-02-13T02:00:00Z",
-      addressId: 71,
-      schoolClassId: 1,
-      parentId: 49,
     },
     {
       id: 166,
@@ -254,9 +188,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Vaughan",
       cpf: "60862819186",
       birthDate: "2014-07-06T03:00:00Z",
-      addressId: 73,
-      schoolClassId: 1,
-      parentId: 95,
     },
     {
       id: 31,
@@ -265,9 +196,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Young",
       cpf: "80102590105",
       birthDate: "2010-07-11T03:00:00Z",
-      addressId: 47,
-      schoolClassId: 1,
-      parentId: 47,
     },
     {
       id: 126,
@@ -276,9 +204,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Gallegos",
       cpf: "88543376664",
       birthDate: "2010-10-17T03:00:00Z",
-      addressId: 16,
-      schoolClassId: 1,
-      parentId: 52,
     },
     {
       id: 183,
@@ -287,9 +212,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Chan",
       cpf: "26270198303",
       birthDate: "2013-08-06T03:00:00Z",
-      addressId: 19,
-      schoolClassId: 1,
-      parentId: 3,
     },
     {
       id: 49,
@@ -298,9 +220,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Hester",
       cpf: "60600495941",
       birthDate: "2010-09-12T03:00:00Z",
-      addressId: 15,
-      schoolClassId: 1,
-      parentId: 43,
     },
     {
       id: 203,
@@ -309,9 +228,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Parker",
       cpf: "19021755706",
       birthDate: "2011-02-28T03:00:00Z",
-      addressId: 56,
-      schoolClassId: 1,
-      parentId: 109,
     },
     {
       id: 207,
@@ -320,9 +236,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Pacheco",
       cpf: "35773285485",
       birthDate: "2015-08-07T03:00:00Z",
-      addressId: 67,
-      schoolClassId: 1,
-      parentId: 63,
     },
     {
       id: 234,
@@ -331,9 +244,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Burris",
       cpf: "60918403301",
       birthDate: "2011-03-20T03:00:00Z",
-      addressId: 108,
-      schoolClassId: 1,
-      parentId: 6,
     },
     {
       id: 89,
@@ -342,9 +252,6 @@ export const mockTableData: SchoolClass = {
       lastName: "Oliver",
       cpf: "34883253987",
       birthDate: "2012-07-25T03:00:00Z",
-      addressId: 86,
-      schoolClassId: 1,
-      parentId: 110,
     },
   ],
 };

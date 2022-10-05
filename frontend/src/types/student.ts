@@ -1,3 +1,7 @@
+import { Address } from "./address";
+import { Parent } from "./parent";
+import { SchoolClass } from "./schoolClass";
+
 export type Student = {
     id: number;
     enrollment: number;
@@ -5,7 +9,7 @@ export type Student = {
     lastName: string;
     cpf: string;
     birthDate: string;
-    addressId: number;
-    schoolClassId: number;
-    parentId: number;
+    address?: Address;
+    schoolClass?: SchoolClass;
+    parent?: Parent;
 }

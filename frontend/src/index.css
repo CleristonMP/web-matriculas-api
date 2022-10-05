@@ -140,9 +140,18 @@ button:focus {
 max-width: 200px;
 }
 
+.form-title {
+  font-size: 1.4rem;
+  margin-top: 12px;
+}
+
 @media (min-width: 576px) {
   .btn.btn-crud-add {
     width: 75%;
+  }
+
+  .form-title {
+    font-size: 1.8rem;
   }
 }
 

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import StudentCrudCard from "../StudentCrudCard";
 import { mockStudentsListData } from "./mockStudentsListData";
 import "./styles.css";
@@ -8,11 +9,11 @@ const StudentsList = () => {
   return (
     <div className="container mb-2 mb-xl-0 py-lg-3 pb-xl-0">
       <div className="container mb-3 text-center px-xl-5 text-lg-start">
-        <a href="link">
+        <Link to="create/form">
           <button className="btn btn-primary text-white h-50px btn-crud-add">
             ADICIONAR
           </button>
-        </a>
+        </Link>
       </div>
       <div className="container">
         <div className="row justify-content-between px-xl-5">

@@ -3,7 +3,6 @@ import {
   unstable_HistoryRouter as HistoryRouter,
   Routes,
   Route,
-  Navigate,
 } from "react-router-dom";
 import About from "pages/About";
 import Admin from "pages/Admin";
@@ -20,6 +19,9 @@ import Home from "pages/Home";
 import { styles } from "util/styles";
 import { history } from "util/history";
 import PrivateRoutes from "components/PrivateRoutes";
+import SchoolClassForm from "pages/Admin/SchoolClasses/SchoolClassForm";
+import StudentForm from "pages/Admin/Students/StudentForm";
+import UserForm from "pages/Admin/Users/UserForm";
 
 const AppRoutes = () => {
   return (
@@ -39,10 +41,16 @@ const AppRoutes = () => {
           <Route element={<PrivateRoutes />}>
             <Route path="admin" element={<Admin />}>
               <Route path="welcome" element={<Welcome />} />
+              <Route
+                path="schoolClasses/:schoolClassId/form"
+                element={<SchoolClassForm />}
+              />
               <Route path="schoolClasses/:schoolClassId" element={<Table />} />
               <Route path="schoolClasses" element={<SchoolClassesList />} />
+              <Route path="students/:studentId/form" element={<StudentForm />} />
               <Route path="students/:studentId" element={<StudentDetails />} />
               <Route path="students" element={<StudentsList />} />
+              <Route path="users/:userId/form" element={<UserForm />} />
               <Route path="users/:userId" element={<UserDetails />} />
               <Route path="users" element={<UsersList />} />
             </Route>

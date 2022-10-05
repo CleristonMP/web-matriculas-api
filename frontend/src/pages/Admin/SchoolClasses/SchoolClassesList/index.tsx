@@ -34,11 +34,11 @@ const SchoolClassesList = () => {
   return (
     <div className="container mb-2 py-lg-3">
       <div className="container mb-3 text-center text-lg-start px-xl-5">
-        <a href="link">
+        <Link to="create/form">
           <button className="btn btn-primary text-white h-50px btn-crud-add">
             ADICIONAR
           </button>
-        </a>
+        </Link>
       </div>
       <div className="container">
         <div className="row justify-content-sm-between px-xl-5">

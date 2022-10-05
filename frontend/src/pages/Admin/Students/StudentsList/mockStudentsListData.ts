@@ -8,9 +8,6 @@ export const mockStudentsListData: Student[] = [
     lastName: "Spence",
     cpf: "68561068993",
     birthDate: "2010-06-19T03:00:00Z",
-    addressId: 66,
-    schoolClassId: 4,
-    parentId: 15,
   },
   {
     id: 2,
@@ -19,9 +16,6 @@ export const mockStudentsListData: Student[] = [
     lastName: "Woodard",
     cpf: "12751149103",
     birthDate: "2011-11-04T02:00:00Z",
-    addressId: 84,
-    schoolClassId: 1,
-    parentId: 38,
   },
   {
     id: 3,
@@ -30,9 +24,6 @@ export const mockStudentsListData: Student[] = [
     lastName: "Robinson",
     cpf: "33067490610",
     birthDate: "2015-08-12T03:00:00Z",
-    addressId: 64,
-    schoolClassId: 4,
-    parentId: 16,
   },
   {
     id: 4,
@@ -41,9 +32,6 @@ export const mockStudentsListData: Student[] = [
     lastName: "Cameron",
     cpf: "84459541264",
     birthDate: "2012-10-28T02:00:00Z",
-    addressId: 4,
-    schoolClassId: 3,
-    parentId: 7,
   },
   {
     id: 5,
@@ -52,9 +40,6 @@ export const mockStudentsListData: Student[] = [
     lastName: "Walls",
     cpf: "23877654408",
     birthDate: "2014-06-08T03:00:00Z",
-    addressId: 59,
-    schoolClassId: 2,
-    parentId: 119,
   },
   {
     id: 6,
@@ -63,9 +48,6 @@ export const mockStudentsListData: Student[] = [
     lastName: "Stein",
     cpf: "90925268497",
     birthDate: "2015-10-17T03:00:00Z",
-    addressId: 85,
-    schoolClassId: 2,
-    parentId: 93,
   },
   {
     id: 7,
@@ -74,9 +56,6 @@ export const mockStudentsListData: Student[] = [
     lastName: "Puckett",
     cpf: "81847341654",
     birthDate: "2011-10-31T02:00:00Z",
-    addressId: 21,
-    schoolClassId: 4,
-    parentId: 78,
   },
   {
     id: 8,
@@ -85,9 +64,6 @@ export const mockStudentsListData: Student[] = [
     lastName: "Green",
     cpf: "28788837161",
     birthDate: "2012-11-18T02:00:00Z",
-    addressId: 96,
-    schoolClassId: 2,
-    parentId: 100,
   },
   {
     id: 9,
@@ -96,9 +72,6 @@ export const mockStudentsListData: Student[] = [
     lastName: "Wall",
     cpf: "13147319351",
     birthDate: "2012-10-18T03:00:00Z",
-    addressId: 15,
-    schoolClassId: 3,
-    parentId: 103,
   },
   {
     id: 10,
@@ -107,9 +80,6 @@ export const mockStudentsListData: Student[] = [
     lastName: "Schmidt",
     cpf: "30942745526",
     birthDate: "2011-11-01T02:00:00Z",
-    addressId: 8,
-    schoolClassId: 3,
-    parentId: 92,
   },
   {
     id: 11,
@@ -118,9 +88,6 @@ export const mockStudentsListData: Student[] = [
     lastName: "Delgado",
     cpf: "27143523813",
     birthDate: "2010-02-25T03:00:00Z",
-    addressId: 11,
-    schoolClassId: 3,
-    parentId: 4,
   },
   {
     id: 12,
@@ -129,9 +96,6 @@ export const mockStudentsListData: Student[] = [
     lastName: "Larsen",
     cpf: "48606234083",
     birthDate: "2013-01-08T02:00:00Z",
-    addressId: 41,
-    schoolClassId: 1,
-    parentId: 48,
   },
   {
     id: 13,
@@ -140,9 +104,6 @@ export const mockStudentsListData: Student[] = [
     lastName: "Williams",
     cpf: "39603829920",
     birthDate: "2010-05-17T03:00:00Z",
-    addressId: 30,
-    schoolClassId: 4,
-    parentId: 33,
   },
   {
     id: 14,
@@ -151,9 +112,6 @@ export const mockStudentsListData: Student[] = [
     lastName: "Norton",
     cpf: "19951066345",
     birthDate: "2014-11-29T02:00:00Z",
-    addressId: 14,
-    schoolClassId: 2,
-    parentId: 54,
   },
   {
     id: 15,
@@ -162,9 +120,6 @@ export const mockStudentsListData: Student[] = [
     lastName: "Hendrix",
     cpf: "28756040583",
     birthDate: "2010-10-24T02:00:00Z",
-    addressId: 81,
-    schoolClassId: 2,
-    parentId: 23,
   },
   {
     id: 16,
@@ -173,9 +128,6 @@ export const mockStudentsListData: Student[] = [
     lastName: "Stout",
     cpf: "62286686794",
     birthDate: "2013-05-17T03:00:00Z",
-    addressId: 47,
-    schoolClassId: 3,
-    parentId: 63,
   },
   {
     id: 17,
@@ -184,9 +136,6 @@ export const mockStudentsListData: Student[] = [
     lastName: "Sears",
     cpf: "78071363187",
     birthDate: "2015-11-07T02:00:00Z",
-    addressId: 56,
-    schoolClassId: 2,
-    parentId: 58,
   },
   {
     id: 18,
@@ -195,9 +144,6 @@ export const mockStudentsListData: Student[] = [
     lastName: "Beasley",
     cpf: "85613473197",
     birthDate: "2011-06-25T03:00:00Z",
-    addressId: 56,
-    schoolClassId: 4,
-    parentId: 95,
   },
   {
     id: 19,
@@ -206,9 +152,6 @@ export const mockStudentsListData: Student[] = [
     lastName: "Cabrera",
     cpf: "12955600611",
     birthDate: "2014-01-23T02:00:00Z",
-    addressId: 57,
-    schoolClassId: 3,
-    parentId: 57,
   },
   {
     id: 20,
@@ -217,8 +160,5 @@ export const mockStudentsListData: Student[] = [
     lastName: "Black",
     cpf: "41357682653",
     birthDate: "2012-04-27T03:00:00Z",
-    addressId: 77,
-    schoolClassId: 3,
-    parentId: 20,
   },
 ];
