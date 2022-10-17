@@ -1,13 +1,35 @@
+import { useParams } from "react-router-dom";
 import { SchoolClass } from "types/schoolClass";
-import { mockTableData } from "./mockTableData";
+import { useEffect, useState } from 'react';
+import { AxiosRequestConfig } from "axios";
+import { requestBackend } from "util/requests";
+import { formatCpf, formatDate } from "util/formatters";
+
 import "./styles.css";
+import { Link } from "react-router-dom";
+
+type UrlParams = {
+  schoolClassId: string;
+};
 
 const Table = () => {
-  const mockData: SchoolClass = mockTableData;
+  const { schoolClassId } = useParams<UrlParams>();
+  const [schoolClass, setSchoolClass] = useState<SchoolClass>();
 
+  useEffect(() => {
+    const params: AxiosRequestConfig = {
+      url: `/school-classes/${schoolClassId}`,
+      withCredentials: true
+    }
+
+    requestBackend(params).then(response => {
+      setSchoolClass(response.data)
+    })
+  }, [schoolClassId]);
+  
   return (
     <div className="mb-4 p-2 p-sm-3">
-      <h2>{`Turma: ${mockData.name} - ${mockData.period}`}</h2>
+      <h2>{`Turma: ${schoolClass?.name} - ${schoolClass?.period}`}</h2>
       <table className="table table-striped table-font">
         <thead>
           <tr>
@@ -25,13 +47,13 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {mockData.students.map((std) => (
+          {schoolClass?.students.map((std) => (
             <tr key={std.id}>
               <th scope="row">{std.enrollment}</th>
-              <td>{std.name}</td>
+              <td> <Link to={`/admin/students/${std.id}`}> {std.name} </Link></td>
               <td>{std.lastName}</td>
-              <td className="d-none d-sm-table-cell">{std.cpf}</td>
-              <td className="d-none d-md-table-cell">{std.birthDate}</td>
+              <td className="d-none d-sm-table-cell">{formatCpf(std.cpf)}</td>
+              <td className="d-none d-md-table-cell">{formatDate(std.birthDate)}</td>
             </tr>
           ))}
         </tbody>

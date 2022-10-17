@@ -1,38 +1,43 @@
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from 'react';
 import { User } from "types/user";
 import { formatRole } from "util/formatters";
+import { AxiosRequestConfig } from "axios";
+import { requestBackend } from "util/requests";
 
 import "./styles.css";
 
+type UrlParams = {
+  userId: string;
+};
+
 const UserDetails = () => {
-  const mockData: User = {
-    id: 1,
-    name: "Maria",
-    lastName: "Silva",
-    email: "maria@gmail.com",
-    roles: [
-      {
-        id: 1,
-        authority: "ROLE_ADMIN",
-      },
-      {
-        id: 2,
-        authority: "ROLE_OPERATOR",
-      },
-    ],
-  };
+  const { userId } = useParams<UrlParams>();
+  const [user, setUser] = useState<User>();
+
+  useEffect(() => {
+    const params: AxiosRequestConfig = {
+      url: `/users/${userId}`,
+      withCredentials: true
+    }
+
+    requestBackend(params).then(response => {
+      setUser(response.data)
+    })
+  }, [userId]);
 
   return (
     <div className="container mt-3 mb-5 py-lg-3">
       <div className="card base-card user-details-card">
         <div className="card-body">
-          <h2 className="card-title">{`${mockData.name} ${mockData.lastName}`}</h2>
-          <h5 className="card-subtitle mb-2 text-muted">{mockData.email}</h5>
+          <h2 className="card-title">{`${user?.name} ${user?.lastName}`}</h2>
+          <h5 className="card-subtitle mb-2 text-muted">{user?.email}</h5>
           <p className="card-text">
             <span className="fw-bold">Funções: </span>
-            {mockData.roles.map((role) => (
+            {user?.roles.map((role) => (
               <span key={role.id}>
                 {formatRole(role.authority)}
-                {mockData.roles.length > 1 ? " / " : ""}
+                {user.roles.length > 1 ? " / " : ""}
               </span>
             ))}
           </p>

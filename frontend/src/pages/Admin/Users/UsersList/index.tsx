@@ -1,49 +1,24 @@
 import { Link } from "react-router-dom";
 import UsersCrudCard from "../UsersCrudCard";
+import { useEffect, useState } from "react";
+import { SpringPage } from "types/vendor/spring";
+import { User } from "types/user";
+import { AxiosRequestConfig } from "axios";
+import { requestBackend } from "util/requests";
 
 const UsersList = () => {
-  const mockData = [
-    {
-      id: 1,
-      name: "Maria",
-      lastName: "Silva",
-      email: "maria@gmail.com",
-      roles: [
-        {
-          id: 1,
-          authority: "ROLE_ADMIN",
-        },
-        {
-          id: 2,
-          authority: "ROLE_OPERATOR",
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: "Alex",
-      lastName: "Green",
-      email: "alex@gmail.com",
-      roles: [
-        {
-          id: 2,
-          authority: "ROLE_OPERATOR",
-        },
-      ],
-    },
-    {
-      id: 3,
-      name: "Bob",
-      lastName: "Brown",
-      email: "bob@gmail.com",
-      roles: [
-        {
-          id: 2,
-          authority: "ROLE_OPERATOR",
-        },
-      ],
-    },
-  ];
+  const [page, setPage] = useState<SpringPage<User>>();
+
+  useEffect(() => {
+    const params: AxiosRequestConfig = {
+      url: "/users",
+      withCredentials: true,
+    };
+
+    requestBackend(params).then((response) => {
+      setPage(response.data);
+    });
+  }, []);
 
   return (
     <div className="container mb-2 py-lg-3">
@@ -55,11 +30,15 @@ const UsersList = () => {
         </Link>
       </div>
       <div className="container">
-        <div className="row justify-content-sm-between px-xl-5">
-          {mockData.map((user) => (
-            <UsersCrudCard user={user} />
-          ))}
-        </div>
+        {page ? (
+          <div className="row px-xl-5 justify-content-sm-between">
+            {page.content.map((user) => (
+              <UsersCrudCard user={user} />
+            ))}
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
