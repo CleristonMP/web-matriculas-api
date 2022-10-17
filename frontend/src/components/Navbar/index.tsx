@@ -1,7 +1,37 @@
-import 'bootstrap/js/src/collapse.js';
-import { NavLink } from 'react-router-dom';
+import "bootstrap/js/src/collapse.js";
+import { NavLink } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "contexts/AuthContext";
+import { isAuthenticated } from "util/auth";
+import { getTokenData } from "util/token";
+import { removeAuthData } from "util/storage";
+import { history } from "util/history";
 
 const Navbar = () => {
+  const { authContextData, setAuthContextData } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (isAuthenticated()) {
+      setAuthContextData({
+        authenticated: true,
+        tokenData: getTokenData(),
+      });
+    } else {
+      setAuthContextData({
+        authenticated: false,
+      });
+    }
+  }, [setAuthContextData]);
+
+  const handleLogoutClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    removeAuthData();
+    setAuthContextData({
+      authenticated: false,
+    });
+    history.replace("/auth/login");
+  };
+
   return (
     <header className="container-fluid bg-light position-relative shadow">
       <nav className="navbar navbar-expand-md bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5">
@@ -49,9 +79,24 @@ const Navbar = () => {
               </a>
             </li>
           </ul>
-          <NavLink to="auth/login" className="btn btn-primary px-4">
-            Login
-          </NavLink>
+          {authContextData.authenticated ? (
+            <>
+              <span className="d-none d-lg-inline me-lg-2">
+                {authContextData.tokenData?.user_name}
+              </span>
+              <NavLink
+                to="#logout"
+                className="btn btn-primary px-4"
+                onClick={handleLogoutClick}
+              >
+                LOGOUT
+              </NavLink>
+            </>
+          ) : (
+            <NavLink to="auth/login" className="btn btn-primary px-4">
+              LOGIN
+            </NavLink>
+          )}
         </div>
       </nav>
     </header>

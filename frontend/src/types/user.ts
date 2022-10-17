@@ -3,6 +3,9 @@ export type User = {
   name: string;
   lastName: string;
   email: string;
+  emailConfirmation: string;
+  password: string;
+  passwordConfirmation: string;
   roles: Role[];
 };
 
