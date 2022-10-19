@@ -1,6 +1,213 @@
+import axios, { AxiosRequestConfig } from "axios";
+import { useEffect, useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { useParams } from "react-router-dom";
+import Select from "react-select";
+import { requestBackend } from "util/requests";
+import { County } from "types/county";
+import { StudentToForm } from "types/studentToForm";
+import { SchoolClass } from "types/schoolClass";
+import { ViaCep } from "types/viacep";
+import { history } from "util/history";
+import { Address } from "types/address";
+import { Parent } from "types/parent";
+import { Student } from "types/student";
+
+import "./styles.css";
+
+type UrlParams = {
+  studentId: string;
+};
+
 const StudentForm = () => {
+  const [counties, setCounties] = useState<County[]>([]);
+  const [schoolClasses, setSchoolClasses] = useState<SchoolClass[]>([]);
+
+  const { studentId } = useParams<UrlParams>();
+
+  const isEditing = studentId !== "create";
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    control,
+  } = useForm<StudentToForm>();
+
+  // Get Counties
+  useEffect(() => {
+    requestBackend({ url: "/counties", withCredentials: true }).then(
+      (response) => {
+        setCounties(response.data.content);
+      }
+    );
+  }, []);
+
+  // Get School Classes
+  useEffect(() => {
+    requestBackend({ url: "/school-classes", withCredentials: true }).then(
+      (response) => {
+        setSchoolClasses(response.data.content);
+      }
+    );
+  }, []);
+
+  const handleCepChange = (inputValue: React.ChangeEvent<HTMLInputElement>) => {
+    if (
+      inputValue.target.value.length === 8 &&
+      Number.isInteger(parseInt(inputValue.target.value))
+    ) {
+      const cep = inputValue.target.value;
+      axios({
+        url: `https://viacep.com.br/ws/${cep}/json/`,
+      }).then((response) => {
+        const viaCepData: ViaCep = response.data;
+        setValue("address.complement", viaCepData.complemento);
+        setValue(
+          "address.county",
+          counties?.reduce((obj) =>
+            obj["name"] === viaCepData.localidade
+              ? obj
+              : { id: 0, name: "", state: "" }
+          )
+        );
+        setValue("address.county.state", viaCepData.uf);
+        setValue("address.complement", viaCepData.complemento);
+        setValue("address.publicPlace", viaCepData.logradouro);
+        setValue("address.district", viaCepData.bairro);
+      });
+    }
+  };
+
+  //Get Student for editing
+  useEffect(() => {
+    if (isEditing) {
+      // Student
+      requestBackend({
+        url: `/students/${studentId}`,
+        withCredentials: true,
+      }).then((studentResponse) => {
+        const student = studentResponse.data as Student;
+        setValue("name", student.name);
+        setValue("lastName", student.lastName);
+        setValue("birthDate", student.birthDate);
+        setValue("cpf", student.cpf);
+        setValue("enrollment", student.enrollment);
+        const addressId = student.addressId;
+        const schoolClassId = student.schoolClassId;
+        const parentId = student.parentId;
+
+        // Address
+        requestBackend({
+          url: `/adresses/${addressId}`,
+          withCredentials: true,
+        }).then((addressResponse) => {
+          const address = addressResponse.data as Address;
+          setValue("address.publicPlace", address.publicPlace);
+          setValue("address.number", address.number);
+          setValue("address.complement", address.complement);
+          setValue("address.zipCode", address.zipCode);
+          setValue("address.district", address.district);
+
+          requestBackend({
+            url: `/counties/${address.countyId}`,
+            withCredentials: true,
+          }).then((countyResponse) => {
+            const county = countyResponse.data as County;
+            setValue("address.county", county);
+            setValue("address.county.state", county.state);
+          });
+        });
+
+        // School Class
+        requestBackend({
+          url: `/school-classes/${schoolClassId}`,
+          withCredentials: true,
+        }).then((schoolClassResponse) => {
+          const schoolClass = schoolClassResponse.data as SchoolClass;
+          setValue("schoolClass", { ...schoolClass });
+        });
+
+        // Parent
+        requestBackend({
+          url: `/parents/${parentId}`,
+          withCredentials: true,
+        }).then((parentResponse) => {
+          const parent = parentResponse.data as Parent;
+          setValue("parent", parent);
+        });
+      });
+    }
+  }, [isEditing, setValue, studentId]);
+
+  const onSubmit = (formData: StudentToForm) => {
+    const addressData: Address = {
+      publicPlace: formData.address.publicPlace,
+      number: formData.address.number,
+      complement: formData.address.complement,
+      zipCode: formData.address.zipCode,
+      district: formData.address.district,
+      countyId: formData.address.county.id,
+    };
+
+    const addressRequestConfig: AxiosRequestConfig = {
+      method: "POST",
+      url: "/adresses",
+      data: addressData,
+      withCredentials: true,
+    };
+
+    const parentData: Parent = {
+      name: formData.parent.name,
+      lastName: formData.parent.lastName,
+      cpf: formData.parent.cpf,
+      phone: formData.parent.phone,
+    };
+
+    const parentRequestConfig: AxiosRequestConfig = {
+      method: "POST",
+      url: "/parents",
+      data: parentData,
+      withCredentials: true,
+    };
+
+    requestBackend(addressRequestConfig).then((addressResponse) => {
+      const addressId = addressResponse.data.id;
+      requestBackend(parentRequestConfig).then((parentResponse) => {
+        const parentId = parentResponse.data.id;
+
+        const studentData: Student = {
+          enrollment: formData.enrollment,
+          name: formData.name,
+          lastName: formData.lastName,
+          cpf: formData.cpf,
+          birthDate: formData.birthDate,
+          schoolClassId: formData.schoolClass.id,
+          addressId,
+          parentId,
+        };
+
+        const studentRequestConfig: AxiosRequestConfig = {
+          method: "POST",
+          url: "/students",
+          data: studentData,
+          withCredentials: true,
+        };
+
+        requestBackend(studentRequestConfig).then(() => {
+          history.push("/admin/students");
+        });
+      });
+    });
+  };
+
+  const handleCancel = () => {
+    history.push("/admin/students");
+  };
+
   return (
-    <form className="mb-4 p-lg-3">
+    <form className="mb-4 p-lg-3" onSubmit={handleSubmit(onSubmit)}>
       <div className="container">
         <div className="border border-opacity-10 rounded p-2 px-sm-3">
           {/* Student data session */}
@@ -11,12 +218,15 @@ const StudentForm = () => {
                 Nome
               </label>
               <input
+                {...register("name", { required: true })}
                 type={"text"}
                 className="form-control"
                 id="name"
                 placeholder="Digite o primeiro nome do aluno"
               />
-              <div className="invalid-feedback">Campo obrigatório.</div>
+              {errors.name && (
+                <div className="invalid-feedback">Campo obrigatório.</div>
+              )}
             </div>
 
             <div className="col-12 col-sm-6">
@@ -24,12 +234,15 @@ const StudentForm = () => {
                 Sobrenome
               </label>
               <input
+                {...register("lastName", { required: true })}
                 type={"text"}
                 className="form-control"
                 id="lastName"
                 placeholder="Digite o(s) sobrenome(s) do aluno"
               />
-              <div className="invalid-feedback">Campo obrigatório.</div>
+              {errors.lastName && (
+                <div className="invalid-feedback">Campo obrigatório.</div>
+              )}
             </div>
 
             <div className="col-12 col-sm-6">
@@ -38,12 +251,15 @@ const StudentForm = () => {
               </label>
               <div className="input-group has-validation">
                 <input
+                  {...register("cpf", { required: true })}
                   type={"text"}
                   className="form-control"
                   id="cpf"
                   placeholder="Digite o CPF nome do aluno"
                 />
-                <div className="invalid-feedback">Campo obrigatório.</div>
+                {errors.cpf && (
+                  <div className="invalid-feedback">Campo obrigatório.</div>
+                )}
               </div>
             </div>
 
@@ -52,12 +268,31 @@ const StudentForm = () => {
                 Data de nascimento
               </label>
               <input
+                {...register("birthDate", { required: true })}
                 type={"date"}
                 className="form-control"
                 id="birthDate"
                 placeholder="Informe a data de nascimento do aluno"
               />
-              <div className="invalid-feedback">Campo obrigatório.</div>
+              {errors.birthDate && (
+                <div className="invalid-feedback">Campo obrigatório.</div>
+              )}
+            </div>
+
+            <div className="col-12 col-sm-6">
+              <label htmlFor="enrollment" className="form-label">
+                Nº Matrícula
+              </label>
+              <input
+                {...register("enrollment", { required: true })}
+                type={"number"}
+                className="form-control"
+                id="enrollment"
+                placeholder="Informe a matrícula do aluno"
+              />
+              {errors.enrollment && (
+                <div className="invalid-feedback">Campo obrigatório.</div>
+              )}
             </div>
           </div>
 
@@ -67,57 +302,72 @@ const StudentForm = () => {
           <div className="row g-3 p-lg-2 mt-2">
             <h2 className="form-title">Dados do responsável</h2>
             <div className="col-12 col-sm-6">
-              <label htmlFor="student.parent.name" className="form-label">
+              <label htmlFor="parent.name" className="form-label">
                 Nome
               </label>
               <input
+                {...register("parent.name", { required: true })}
                 type={"text"}
                 className="form-control"
-                id="student.parent.name"
+                id="parent.name"
                 placeholder="Digite o primeiro nome do responsável pelo aluno"
               />
-              <div className="invalid-feedback">Campo obrigatório.</div>
+              {errors.parent?.name && (
+                <div className="invalid-feedback">Campo obrigatório.</div>
+              )}
             </div>
 
             <div className="col-12 col-sm-6">
-              <label htmlFor="student.parent.lastName" className="form-label">
+              <label htmlFor="parent.lastName" className="form-label">
                 Sobrenome
               </label>
               <input
+                {...register("parent.lastName", { required: true })}
                 type={"text"}
                 className="form-control"
-                id="student.parent.lastName"
+                id="parent.lastName"
                 placeholder="Digite o(s) sobrenome(s) do responsável pelo aluno"
               />
-              <div className="invalid-feedback">Campo obrigatório.</div>
+              {errors.parent?.lastName && (
+                <div className="invalid-feedback">Campo obrigatório.</div>
+              )}
             </div>
 
             <div className="col-12 col-sm-6">
-              <label htmlFor="student.parent.cpf" className="form-label">
+              <label htmlFor="parent.cpf" className="form-label">
                 CPF
               </label>
               <div className="input-group has-validation">
                 <input
+                  {...register("parent.cpf", {
+                    required: true,
+                    pattern: /^\d{3}\.\d{3}\.\d{3}-\d{2}$/,
+                  })}
                   type={"text"}
                   className="form-control"
-                  id="student.parent.cpf"
+                  id="parent.cpf"
                   placeholder="Digite o CPF do responsável pelo aluno"
                 />
-                <div className="invalid-feedback">Campo obrigatório.</div>
+                {errors.parent?.cpf && (
+                  <div className="invalid-feedback">Campo obrigatório.</div>
+                )}
               </div>
             </div>
 
             <div className="col-12 col-sm-6">
-              <label htmlFor="student.parent.phone" className="form-label">
+              <label htmlFor="parent.phone" className="form-label">
                 Telefone
               </label>
               <input
+                {...register("parent.phone", { required: true })}
                 type={"tel"}
                 className="form-control"
-                id="student.parent.phone"
+                id="parent.phone"
                 placeholder="Informe um telefone para contato"
               />
-              <div className="invalid-feedback">Campo obrigatório.</div>
+              {errors.parent?.phone && (
+                <div className="invalid-feedback">Campo obrigatório.</div>
+              )}
             </div>
           </div>
 
@@ -127,81 +377,119 @@ const StudentForm = () => {
           <div className="row g-3 p-lg-2 mt-2">
             <h2 className="form-title">Endereço</h2>
             <div className="col-12">
-              <label
-                htmlFor="student.address.publicPlace"
-                className="form-label"
-              >
+              <label htmlFor="address.publicPlace" className="form-label">
                 Logradouro
               </label>
               <input
-                type="text"
+                {...register("address.publicPlace", { required: true })}
+                type={"text"}
                 className="form-control"
-                id="student.address.publicPlace"
+                id="address.publicPlace"
                 placeholder="Rua, avenida, travessa..."
               />
-              <div className="invalid-feedback">Campo obrigatório.</div>
+              {errors.address?.publicPlace && (
+                <div className="invalid-feedback">Campo obrigatório.</div>
+              )}
             </div>
 
             <div className="col-12 col-sm-4">
-              <label htmlFor="student.address.number" className="form-label">
+              <label htmlFor="address.number" className="form-label">
                 Número
               </label>
               <input
-                type="text"
+                {...register("address.number")}
+                type={"text"}
                 className="form-control"
-                id="student.address.number"
-                placeholder="Casa, apartamento..."
+                id="address.number"
+                placeholder="Nº ..."
               />
             </div>
 
             <div className="col-12 col-sm-4">
-              <label
-                htmlFor="student.address.complement"
-                className="form-label"
-              >
+              <label htmlFor="address.complement" className="form-label">
                 Complemento
               </label>
               <input
-                type="text"
+                {...register("address.complement")}
+                type={"text"}
                 className="form-control"
-                id="student.address.complement"
+                id="address.complement"
                 placeholder="Quadra, bloco..."
               />
             </div>
 
             <div className="col-12 col-sm-4">
-              <label htmlFor="student.address.zipCode" className="form-label">
+              <label htmlFor="address.zipCode" className="form-label">
                 CEP
               </label>
+
               <input
-                type="text"
+                {...register("address.zipCode")}
+                type={"text"}
                 className="form-control"
-                id="student.address.zipCode"
+                id="address.zipCode"
                 placeholder="65.000-000"
+                onChange={handleCepChange}
+                maxLength={8}
+                onInput={
+                  (value: React.FormEvent<HTMLInputElement>) =>
+                    (value.currentTarget.value =
+                      value.currentTarget.value.replace(/[^0-9]/g, ""))
+                  /* Credits: https://www.techiedelight.com/pt/restrict-html-input-text-box-to-allow-only-numeric-values/#:~:text=Usando%20%3Cinput%20type%3D%22number,elementos%20do%20n%C3%BAmero%20do%20tipo. */
+                }
               />
             </div>
 
             <div className="col-12 col-sm-4">
-              <label htmlFor="student.address.district" className="form-label">
+              <label htmlFor="address.district" className="form-label">
                 Bairro
               </label>
               <input
-                type="text"
+                {...register("address.district")}
+                type={"text"}
                 className="form-control"
-                id="student.address.district"
+                id="address.district"
                 placeholder="Cohatrac, Trizidela..."
               />
             </div>
 
             <div className="col-12 col-sm-4">
-              <label htmlFor="student.address.county" className="form-label">
+              <label htmlFor="address.county" className="form-label">
                 Município
               </label>
+              <Controller
+                name="address.county"
+                rules={{ required: true }}
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    options={counties}
+                    classNamePrefix="counties-crud-select"
+                    getOptionLabel={(county) => county.name}
+                    getOptionValue={(county) => String(county.id)}
+                    inputId="address.county"
+                    placeholder="Município"
+                  />
+                )}
+              />
+              {errors.address?.county && (
+                <div className="invalid-feedback d-block">
+                  Campo obrigatório
+                </div>
+              )}
+            </div>
+
+            <div className="col-3 col-sm-2">
+              <label htmlFor="address.county.state" className="form-label">
+                UF
+              </label>
               <input
-                type="text"
+                {...register("address.county.state")}
+                type={"text"}
                 className="form-control"
-                id="student.address.county"
-                placeholder="São Luís, São José de Ribamar..."
+                id="address.county.state"
+                disabled
               />
             </div>
           </div>
@@ -211,44 +499,31 @@ const StudentForm = () => {
           {/* School Class session */}
           <div className="row g-3 p-lg-2 mt-2">
             <h2 className="form-title">Turma</h2>
-            <div className="col-12 col-sm-6 col-lg-4 col-xl-3">
-              <label htmlFor="student.schoolClass.name" className="form-label">
+            <div className="school-class-custom-ctr">
+              <label htmlFor="schoolClass" className="form-label">
                 Identificador
               </label>
-              <select
-                id="student.schoolClass.name"
-                name="student.schoolClass.name"
-                className="form-select"
-                aria-label="Seletor de identificador das turmas"
-              >
-                <option selected></option>
-                <option value="101 EHC">101 EHC</option>
-                <option value="202 ABC">202 ABC</option>
-                <option value="303 JPG">303 JPG</option>
-                <option value="404 TBT">404 TBT</option>
-              </select>
-              <div className="invalid-feedback">Campo obrigatório.</div>
-            </div>
-
-            <div className="col-12 col-sm-6 col-lg-4 col-xl-3">
-              <label
-                htmlFor="student.schoolClass.period"
-                className="form-label"
-              >
-                Período
-              </label>
-              <select
-                id="student.schoolClass.period"
-                name="student.schoolClass.period"
-                className="form-select"
-                aria-label="Seletor do período"
-              >
-                <option selected></option>
-                <option value="Matutino">Matutino</option>
-                <option value="Vespertino">Vespertino</option>
-                <option value="Noturno">Noturno</option>
-              </select>
-              <div className="invalid-feedback">Campo obrigatório.</div>
+              <Controller
+                name="schoolClass"
+                rules={{ required: true }}
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    options={schoolClasses}
+                    classNamePrefix="custom-select"
+                    getOptionLabel={(sc) => sc.name + " - " + sc.period}
+                    getOptionValue={(sc) => String(sc.id)}
+                    inputId="schoolClass"
+                    placeholder="Turma"
+                  />
+                )}
+              />
+              {errors.schoolClass && (
+                <div className="invalid-feedback d-block">
+                  Campo obrigatório
+                </div>
+              )}
             </div>
           </div>
 
@@ -256,7 +531,10 @@ const StudentForm = () => {
 
           {/* Buttons */}
           <div className="mb-4 col-12 d-flex justify-content-between justify-content-md-around justify-content-lg-end">
-            <button className="btn btn-outline-danger custom-btn me-2 me-lg-5">
+            <button
+              className="btn btn-outline-danger custom-btn me-2 me-lg-5"
+              onClick={handleCancel}
+            >
               Cancelar
             </button>
             <button

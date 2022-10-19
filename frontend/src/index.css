@@ -145,6 +145,22 @@ max-width: 200px;
   margin-top: 12px;
 }
 
+.custom-select__control {
+  border-radius: 10px !important;
+  font-size: 1em;
+  letter-spacing: -0.015em;
+  color: var(--dark);
+  height: 50px;
+}
+
+.custom-select__placeholder {
+  color: var(--gray) !important;
+}
+
+.custom-select__indicator-separator {
+  display: none;
+}
+
 @media (min-width: 576px) {
   .btn.btn-crud-add {
     width: 75%;

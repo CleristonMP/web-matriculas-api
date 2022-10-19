@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 
@@ -15,7 +16,7 @@ public class StudentDTO implements Serializable {
 	
 	private Long id;
 
-	@NotBlank(message = "Campo requerido")
+	@NotNull(message = "Campo requerido")
 	private Integer enrollment;
 
 	@Size(min = 3, max = 15, message = "O nome do aluno deve ter entre 3 e 15 caracteres")
@@ -27,7 +28,7 @@ public class StudentDTO implements Serializable {
 	private String lastName;
 	private String cpf;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT")
 	@PastOrPresent(message = "A data de nascimento não pode ser futura")
 	private Date birthDate;
 

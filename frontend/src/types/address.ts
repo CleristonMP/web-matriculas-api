@@ -1,12 +1,12 @@
 import { Student } from "./student";
 
 export type Address = {
-    id: number;
+    id?: number;
     publicPlace: string;
     number: string;
     complement: string;
     zipCode: number;
     district: string;
     countyId: number;
-    students: Student[];
+    students?: Student[];
 }

@@ -35,8 +35,8 @@ public class StudentResource {
 	}
 	
 	@GetMapping(value = "/{enrollment}")
-	public ResponseEntity<StudentDTO> findByEnrollment(@PathVariable Long enrollment){
-		StudentDTO dto = service.findByEnrollment(enrollment);	
+	public ResponseEntity<StudentDTO> findByEnrollment(@PathVariable Long id){
+		StudentDTO dto = service.findById(id);	
 		return ResponseEntity.ok().body(dto);
 	}
 	
@@ -48,15 +48,15 @@ public class StudentResource {
 		return ResponseEntity.created(uri).body(dto);
 	}
 	
-	@PutMapping(value = "/{enrollment}")
-	public ResponseEntity<StudentDTO> update(@PathVariable Long enrollment, @Valid @RequestBody StudentDTO dto) {
-		dto = service.update(enrollment, dto);
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<StudentDTO> update(@PathVariable Long id, @Valid @RequestBody StudentDTO dto) {
+		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}
 	
-	@DeleteMapping(value = "/{enrollment}")
-	public ResponseEntity<Void> delete(@PathVariable Long enrollment) {
-		service.delete(enrollment);
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
+		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 }

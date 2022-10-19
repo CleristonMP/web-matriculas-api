@@ -109,7 +109,7 @@ const SchoolClassForm = () => {
                 <Select
                   {...field}
                   options={periodOptions}
-                  classNamePrefix="sc-period-select"
+                  classNamePrefix="custom-select"
                   getOptionLabel={(pr: Period) => pr.name}
                   getOptionValue={(pr: Period) => String(pr.id)}
                   inputId="period"

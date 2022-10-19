@@ -9,7 +9,7 @@ type Props = {
 const StudentCrudCard = ({ student }: Props) => {
   return (
     <div className="card-body custom-card-body flex-sm-column text-sm-center">
-      <Link to={student.id.toString()}>
+      <Link to={student.id!.toString()}>
         <h5 className="card-title mb-sm-3">
           {`${student.name} ${student.lastName}`}
         </h5>
@@ -18,9 +18,9 @@ const StudentCrudCard = ({ student }: Props) => {
       <p className="card-text mb-sm-3">{`Data de nascimento: ${student.birthDate}`}</p>
       <div className="d-flex justify-content-center">
         <button className="btn btn-outline-danger card-link">EXCLUIR</button>
-        <a href="link" className="card-link">
+        <Link to={`${student.id}/form`} className="card-link">
           <button className="btn btn-outline-secondary">EDITAR</button>
-        </a>
+        </Link>
       </div>
     </div>
   );
