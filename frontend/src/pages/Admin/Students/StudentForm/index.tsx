@@ -89,6 +89,7 @@ const StudentForm = () => {
         withCredentials: true,
       }).then((studentResponse) => {
         const student = studentResponse.data as Student;
+        setValue("id", student.id);
         setValue("name", student.name);
         setValue("lastName", student.lastName);
         setValue("birthDate", student.birthDate);
@@ -104,6 +105,7 @@ const StudentForm = () => {
           withCredentials: true,
         }).then((addressResponse) => {
           const address = addressResponse.data as Address;
+          setValue("address.id", address.id);
           setValue("address.publicPlace", address.publicPlace);
           setValue("address.number", address.number);
           setValue("address.complement", address.complement);
@@ -142,7 +144,9 @@ const StudentForm = () => {
   }, [isEditing, setValue, studentId]);
 
   const onSubmit = (formData: StudentToForm) => {
+    // Address config and request
     const addressData: Address = {
+      id: isEditing ? formData.address.id : undefined,
       publicPlace: formData.address.publicPlace,
       number: formData.address.number,
       complement: formData.address.complement,
@@ -152,13 +156,15 @@ const StudentForm = () => {
     };
 
     const addressRequestConfig: AxiosRequestConfig = {
-      method: "POST",
-      url: "/adresses",
+      method: isEditing ? "PUT" : "POST",
+      url: isEditing ? `/adresses/${addressData.id}` : "/adresses",
       data: addressData,
       withCredentials: true,
     };
 
+    // Parent config and request
     const parentData: Parent = {
+      id: isEditing ? formData.parent.id : undefined,
       name: formData.parent.name,
       lastName: formData.parent.lastName,
       cpf: formData.parent.cpf,
@@ -166,8 +172,8 @@ const StudentForm = () => {
     };
 
     const parentRequestConfig: AxiosRequestConfig = {
-      method: "POST",
-      url: "/parents",
+      method: isEditing ? "PUT" : "POST",
+      url: isEditing ? `/parents/${parentData.id}` : "/parents",
       data: parentData,
       withCredentials: true,
     };
@@ -177,7 +183,9 @@ const StudentForm = () => {
       requestBackend(parentRequestConfig).then((parentResponse) => {
         const parentId = parentResponse.data.id;
 
+        // Student config and request
         const studentData: Student = {
+          id: isEditing ? formData.id : undefined,
           enrollment: formData.enrollment,
           name: formData.name,
           lastName: formData.lastName,
@@ -189,8 +197,8 @@ const StudentForm = () => {
         };
 
         const studentRequestConfig: AxiosRequestConfig = {
-          method: "POST",
-          url: "/students",
+          method: isEditing ? "PUT" : "POST",
+          url: isEditing ? `/students/${studentData.id}` : "/students",
           data: studentData,
           withCredentials: true,
         };
@@ -341,7 +349,6 @@ const StudentForm = () => {
                 <input
                   {...register("parent.cpf", {
                     required: true,
-                    pattern: /^\d{3}\.\d{3}\.\d{3}-\d{2}$/,
                   })}
                   type={"text"}
                   className="form-control"

@@ -34,8 +34,8 @@ public class StudentResource {
 		return ResponseEntity.ok().body(page);
 	}
 	
-	@GetMapping(value = "/{enrollment}")
-	public ResponseEntity<StudentDTO> findByEnrollment(@PathVariable Long id){
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<StudentDTO> findById(@PathVariable Long id){
 		StudentDTO dto = service.findById(id);	
 		return ResponseEntity.ok().body(dto);
 	}

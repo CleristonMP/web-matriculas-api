@@ -1,4 +1,5 @@
 export type StudentToForm = {
+  id?: number;
   enrollment: number;
   name: string;
   lastName: string;
@@ -26,6 +27,7 @@ export type StudentToForm = {
     };
   };
   parent: {
+    id?: number;
     name: string;
     lastName: string;
     cpf: string;
