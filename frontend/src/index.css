@@ -136,6 +136,10 @@ button:focus {
   width: 100%;
 }
 
+.card-link {
+  display: contents;
+}
+
 .custom-btn {
 max-width: 200px;
 }

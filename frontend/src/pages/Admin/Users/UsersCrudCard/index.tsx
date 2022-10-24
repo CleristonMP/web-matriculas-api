@@ -42,14 +42,14 @@ const UsersCrudCard = ({ user, onDelete }: Props) => {
         </Link>
         <div className="d-flex justify-content-center">
           <button
-            className="btn btn-outline-danger card-link"
+            className="btn btn-outline-danger me-4"
             onClick={() => handleDelete(user.id)}
           >
             EXCLUIR
           </button>
-          <a href={`users/${user.id.toString()}/form`} className="card-link">
+          <Link to={`${user.id.toString()}/form`}>
             <button className="btn btn-outline-secondary">EDITAR</button>
-          </a>
+          </Link>
         </div>
       </div>
     </div>

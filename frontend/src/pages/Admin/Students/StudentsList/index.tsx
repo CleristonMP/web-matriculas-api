@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import StudentCrudCard from "../StudentCrudCard";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from "react";
 import { SpringPage } from "types/vendor/spring";
 import { Student } from "types/student";
 import { AxiosRequestConfig } from "axios";
@@ -10,17 +10,21 @@ import "./styles.css";
 
 const StudentsList = () => {
   const [page, setPage] = useState<SpringPage<Student>>();
-  
-  useEffect(() => {
+
+  const getStudents = useCallback(() => {
     const params: AxiosRequestConfig = {
       url: "/students",
-      withCredentials: true
-    }
+      withCredentials: true,
+    };
 
-    requestBackend(params).then(response => {
+    requestBackend(params).then((response) => {
       setPage(response.data);
     });
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    getStudents();
+  }, [getStudents]);
 
   return (
     <div className="container mb-2 mb-xl-0 py-lg-3 pb-xl-0">
@@ -34,8 +38,11 @@ const StudentsList = () => {
       <div className="container">
         <div className="row justify-content-between px-xl-5">
           {page?.content.map((std) => (
-            <div className="card base-card std-card mb-3 mb-xl-5 col-sm-6 col-xl-4" key={std.id}>
-              <StudentCrudCard student={std} />
+            <div
+              className="card base-card std-card mb-3 mb-xl-5 col-sm-6 col-xl-4"
+              key={std.id}
+            >
+              <StudentCrudCard onDelete={getStudents} student={std} />
             </div>
           ))}
         </div>

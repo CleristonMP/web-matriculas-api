@@ -13,8 +13,11 @@ import { SchoolClass } from "types/schoolClass";
 import { Address } from "types/address";
 import { Parent } from "types/parent";
 import { County } from "types/county";
+import { Link } from "react-router-dom";
 
 import "./styles.css";
+import { toast } from "react-toastify";
+import { history } from "util/history";
 
 type UrlParams = {
   studentId: string;
@@ -22,71 +25,97 @@ type UrlParams = {
 
 const StudentDetails = () => {
   const { studentId } = useParams<UrlParams>();
+
   const [student, setStudent] = useState<Student>();
   const [schoolClass, setSchoolClass] = useState<SchoolClass>();
   const [parent, setParent] = useState<Parent>();
   const [address, setAddress] = useState<Address>();
   const [county, setCounty] = useState<County>();
 
-  /* Retrieving Student */
+  /* Get Student */
   useEffect(() => {
-    const params: AxiosRequestConfig = {
+    const studentRequestConfig: AxiosRequestConfig = {
       url: `/students/${studentId}`,
       withCredentials: true,
     };
 
-    requestBackend(params).then((response) => {
-      setStudent(response.data);
+    requestBackend(studentRequestConfig).then((studentResponse) => {
+      const student = studentResponse.data as Student;
+      setStudent(studentResponse.data);
+
+      /* Get School Class */
+      const schoolClassRequestConfig: AxiosRequestConfig = {
+        url: `/school-classes/${student.schoolClassId}`,
+        withCredentials: true,
+      };
+
+      requestBackend(schoolClassRequestConfig).then((schoolClassResponse) => {
+        setSchoolClass(schoolClassResponse.data);
+      });
+
+      /* Get Parent */
+      const parentRequestConfig: AxiosRequestConfig = {
+        url: `/parents/${student.parentId}`,
+        withCredentials: true,
+      };
+
+      requestBackend(parentRequestConfig).then((parentResponse) => {
+        setParent(parentResponse.data);
+      });
+
+      /* Get Address */
+      const addressRequestConfig: AxiosRequestConfig = {
+        url: `/adresses/${student.addressId}`,
+        withCredentials: true,
+      };
+
+      requestBackend(addressRequestConfig).then((addressResponse) => {
+        setAddress(addressResponse.data);
+        const address = addressResponse.data as Address;
+
+        /* Get County */
+        const countyRequestConfig: AxiosRequestConfig = {
+          url: `/counties/${address.countyId}`,
+          withCredentials: true,
+        };
+
+        requestBackend(countyRequestConfig).then((countyResponse) => {
+          setCounty(countyResponse.data);
+        });
+      });
     });
   }, [studentId]);
 
-  /* Retrieving School Class */
-  useEffect(() => {
-    const params: AxiosRequestConfig = {
-      url: `/school-classes/${student?.schoolClassId}`,
+  const handleDelete = (studentId: number) => {
+    if (!window.confirm("Tem certeza de que deseja excluir este aluno(a)?")) {
+      return;
+    }
+
+    const config: AxiosRequestConfig = {
+      method: "DELETE",
+      url: `/students/${studentId}`,
       withCredentials: true,
     };
 
-    requestBackend(params).then((response) => {
-      setSchoolClass(response.data);
-    });
-  }, [student?.schoolClassId]);
-
-  /* Retrieving Parent */
-  useEffect(() => {
-    const params: AxiosRequestConfig = {
-      url: `/parents/${student?.parentId}`,
-      withCredentials: true,
-    };
-
-    requestBackend(params).then((response) => {
-      setParent(response.data);
-    });
-  }, [student?.parentId]);
-
-  /* Retrieving Address */
-  useEffect(() => {
-    const params: AxiosRequestConfig = {
-      url: `/adresses/${student?.addressId}`,
-      withCredentials: true,
-    };
-
-    requestBackend(params).then((response) => {
-      setAddress(response.data);
-    });
-  }, [student?.addressId]);
-
-  /* Retrieving County */
-  useEffect(() => {
-    const params: AxiosRequestConfig = {
-      url: `/counties/${address?.countyId}`,
-      withCredentials: true,
-    };
-
-    requestBackend(params).then((response) => {
-      setCounty(response.data);
-    });
-  }, [address?.countyId]);
+    if (student) {
+      requestBackend(config)
+        .then(() => {
+          history.push("/admin/students");
+          toast.info(
+            `O(A) aluno(a) ${
+              student.name +
+              " " +
+              student.lastName +
+              " - Matrícula: " +
+              student.enrollment
+            } foi excluído(a).`
+          );
+        })
+        .catch(() => {
+          toast.error("Erro ao excluir aluno(a).");
+        });
+    }
+  };
 
   return (
     <div className="container mt-3 mb-5 py-lg-3">
@@ -123,13 +152,19 @@ const StudentDetails = () => {
             {address?.district}, {county?.name} - {county?.state}
           </p>
           <div className="mt-4 mt-sm-5 d-flex justify-content-between justify-content-sm-around">
+            <Link to={`form`} className="card-link">
+              <button
+                type="button"
+                className="btn btn-outline-secondary custom-btn me-2"
+              >
+                Editar
+              </button>
+            </Link>
             <button
+              onClick={() => handleDelete(student?.id!)}
               type="button"
-              className="btn btn-outline-secondary custom-btn me-2"
+              className="btn btn-outline-danger custom-btn"
             >
-              Editar
-            </button>
-            <button type="button" className="btn btn-outline-danger custom-btn">
               Excluir
             </button>
           </div>
