@@ -5,20 +5,35 @@ import { SpringPage } from "types/vendor/spring";
 import { User } from "types/user";
 import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "util/requests";
+import { ControlComponentsData } from "types/controlComponentsData";
+import Pagination from "components/Pagination";
 
 const UsersList = () => {
   const [page, setPage] = useState<SpringPage<User>>();
 
+  const [controlComponentsData, setControlComponentsData] =
+    useState<ControlComponentsData>({ activePage: 0 });
+
+  const handlePageChange = (pageNumber: number) => {
+    setControlComponentsData({
+      activePage: pageNumber,
+    });
+  };
+
   const getUsers = useCallback(() => {
     const config: AxiosRequestConfig = {
-      url: '/users',
-      withCredentials: true
+      url: "/users",
+      withCredentials: true,
+      params: {
+        size: 6,
+        page: controlComponentsData.activePage,
+      },
     };
 
     requestBackend(config).then((response) => {
       setPage(response.data);
     });
-  }, []);
+  }, [controlComponentsData.activePage]);
 
   useEffect(() => {
     getUsers();
@@ -43,6 +58,15 @@ const UsersList = () => {
         ) : (
           <></>
         )}
+      </div>
+
+      <div className="row">
+        <Pagination
+          forcePage={page?.number}
+          pageCount={page ? page.totalPages : 0}
+          range={3}
+          onChange={handlePageChange}
+        />
       </div>
     </div>
   );

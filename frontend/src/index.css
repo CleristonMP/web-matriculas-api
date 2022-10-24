@@ -20,6 +20,7 @@
   --cyan: #17a2b8;
   --white: #fff;
   --gray: #6c757d;
+  --gray-light: #c5c5c5;
   --gray-dark: #343a40;
   --primary: #17a2b8;
   --secondary: #00394f;
@@ -91,6 +92,10 @@ ol,
 ul,
 dl {
   margin-bottom: 1rem;
+}
+
+ul {
+  list-style-type: none;
 }
 
 img {

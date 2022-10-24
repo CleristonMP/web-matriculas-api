@@ -5,20 +5,35 @@ import { requestBackend } from "util/requests";
 import { AxiosRequestConfig } from "axios";
 import { SchoolClass } from "types/schoolClass";
 import { SpringPage } from "types/vendor/spring";
+import Pagination from "components/Pagination";
+import { ControlComponentsData } from "types/controlComponentsData";
 
 const SchoolClassesList = () => {
   const [page, setPage] = useState<SpringPage<SchoolClass>>();
+
+  const [controlComponentsData, setControlComponentsData] =
+    useState<ControlComponentsData>({ activePage: 0 });
+
+  const handlePageChange = (pageNumber: number) => {
+    setControlComponentsData({
+      activePage: pageNumber,
+    });
+  };
 
   const getSchoolClasses = useCallback(() => {
     const config: AxiosRequestConfig = {
       url: "/school-classes",
       withCredentials: true,
+      params: {
+        page: controlComponentsData.activePage,
+        size: 6,
+      }
     };
 
     requestBackend(config).then((response) => {
       setPage(response.data);
     });
-  }, []);
+  }, [controlComponentsData.activePage]);
 
   useEffect(() => {
     getSchoolClasses();
@@ -47,6 +62,15 @@ const SchoolClassesList = () => {
             </div>
           ))}
         </div>
+      </div>
+
+      <div className="row">
+        <Pagination
+          forcePage={page?.number}
+          pageCount={page ? page.totalPages : 0}
+          range={3}
+          onChange={handlePageChange}
+        />
       </div>
     </div>
   );

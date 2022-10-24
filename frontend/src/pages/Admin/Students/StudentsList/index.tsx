@@ -5,22 +5,37 @@ import { SpringPage } from "types/vendor/spring";
 import { Student } from "types/student";
 import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "util/requests";
+import Pagination from "components/Pagination";
+import { ControlComponentsData } from "types/controlComponentsData";
 
 import "./styles.css";
 
 const StudentsList = () => {
   const [page, setPage] = useState<SpringPage<Student>>();
 
+  const [controlComponentsData, setControlComponentsData] =
+    useState<ControlComponentsData>({ activePage: 0 });
+
+  const handlePageChange = (pageNumber: number) => {
+    setControlComponentsData({
+      activePage: pageNumber,
+    });
+  };
+
   const getStudents = useCallback(() => {
     const config: AxiosRequestConfig = {
       url: "/students",
       withCredentials: true,
+      params: {
+        page: controlComponentsData.activePage,
+        size: 12,
+      },
     };
 
     requestBackend(config).then((response) => {
       setPage(response.data);
     });
-  }, []);
+  }, [controlComponentsData.activePage]);
 
   useEffect(() => {
     getStudents();
@@ -46,6 +61,15 @@ const StudentsList = () => {
             </div>
           ))}
         </div>
+      </div>
+
+      <div className="row">
+        <Pagination
+          forcePage={page?.number}
+          pageCount={page ? page.totalPages : 0}
+          range={3}
+          onChange={handlePageChange}
+        />
       </div>
     </div>
   );
