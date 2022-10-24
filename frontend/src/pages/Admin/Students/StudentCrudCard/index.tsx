@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { Student } from "types/student";
 import { formatCpf, formatDate } from "util/formatters";
 import { requestBackend } from "util/requests";
+
 import "./styles.css";
 
 type Props = {
@@ -17,23 +18,23 @@ const StudentCrudCard = ({ student, onDelete }: Props) => {
       return;
     }
 
-    const params: AxiosRequestConfig = {
+    const config: AxiosRequestConfig = {
       method: "DELETE",
       url: `/students/${studentId}`,
       withCredentials: true,
     };
 
-    requestBackend(params)
+    requestBackend(config)
       .then(() => {
         onDelete();
         toast.info(
-          `O(A) aluno(a) ${
+          `O(a) aluno(a) ${
             student.name +
             " " +
             student.lastName +
             " - Matrícula: " +
             student.enrollment
-          } foi excluído(a).`
+          } foi excluído(a) com sucesso.`
         );
       })
       .catch(() => {

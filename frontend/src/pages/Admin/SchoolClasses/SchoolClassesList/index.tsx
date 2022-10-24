@@ -10,12 +10,12 @@ const SchoolClassesList = () => {
   const [page, setPage] = useState<SpringPage<SchoolClass>>();
 
   const getSchoolClasses = useCallback(() => {
-    const params: AxiosRequestConfig = {
+    const config: AxiosRequestConfig = {
       url: "/school-classes",
       withCredentials: true,
     };
 
-    requestBackend(params).then((response) => {
+    requestBackend(config).then((response) => {
       setPage(response.data);
     });
   }, []);

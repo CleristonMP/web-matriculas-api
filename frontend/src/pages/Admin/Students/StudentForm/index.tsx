@@ -14,6 +14,7 @@ import { Parent } from "types/parent";
 import { Student } from "types/student";
 
 import "./styles.css";
+import { toast } from "react-toastify";
 
 type UrlParams = {
   studentId: string;
@@ -204,6 +205,11 @@ const StudentForm = () => {
         };
 
         requestBackend(studentRequestConfig).then(() => {
+          isEditing
+            ? toast.info(
+                "As informações do aluno(a) foram atualizadas com sucesso."
+              )
+            : toast.info("Aluno(a) cadastrado com sucesso.");
           history.push("/admin/students");
         });
       });

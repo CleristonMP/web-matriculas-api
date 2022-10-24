@@ -51,7 +51,6 @@ const UserForm = () => {
         }));
 
         setValue("roles", customRoles);
-        console.log(user);
       });
     }
   }, [isEditing, userId, setValue]);
@@ -69,12 +68,12 @@ const UserForm = () => {
     requestBackend(config)
       .then(() => {
         !isEditing
-          ? toast.info("Usuário cadastrado com sucesso")
-          : toast.info("Usuário atualizado com sucesso");
+          ? toast.info("Usuário cadastrado com sucesso.")
+          : toast.info("Usuário atualizado com sucesso.");
         history.push("/admin/users");
       })
       .catch(() => {
-        toast.error("Erro ao cadastrar usuário");
+        toast.error("Erro ao cadastrar usuário.");
       });
   };
 

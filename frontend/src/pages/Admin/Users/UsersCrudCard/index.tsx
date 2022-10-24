@@ -11,17 +11,17 @@ type Props = {
 
 const UsersCrudCard = ({ user, onDelete }: Props) => {
   const handleDelete = (userId: number) => {
-    if (!window.confirm("Tem certeza de que deseja deletar este usuário?")) {
+    if (!window.confirm("Tem certeza de que deseja excluir este usuário?")) {
       return;
     }
 
-    const params: AxiosRequestConfig = {
+    const config: AxiosRequestConfig = {
       method: "DELETE",
       url: `/users/${userId}`,
       withCredentials: true,
     };
 
-    requestBackend(params)
+    requestBackend(config)
       .then(() => {
         onDelete();
         toast.info(

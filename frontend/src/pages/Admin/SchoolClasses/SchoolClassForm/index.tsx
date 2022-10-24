@@ -8,6 +8,7 @@ import { history } from "util/history";
 import Select from "react-select";
 
 import "./styles.css";
+import { toast } from "react-toastify";
 
 type UrlParams = {
   schoolClassId: string;
@@ -60,14 +61,15 @@ const SchoolClassForm = () => {
       period: formData.period.name,
     };
 
-    const params: AxiosRequestConfig = {
+    const config: AxiosRequestConfig = {
       method: isEditing ? "PUT" : "POST",
       url: isEditing ? `/school-classes/${schoolClassId}` : "/school-classes",
       data,
       withCredentials: true,
     };
 
-    requestBackend(params).then(() => {
+    requestBackend(config).then(() => {
+      isEditing ? toast.info("Turma atualizada com sucesso.") : toast.info("Turma cadastrada com sucesso.");
       history.push("/admin/schoolClasses");
     });
   };

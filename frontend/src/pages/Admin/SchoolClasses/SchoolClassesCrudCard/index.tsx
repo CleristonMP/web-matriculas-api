@@ -17,13 +17,13 @@ const SchoolClassesCrudCard = ({ schollClass, onDelete }: Props) => {
       return;
     }
 
-    const params: AxiosRequestConfig = {
+    const config: AxiosRequestConfig = {
       method: 'DELETE',
       url: `/school-classes/${schoolClassId}`,
       withCredentials: true,
     };
 
-    requestBackend(params)
+    requestBackend(config)
       .then(() => {
         onDelete();
         toast.info(`A turma ${schollClass.name} foi excluída.`);

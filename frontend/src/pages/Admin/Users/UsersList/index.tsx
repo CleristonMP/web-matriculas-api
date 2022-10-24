@@ -37,7 +37,7 @@ const UsersList = () => {
         {page ? (
           <div className="row px-xl-5 justify-content-sm-between">
             {page.content.map((user) => (
-              <UsersCrudCard user={user} onDelete={getUsers} />
+              <UsersCrudCard user={user} onDelete={getUsers} key={user.id} />
             ))}
           </div>
         ) : (

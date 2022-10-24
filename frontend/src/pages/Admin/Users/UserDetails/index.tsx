@@ -1,9 +1,12 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import { User } from "types/user";
 import { formatRole } from "util/formatters";
 import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "util/requests";
+import { Link } from "react-router-dom";
+import { history } from "util/history";
+import { toast } from "react-toastify";
 
 import "./styles.css";
 
@@ -16,15 +19,40 @@ const UserDetails = () => {
   const [user, setUser] = useState<User>();
 
   useEffect(() => {
-    const params: AxiosRequestConfig = {
+    const config: AxiosRequestConfig = {
       url: `/users/${userId}`,
-      withCredentials: true
+      withCredentials: true,
+    };
+
+    requestBackend(config).then((response) => {
+      setUser(response.data);
+    });
+  }, [userId]);
+
+  const handleDelete = (userId: number) => {
+    if (!window.confirm("Tem certeza de que deseja excluir este usuário(a)?")) {
+      return;
     }
 
-    requestBackend(params).then(response => {
-      setUser(response.data)
-    })
-  }, [userId]);
+    const config: AxiosRequestConfig = {
+      method: "DELETE",
+      url: `/users/${userId}`,
+      withCredentials: true,
+    };
+
+    if (user) {
+      requestBackend(config)
+        .then(() => {
+          toast.info(
+            `O(a) usuário(a) ${user.name + " " + user.lastName} foi excluído(a) com sucesso.`
+          );
+          history.push("/admin/users");
+        })
+        .catch(() => {
+          toast.error("Erro ao excluir usuário(a).");
+        });
+    }
+  };
 
   return (
     <div className="container mt-3 mb-5 py-lg-3">
@@ -42,13 +70,19 @@ const UserDetails = () => {
             ))}
           </p>
           <div className="mt-4 mt-sm-5 d-flex justify-content-between justify-content-sm-around">
+            <Link to="form" className="card-link">
+              <button
+                type="button"
+                className="btn btn-outline-secondary custom-btn me-2"
+              >
+                Editar
+              </button>
+            </Link>
             <button
+              onClick={() => handleDelete(user?.id!)}
               type="button"
-              className="btn btn-outline-secondary custom-btn me-2"
+              className="btn btn-outline-danger custom-btn"
             >
-              Editar
-            </button>
-            <button type="button" className="btn btn-outline-danger custom-btn">
               Excluir
             </button>
           </div>

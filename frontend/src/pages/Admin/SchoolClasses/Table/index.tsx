@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "util/requests";
 import { formatCpf, formatDate } from "util/formatters";
+import { Link } from "react-router-dom";
 
 import "./styles.css";
-import { Link } from "react-router-dom";
 
 type UrlParams = {
   schoolClassId: string;
@@ -17,12 +17,12 @@ const Table = () => {
   const [schoolClass, setSchoolClass] = useState<SchoolClass>();
 
   useEffect(() => {
-    const params: AxiosRequestConfig = {
+    const config: AxiosRequestConfig = {
       url: `/school-classes/${schoolClassId}`,
       withCredentials: true
     }
 
-    requestBackend(params).then(response => {
+    requestBackend(config).then(response => {
       setSchoolClass(response.data)
     })
   }, [schoolClassId]);

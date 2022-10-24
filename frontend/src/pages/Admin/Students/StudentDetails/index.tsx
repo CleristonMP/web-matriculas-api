@@ -14,10 +14,10 @@ import { Address } from "types/address";
 import { Parent } from "types/parent";
 import { County } from "types/county";
 import { Link } from "react-router-dom";
-
-import "./styles.css";
 import { toast } from "react-toastify";
 import { history } from "util/history";
+
+import "./styles.css";
 
 type UrlParams = {
   studentId: string;
@@ -102,13 +102,13 @@ const StudentDetails = () => {
         .then(() => {
           history.push("/admin/students");
           toast.info(
-            `O(A) aluno(a) ${
+            `O(a) aluno(a) ${
               student.name +
               " " +
               student.lastName +
               " - Matrícula: " +
               student.enrollment
-            } foi excluído(a).`
+            } foi excluído(a) com sucesso.`
           );
         })
         .catch(() => {

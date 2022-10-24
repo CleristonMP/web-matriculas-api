@@ -12,12 +12,12 @@ const StudentsList = () => {
   const [page, setPage] = useState<SpringPage<Student>>();
 
   const getStudents = useCallback(() => {
-    const params: AxiosRequestConfig = {
+    const config: AxiosRequestConfig = {
       url: "/students",
       withCredentials: true,
     };
 
-    requestBackend(params).then((response) => {
+    requestBackend(config).then((response) => {
       setPage(response.data);
     });
   }, []);
