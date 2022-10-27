@@ -2,7 +2,6 @@ import axios, { AxiosRequestConfig } from "axios";
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import Select from "react-select";
 import { requestBackend } from "util/requests";
 import { County } from "types/county";
 import { StudentToForm } from "types/studentToForm";
@@ -12,9 +11,10 @@ import { history } from "util/history";
 import { Address } from "types/address";
 import { Parent } from "types/parent";
 import { Student } from "types/student";
+import { toast } from "react-toastify";
+import Select from "react-select";
 
 import "./styles.css";
-import { toast } from "react-toastify";
 
 type UrlParams = {
   studentId: string;
@@ -526,7 +526,7 @@ const StudentForm = () => {
                     options={schoolClasses}
                     classNamePrefix="custom-select"
                     getOptionLabel={(sc) => sc.name + " - " + sc.period}
-                    getOptionValue={(sc) => String(sc.id)}
+                    getOptionValue={(sc) => String(sc.id!)}
                     inputId="schoolClass"
                     placeholder="Turma"
                   />

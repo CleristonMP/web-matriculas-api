@@ -6,7 +6,11 @@ import { AxiosRequestConfig } from "axios";
 import { SchoolClass } from "types/schoolClass";
 import { SpringPage } from "types/vendor/spring";
 import Pagination from "components/Pagination";
-import { ControlComponentsData } from "types/controlComponentsData";
+
+type ControlComponentsData = {
+  activePage: number;
+  name?: string;
+};
 
 const SchoolClassesList = () => {
   const [page, setPage] = useState<SpringPage<SchoolClass>>();

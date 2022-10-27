@@ -5,8 +5,12 @@ import { SpringPage } from "types/vendor/spring";
 import { User } from "types/user";
 import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "util/requests";
-import { ControlComponentsData } from "types/controlComponentsData";
 import Pagination from "components/Pagination";
+
+type ControlComponentsData = {
+  activePage: number;
+  name?: string;
+};
 
 const UsersList = () => {
   const [page, setPage] = useState<SpringPage<User>>();

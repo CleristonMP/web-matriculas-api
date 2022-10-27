@@ -1,0 +1,109 @@
+.filter-ctr {
+  margin-bottom: 20px;
+  padding: 15px;
+}
+
+.filter-name-ctr {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--gray-light);
+  margin-bottom: 10px;
+}
+
+.filter-name-ctr input {
+  border: none;
+  background-color: unset;
+}
+
+.filter-name-ctr input:focus {
+  box-shadow: none;
+}
+
+.filter-name-ctr input::placeholder {
+  color: var(--gray);
+}
+
+.filter-search-icon {
+  border: none;
+  background-color: unset;
+}
+
+.filter-search-icon svg {
+  scale: 75%;
+  stroke: var(--gray);
+  fill: var(--gray);
+}
+
+.filter-bottom-ctr {
+  display: flex;
+  align-items: center;
+}
+
+.filter-schoolclass-ctr {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.btn-filter-clear {
+  font-weight: bold !important;
+  border-radius: 10px !important;
+}
+
+.btn-filter-word {
+  display: none;
+}
+
+.product-select__control {
+  font-size: 1em;
+  letter-spacing: -0.015em;
+  color: var(--gray-dark);
+  border: none !important;
+  border-bottom: 1px solid var(--gray-light) !important;
+}
+
+.filter-select__placeholder {
+  color: var(--gray) !important;
+}
+
+.filter-select__indicator-separator {
+  display: none;
+}
+
+@media (min-width: 576px) {
+  .btn-filter-word {
+    display: unset;
+  }
+}
+
+@media (min-width: 768px) {
+  .filter-ctr {
+    margin-left: 20px;
+    flex: 1;
+    margin-bottom: 0;
+    padding: 10px 15px;
+  }
+
+  .filter-form {
+    display: flex;
+  }
+
+  .filter-name-ctr {
+    flex: 1;
+    margin-right: 20px;
+    margin-bottom: 0;
+  }
+
+  .filter-bottom-ctr {
+    flex: 1;
+  }
+
+  .btn-filter-word {
+    display: none;
+  }
+}
+
+@media (min-width: 992px) {
+  .btn-filter-word {
+    display: unset;
+  }
+}

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -29,8 +30,10 @@ public class StudentResource {
 	private StudentService service;
 	
 	@GetMapping
-	public ResponseEntity<Page<StudentDTO>> findAll(Pageable pageable) {
-		Page<StudentDTO> page = service.findAllPaged(pageable);
+	public ResponseEntity<Page<StudentDTO>> findAll(Pageable pageable,
+			@RequestParam(value = "schoolClassId", defaultValue = "") Long schoolClassId,
+			@RequestParam(value = "name", defaultValue = "") String name) {
+		Page<StudentDTO> page = service.findAllPaged(pageable, schoolClassId, name);
 		return ResponseEntity.ok().body(page);
 	}
 	
@@ -43,7 +46,7 @@ public class StudentResource {
 	@PostMapping
 	public ResponseEntity<StudentDTO> insert(@Valid @RequestBody StudentDTO dto){
 		dto = service.insert(dto);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{enrollment}")
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(dto.getEnrollment()).toUri();		
 		return ResponseEntity.created(uri).body(dto);
 	}

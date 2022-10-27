@@ -1,25 +1,38 @@
 import { Link } from "react-router-dom";
-import StudentCrudCard from "../StudentCrudCard";
-import { useEffect, useState, useCallback } from "react";
 import { SpringPage } from "types/vendor/spring";
 import { Student } from "types/student";
 import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "util/requests";
+import { useEffect, useState, useCallback } from "react";
+import StudentFilter, { StudentFilterData } from "components/StudentFilter";
+import StudentCrudCard from "../StudentCrudCard";
 import Pagination from "components/Pagination";
-import { ControlComponentsData } from "types/controlComponentsData";
 
 import "./styles.css";
+
+type ControlComponentsData = {
+  activePage: number;
+  filterData?: StudentFilterData;
+};
 
 const StudentsList = () => {
   const [page, setPage] = useState<SpringPage<Student>>();
 
   const [controlComponentsData, setControlComponentsData] =
-    useState<ControlComponentsData>({ activePage: 0 });
+    useState<ControlComponentsData>({
+      activePage: 0,
+      filterData: { name: "", schoolClass: null },
+    });
 
   const handlePageChange = (pageNumber: number) => {
     setControlComponentsData({
       activePage: pageNumber,
+      filterData: controlComponentsData.filterData,
     });
+  };
+
+  const handleSubmitFilter = (data: StudentFilterData) => {
+    setControlComponentsData({ activePage: 0, filterData: data });
   };
 
   const getStudents = useCallback(() => {
@@ -27,15 +40,21 @@ const StudentsList = () => {
       url: "/students",
       withCredentials: true,
       params: {
-        page: controlComponentsData.activePage,
         size: 12,
+        page: controlComponentsData.activePage,
+        name: controlComponentsData.filterData?.name,
+        schoolClassId: controlComponentsData.filterData?.schoolClass?.id,
       },
     };
 
     requestBackend(config).then((response) => {
       setPage(response.data);
     });
-  }, [controlComponentsData.activePage]);
+  }, [
+    controlComponentsData.activePage,
+    controlComponentsData.filterData?.schoolClass?.id,
+    controlComponentsData.filterData?.name,
+  ]);
 
   useEffect(() => {
     getStudents();
@@ -49,6 +68,7 @@ const StudentsList = () => {
             ADICIONAR
           </button>
         </Link>
+        <StudentFilter onSubmitFilter={handleSubmitFilter} />
       </div>
       <div className="container">
         <div className="row justify-content-between px-xl-5">

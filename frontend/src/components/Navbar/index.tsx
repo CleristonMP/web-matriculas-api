@@ -54,7 +54,7 @@ const Navbar = () => {
         >
           <ul className="navbar-nav font-weight-bold mx-auto py-0">
             <li>
-              <NavLink to="/" className="nav-item nav-link active">
+              <NavLink end to="/" className="nav-item nav-link">
                 Home
               </NavLink>
             </li>
@@ -78,6 +78,13 @@ const Navbar = () => {
                 Contato
               </a>
             </li>
+            {isAuthenticated() ? (
+              <NavLink to="admin/welcome" className="nav-item nav-link">
+                Admin
+              </NavLink>
+            ) : (
+              <></>
+            )}
           </ul>
           {authContextData.authenticated ? (
             <>

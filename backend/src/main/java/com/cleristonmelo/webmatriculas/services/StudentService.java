@@ -37,8 +37,8 @@ public class StudentService {
 	private ParentRepository parentRepository;
 	
 	@Transactional(readOnly = true)
-	public Page<StudentDTO> findAllPaged(Pageable pageable) {
-		Page<Student> page = repository.findAll(pageable);
+	public Page<StudentDTO> findAllPaged(Pageable pageable, Long schoolClassId, String name) {
+		Page<Student> page = repository.find(pageable, schoolClassId, name);
 		return page.map(x -> new StudentDTO(x));
 	}
 	
