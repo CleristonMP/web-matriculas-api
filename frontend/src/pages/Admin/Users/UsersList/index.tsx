@@ -6,10 +6,11 @@ import { User } from "types/user";
 import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "util/requests";
 import Pagination from "components/Pagination";
+import UserFilter, { UserFilterData } from "../UserFilter";
 
 type ControlComponentsData = {
   activePage: number;
-  name?: string;
+  filterData?: UserFilterData;
 };
 
 const UsersList = () => {
@@ -21,7 +22,12 @@ const UsersList = () => {
   const handlePageChange = (pageNumber: number) => {
     setControlComponentsData({
       activePage: pageNumber,
+      filterData: controlComponentsData.filterData,
     });
+  };
+
+  const handleSubmitFilter = (data: UserFilterData) => {
+    setControlComponentsData({ activePage: 0, filterData: data });
   };
 
   const getUsers = useCallback(() => {
@@ -31,13 +37,17 @@ const UsersList = () => {
       params: {
         size: 6,
         page: controlComponentsData.activePage,
+        name: controlComponentsData.filterData?.name,
       },
     };
 
     requestBackend(config).then((response) => {
       setPage(response.data);
     });
-  }, [controlComponentsData.activePage]);
+  }, [
+    controlComponentsData.activePage,
+    controlComponentsData.filterData?.name,
+  ]);
 
   useEffect(() => {
     getUsers();
@@ -51,6 +61,7 @@ const UsersList = () => {
             ADICIONAR
           </button>
         </Link>
+        <UserFilter onSubmitFilter={handleSubmitFilter} />
       </div>
       <div className="container">
         {page ? (

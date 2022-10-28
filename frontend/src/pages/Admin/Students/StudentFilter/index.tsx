@@ -92,7 +92,7 @@ const StudentFilter = ({ onSubmitFilter }: Props) => {
                   onChange={(value) =>
                     handleChangeSchoolClass(value as SchoolClass)
                   }
-                  getOptionLabel={(sc: SchoolClass) => sc.name}
+                  getOptionLabel={(sc: SchoolClass) => sc.name + " - " + sc.period}
                   getOptionValue={(sc: SchoolClass) => String(sc.id)}
                 />
               )}
