@@ -4,7 +4,7 @@ import { Student } from "types/student";
 import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "util/requests";
 import { useEffect, useState, useCallback } from "react";
-import StudentFilter, { StudentFilterData } from "components/StudentFilter";
+import StudentFilter, { StudentFilterData } from "../StudentFilter";
 import StudentCrudCard from "../StudentCrudCard";
 import Pagination from "components/Pagination";
 

@@ -144,10 +144,10 @@ VALUES
 
 INSERT INTO tb_school_class (name,period)
 VALUES
-  ('101 EHC','Vespertino'),
-  ('101 EHC','Vespertino'),
+  ('101 EHC','Matutino'),
+  ('202 BBC','Vespertino'),
   ('303 ABC','Matutino'),
-  ('101 EHC','Matutino');
+  ('404 SBT','Noturno');
 
 INSERT INTO tb_parent (name,last_Name,cpf,phone)
 VALUES

@@ -1,65 +1,60 @@
-import { useEffect, useState } from "react";
+import { ReactComponent as SearchIcon } from "assets/images/search_icon.svg";
 import { Controller, useForm } from "react-hook-form";
-import { SchoolClass } from "types/schoolClass";
-import { requestBackend } from "util/requests";
-import { ReactComponent as SearchIcon } from "../../assets/images/search_icon.svg";
+import { Period } from "types/schoolClass";
 import Select from "react-select";
 
 import "./styles.css";
 
-export type StudentFilterData = {
+export type SchoolClassFilterData = {
   name?: string;
-  schoolClass: SchoolClass | null;
+  period: Period | null;
 };
+
+const periodOptions: Period[] = [
+  { id: 1, name: "Matutino" },
+  { id: 2, name: "Vespertino" },
+  { id: 3, name: "Noturno" },
+];
 
 type Props = {
-  onSubmitFilter: (data: StudentFilterData) => void;
+  onSubmitFilter: (data: SchoolClassFilterData) => void;
 };
 
-const StudentFilter = ({ onSubmitFilter }: Props) => {
-  const [schoolClasses, setSchoolClasses] = useState<SchoolClass[]>([]);
-
+const SchoolClassFilter = ({ onSubmitFilter }: Props) => {
   const { register, handleSubmit, setValue, getValues, control } =
-    useForm<StudentFilterData>();
+    useForm<SchoolClassFilterData>();
 
-  const onSubmit = (formData: StudentFilterData) => {
+  const onSubmit = (formData: SchoolClassFilterData) => {
     onSubmitFilter(formData);
   };
 
   const handleFormClear = () => {
     setValue("name", "");
-    setValue("schoolClass", null);
+    setValue("period", null);
+    setValue("period.name", "");
   };
 
   const handleChangeName = (value: string) => {
     setValue("name", value);
 
-    const obj: StudentFilterData = {
+    const obj: SchoolClassFilterData = {
       name: getValues("name"),
-      schoolClass: getValues("schoolClass"),
+      period: getValues("period"),
     };
 
     onSubmitFilter(obj);
   };
 
-  const handleChangeSchoolClass = (value: SchoolClass) => {
-    setValue("schoolClass", { ...value });
+  const handleChangePeriod = (value: Period) => {
+    setValue("period", value);
 
-    const obj: StudentFilterData = {
+    const obj: SchoolClassFilterData = {
       name: getValues("name"),
-      schoolClass: getValues("schoolClass"),
+      period: getValues("period"),
     };
 
     onSubmitFilter(obj);
   };
-
-  useEffect(() => {
-    requestBackend({ url: "/school-classes", withCredentials: true }).then(
-      (response) => {
-        setSchoolClasses(response.data.content);
-      }
-    );
-  }, []);
 
   return (
     <div className="base-card filter-ctr">
@@ -69,7 +64,7 @@ const StudentFilter = ({ onSubmitFilter }: Props) => {
             {...register("name")}
             type="text"
             className={"form-control"}
-            placeholder="Nome do aluno"
+            placeholder="Nome da turma"
             name="name"
             onChange={(value) => handleChangeName(value.target.value)}
           />
@@ -78,22 +73,22 @@ const StudentFilter = ({ onSubmitFilter }: Props) => {
           </button>
         </div>
         <div className="filter-bottom-ctr">
-          <div className="filter-schoolclass-ctr">
+          <div className="filter-period-ctr">
             <Controller
-              name="schoolClass"
+              name="period"
+              rules={{ required: true }}
               control={control}
               render={({ field }) => (
                 <Select
                   {...field}
-                  options={schoolClasses}
-                  isClearable
-                  placeholder="Turma"
+                  options={periodOptions}
                   classNamePrefix="filter-select"
-                  onChange={(value) =>
-                    handleChangeSchoolClass(value as SchoolClass)
-                  }
-                  getOptionLabel={(sc: SchoolClass) => sc.name}
-                  getOptionValue={(sc: SchoolClass) => String(sc.id)}
+                  getOptionLabel={(pr: Period) => pr.name}
+                  getOptionValue={(pr: Period) => String(pr.id)}
+                  inputId="period"
+                  placeholder="Período"
+                  isClearable
+                  onChange={(value) => handleChangePeriod(value!)}
                 />
               )}
             />
@@ -110,4 +105,4 @@ const StudentFilter = ({ onSubmitFilter }: Props) => {
   );
 };
 
-export default StudentFilter;
+export default SchoolClassFilter;

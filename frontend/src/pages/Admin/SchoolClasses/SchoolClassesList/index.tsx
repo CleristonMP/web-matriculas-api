@@ -6,10 +6,11 @@ import { AxiosRequestConfig } from "axios";
 import { SchoolClass } from "types/schoolClass";
 import { SpringPage } from "types/vendor/spring";
 import Pagination from "components/Pagination";
+import SchoolClassFilter, { SchoolClassFilterData } from "../SchoolClassFilter";
 
 type ControlComponentsData = {
   activePage: number;
-  name?: string;
+  filterData?: SchoolClassFilterData;
 };
 
 const SchoolClassesList = () => {
@@ -21,7 +22,12 @@ const SchoolClassesList = () => {
   const handlePageChange = (pageNumber: number) => {
     setControlComponentsData({
       activePage: pageNumber,
+      filterData: controlComponentsData.filterData,
     });
+  };
+
+  const handleSubmitFilter = (data: SchoolClassFilterData) => {
+    setControlComponentsData({ activePage: 0, filterData: data });
   };
 
   const getSchoolClasses = useCallback(() => {
@@ -31,13 +37,18 @@ const SchoolClassesList = () => {
       params: {
         page: controlComponentsData.activePage,
         size: 6,
-      }
+        name: controlComponentsData.filterData?.name || controlComponentsData.filterData?.period?.name,
+      },
     };
 
     requestBackend(config).then((response) => {
       setPage(response.data);
     });
-  }, [controlComponentsData.activePage]);
+  }, [
+    controlComponentsData.activePage,
+    controlComponentsData.filterData?.name,
+    controlComponentsData.filterData?.period?.name
+  ]);
 
   useEffect(() => {
     getSchoolClasses();
@@ -51,6 +62,7 @@ const SchoolClassesList = () => {
             ADICIONAR
           </button>
         </Link>
+        <SchoolClassFilter onSubmitFilter={handleSubmitFilter} />
       </div>
       <div className="container">
         <div className="row justify-content-sm-between px-xl-5">
