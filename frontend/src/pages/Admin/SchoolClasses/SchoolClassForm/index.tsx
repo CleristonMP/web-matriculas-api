@@ -9,6 +9,7 @@ import Select from "react-select";
 
 import "./styles.css";
 import { toast } from "react-toastify";
+import GoBackButton from "components/GoBackButton";
 
 type UrlParams = {
   schoolClassId: string;
@@ -37,10 +38,10 @@ const SchoolClassForm = () => {
     const periods: any = {
       Matutino: { id: 1, name: "Matutino" },
       Vespertino: { id: 2, name: "Vespertino" },
-      Noturno: { id: 3, name: "Noturno" }
-    }
+      Noturno: { id: 3, name: "Noturno" },
+    };
     return periods[value];
-  }
+  };
 
   useEffect(() => {
     if (isEditing) {
@@ -69,7 +70,9 @@ const SchoolClassForm = () => {
     };
 
     requestBackend(config).then(() => {
-      isEditing ? toast.info("Turma atualizada com sucesso.") : toast.info("Turma cadastrada com sucesso.");
+      isEditing
+        ? toast.info("Turma atualizada com sucesso.")
+        : toast.info("Turma cadastrada com sucesso.");
       history.push("/admin/schoolClasses");
     });
   };
@@ -82,7 +85,10 @@ const SchoolClassForm = () => {
     <form className="container mb-4 py-lg-3" onSubmit={handleSubmit(onSubmit)}>
       <div className="container">
         <div className="row border border-opacity-10 rounded mx-auto p-3 scform-ctr">
-          <h2 className="form-title">Cadastrar Turma</h2>
+          <div className="d-flex align-items-center justify-content-between">
+            <h2 className="form-title">Cadastrar Turma</h2>
+            <GoBackButton />
+          </div>
           <div className="col-12">
             <label htmlFor="name" className="form-label">
               Nome

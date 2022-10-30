@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import Select from "react-select";
 
 import "./styles.css";
+import GoBackButton from "components/GoBackButton";
 
 type UrlParams = {
   studentId: string;
@@ -225,8 +226,11 @@ const StudentForm = () => {
       <div className="container">
         <div className="border border-opacity-10 rounded p-2 px-sm-3">
           {/* Student data session */}
-          <div className="row g-3 p-lg-2 mt-1">
-            <h2 className="form-title">Dados do aluno</h2>
+          <div className="row g-3 p-lg-2">
+            <div className="d-flex align-items-center justify-content-between">
+              <h2 className="form-title">Dados do aluno</h2>
+              <GoBackButton />
+            </div>
             <div className="col-12 col-sm-6">
               <label htmlFor="name" className="form-label">
                 Nome

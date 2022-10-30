@@ -1,12 +1,13 @@
 import { useParams } from "react-router-dom";
 import { SchoolClass } from "types/schoolClass";
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "util/requests";
 import { formatCpf, formatDate } from "util/formatters";
 import { Link } from "react-router-dom";
 
 import "./styles.css";
+import GoBackButton from "components/GoBackButton";
 
 type UrlParams = {
   schoolClassId: string;
@@ -19,17 +20,20 @@ const Table = () => {
   useEffect(() => {
     const config: AxiosRequestConfig = {
       url: `/school-classes/${schoolClassId}`,
-      withCredentials: true
-    }
+      withCredentials: true,
+    };
 
-    requestBackend(config).then(response => {
-      setSchoolClass(response.data)
-    })
+    requestBackend(config).then((response) => {
+      setSchoolClass(response.data);
+    });
   }, [schoolClassId]);
-  
+
   return (
     <div className="mb-4 p-2 p-sm-3">
-      <h2>{`Turma: ${schoolClass?.name} - ${schoolClass?.period}`}</h2>
+      <div className="d-flex align-items-center">
+        <GoBackButton />
+        <h2 className="m-0">{`Turma: ${schoolClass?.name} - ${schoolClass?.period}`}</h2>
+      </div>
       <table className="table table-striped table-font">
         <thead>
           <tr>
@@ -50,10 +54,15 @@ const Table = () => {
           {schoolClass?.students.map((std) => (
             <tr key={std.id}>
               <th scope="row">{std.enrollment}</th>
-              <td> <Link to={`/admin/students/${std.id}`}> {std.name} </Link></td>
+              <td>
+                {" "}
+                <Link to={`/admin/students/${std.id}`}> {std.name} </Link>
+              </td>
               <td>{std.lastName}</td>
               <td className="d-none d-sm-table-cell">{formatCpf(std.cpf)}</td>
-              <td className="d-none d-md-table-cell">{formatDate(std.birthDate)}</td>
+              <td className="d-none d-md-table-cell">
+                {formatDate(std.birthDate)}
+              </td>
             </tr>
           ))}
         </tbody>

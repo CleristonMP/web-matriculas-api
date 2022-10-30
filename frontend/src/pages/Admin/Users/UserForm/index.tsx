@@ -1,4 +1,5 @@
 import { AxiosRequestConfig } from "axios";
+import GoBackButton from "components/GoBackButton";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
@@ -85,7 +86,10 @@ const UserForm = () => {
     <form className="mb-4 p-lg-3" onSubmit={handleSubmit(onSubmit)}>
       <div className="container">
         <div className="border border-opacity-10 rounded p-2 px-sm-3 p-xl-4">
-          <h2 className="form-title">CADASTRAR USUÁRIO</h2>
+          <div className="d-flex align-items-center justify-content-between">
+            <h2 className="form-title">CADASTRAR USUÁRIO</h2>
+            <GoBackButton />
+          </div>
           <div className="row">
             <div className="col-lg-6 mb-3 mb-xl-3">
               <label htmlFor="name" className="form-label">

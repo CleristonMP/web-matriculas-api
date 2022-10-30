@@ -7,6 +7,7 @@ import { SchoolClass } from "types/schoolClass";
 import { SpringPage } from "types/vendor/spring";
 import Pagination from "components/Pagination";
 import SchoolClassFilter, { SchoolClassFilterData } from "../SchoolClassFilter";
+import GoBackButton from "components/GoBackButton";
 
 type ControlComponentsData = {
   activePage: number;
@@ -37,7 +38,9 @@ const SchoolClassesList = () => {
       params: {
         page: controlComponentsData.activePage,
         size: 6,
-        name: controlComponentsData.filterData?.name || controlComponentsData.filterData?.period?.name,
+        name:
+          controlComponentsData.filterData?.name ||
+          controlComponentsData.filterData?.period?.name,
       },
     };
 
@@ -47,7 +50,7 @@ const SchoolClassesList = () => {
   }, [
     controlComponentsData.activePage,
     controlComponentsData.filterData?.name,
-    controlComponentsData.filterData?.period?.name
+    controlComponentsData.filterData?.period?.name,
   ]);
 
   useEffect(() => {
@@ -57,6 +60,7 @@ const SchoolClassesList = () => {
   return (
     <div className="container mb-2 py-lg-3">
       <div className="container mb-3 text-center text-lg-start px-xl-5">
+        <GoBackButton />
         <Link to="create/form">
           <button className="btn btn-primary text-white h-50px btn-crud-add">
             ADICIONAR

@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import { history } from "util/history";
 
 import "./styles.css";
+import GoBackButton from "components/GoBackButton";
 
 type UrlParams = {
   studentId: string;
@@ -121,9 +122,12 @@ const StudentDetails = () => {
     <div className="container mt-3 mb-5 py-lg-3">
       <div className="card base-card std-details-card">
         <div className="card-body p-4">
-          <h2 className="card-title mb-3">
-            {student?.name + " " + student?.lastName}
-          </h2>
+          <div className="mb-3 d-flex align-items-center justify-content-between">
+            <h2 className="card-title m-0">
+              {student?.name + " " + student?.lastName}
+            </h2>
+            <GoBackButton />
+          </div>
           <h5 className="card-subtitle mb-2">
             Matrícula: {student?.enrollment}
           </h5>

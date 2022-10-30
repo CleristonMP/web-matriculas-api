@@ -9,6 +9,7 @@ import { history } from "util/history";
 import { toast } from "react-toastify";
 
 import "./styles.css";
+import GoBackButton from "components/GoBackButton";
 
 type UrlParams = {
   userId: string;
@@ -44,7 +45,9 @@ const UserDetails = () => {
       requestBackend(config)
         .then(() => {
           toast.info(
-            `O(a) usuário(a) ${user.name + " " + user.lastName} foi excluído(a) com sucesso.`
+            `O(a) usuário(a) ${
+              user.name + " " + user.lastName
+            } foi excluído(a) com sucesso.`
           );
           history.push("/admin/users");
         })
@@ -58,7 +61,10 @@ const UserDetails = () => {
     <div className="container mt-3 mb-5 py-lg-3">
       <div className="card base-card user-details-card">
         <div className="card-body">
-          <h2 className="card-title">{`${user?.name} ${user?.lastName}`}</h2>
+          <div className="d-flex align-items-center justify-content-between">
+            <h2 className="card-title">{`${user?.name} ${user?.lastName}`}</h2>
+            <GoBackButton />
+          </div>
           <h5 className="card-subtitle mb-2 text-muted">{user?.email}</h5>
           <p className="card-text">
             <span className="fw-bold">Funções: </span>
