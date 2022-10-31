@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 
 import "./styles.css";
 import GoBackButton from "components/GoBackButton";
+import AppLoader from "components/AppLoader";
 
 type UrlParams = {
   schoolClassId: string;
@@ -16,6 +17,7 @@ type UrlParams = {
 const Table = () => {
   const { schoolClassId } = useParams<UrlParams>();
   const [schoolClass, setSchoolClass] = useState<SchoolClass>();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const config: AxiosRequestConfig = {
@@ -23,50 +25,63 @@ const Table = () => {
       withCredentials: true,
     };
 
-    requestBackend(config).then((response) => {
-      setSchoolClass(response.data);
-    });
+    setIsLoading(true);
+    requestBackend(config)
+      .then((response) => {
+        setSchoolClass(response.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [schoolClassId]);
 
   return (
     <div className="mb-4 p-2 p-sm-3">
-      <div className="d-flex align-items-center">
-        <GoBackButton />
-        <h2 className="m-0">{`Turma: ${schoolClass?.name} - ${schoolClass?.period}`}</h2>
-      </div>
-      <table className="table table-striped table-font">
-        <thead>
-          <tr>
-            <th scope="col">Mat.</th>
-            <th scope="col">Nome</th>
-            <th scope="col" className="text-break">
-              Sobrenome
-            </th>
-            <th scope="col" className="d-none d-sm-table-cell">
-              CPF
-            </th>
-            <th scope="col" className="text-break d-none d-md-table-cell">
-              Data de nascimento
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {schoolClass?.students.map((std) => (
-            <tr key={std.id}>
-              <th scope="row">{std.enrollment}</th>
-              <td>
-                {" "}
-                <Link to={`/admin/students/${std.id}`}> {std.name} </Link>
-              </td>
-              <td>{std.lastName}</td>
-              <td className="d-none d-sm-table-cell">{formatCpf(std.cpf)}</td>
-              <td className="d-none d-md-table-cell">
-                {formatDate(std.birthDate)}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {isLoading ? (
+        <AppLoader />
+      ) : (
+        <>
+          <div className="d-flex align-items-center">
+            <GoBackButton />
+            <h2 className="m-0">{`Turma: ${schoolClass?.name} - ${schoolClass?.period}`}</h2>
+          </div>
+          <table className="table table-striped table-font">
+            <thead>
+              <tr>
+                <th scope="col">Mat.</th>
+                <th scope="col">Nome</th>
+                <th scope="col" className="text-break">
+                  Sobrenome
+                </th>
+                <th scope="col" className="d-none d-sm-table-cell">
+                  CPF
+                </th>
+                <th scope="col" className="text-break d-none d-md-table-cell">
+                  Data de nascimento
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {schoolClass?.students.map((std) => (
+                <tr key={std.id}>
+                  <th scope="row">{std.enrollment}</th>
+                  <td>
+                    {" "}
+                    <Link to={`/admin/students/${std.id}`}> {std.name} </Link>
+                  </td>
+                  <td>{std.lastName}</td>
+                  <td className="d-none d-sm-table-cell">
+                    {formatCpf(std.cpf)}
+                  </td>
+                  <td className="d-none d-md-table-cell">
+                    {formatDate(std.birthDate)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
     </div>
   );
 };

@@ -8,6 +8,7 @@ import { SpringPage } from "types/vendor/spring";
 import Pagination from "components/Pagination";
 import SchoolClassFilter, { SchoolClassFilterData } from "../SchoolClassFilter";
 import GoBackButton from "components/GoBackButton";
+import AppLoader from "components/AppLoader";
 
 type ControlComponentsData = {
   activePage: number;
@@ -16,6 +17,7 @@ type ControlComponentsData = {
 
 const SchoolClassesList = () => {
   const [page, setPage] = useState<SpringPage<SchoolClass>>();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [controlComponentsData, setControlComponentsData] =
     useState<ControlComponentsData>({ activePage: 0 });
@@ -44,9 +46,14 @@ const SchoolClassesList = () => {
       },
     };
 
-    requestBackend(config).then((response) => {
-      setPage(response.data);
-    });
+    setIsLoading(true);
+    requestBackend(config)
+      .then((response) => {
+        setPage(response.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [
     controlComponentsData.activePage,
     controlComponentsData.filterData?.name,
@@ -70,17 +77,21 @@ const SchoolClassesList = () => {
       </div>
       <div className="container">
         <div className="row justify-content-sm-between px-xl-5">
-          {page?.content.map((sc) => (
-            <div
-              className="card base-card text-center school-class-card mb-3 col-sm-6 col-lg-4"
-              key={sc.id}
-            >
-              <SchoolClassesCrudCard
-                schollClass={sc}
-                onDelete={getSchoolClasses}
-              />
-            </div>
-          ))}
+          {isLoading ? (
+            <AppLoader />
+          ) : (
+            page?.content.map((sc) => (
+              <div
+                className="card base-card text-center school-class-card mb-3 col-sm-6 col-lg-4"
+                key={sc.id}
+              >
+                <SchoolClassesCrudCard
+                  schollClass={sc}
+                  onDelete={getSchoolClasses}
+                />
+              </div>
+            ))
+          )}
         </div>
       </div>
 

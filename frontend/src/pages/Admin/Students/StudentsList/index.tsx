@@ -10,6 +10,7 @@ import Pagination from "components/Pagination";
 
 import "./styles.css";
 import GoBackButton from "components/GoBackButton";
+import AppLoader from "components/AppLoader";
 
 type ControlComponentsData = {
   activePage: number;
@@ -18,6 +19,7 @@ type ControlComponentsData = {
 
 const StudentsList = () => {
   const [page, setPage] = useState<SpringPage<Student>>();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [controlComponentsData, setControlComponentsData] =
     useState<ControlComponentsData>({
@@ -48,9 +50,14 @@ const StudentsList = () => {
       },
     };
 
-    requestBackend(config).then((response) => {
-      setPage(response.data);
-    });
+    setIsLoading(true);
+    requestBackend(config)
+      .then((response) => {
+        setPage(response.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [
     controlComponentsData.activePage,
     controlComponentsData.filterData?.schoolClass?.id,
@@ -74,14 +81,18 @@ const StudentsList = () => {
       </div>
       <div className="container">
         <div className="row justify-content-between px-xl-5">
-          {page?.content.map((std) => (
-            <div
-              className="card base-card std-card mb-3 mb-xl-5 col-sm-6 col-xl-4"
-              key={std.id}
-            >
-              <StudentCrudCard onDelete={getStudents} student={std} />
-            </div>
-          ))}
+          {isLoading ? (
+            <AppLoader />
+          ) : (
+            page?.content.map((std) => (
+              <div
+                className="card base-card std-card mb-3 mb-xl-5 col-sm-6 col-xl-4"
+                key={std.id}
+              >
+                <StudentCrudCard onDelete={getStudents} student={std} />
+              </div>
+            ))
+          )}
         </div>
       </div>
 

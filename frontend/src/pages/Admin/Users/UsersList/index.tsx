@@ -8,6 +8,7 @@ import { requestBackend } from "util/requests";
 import Pagination from "components/Pagination";
 import UserFilter, { UserFilterData } from "../UserFilter";
 import GoBackButton from "components/GoBackButton";
+import AppLoader from "components/AppLoader";
 
 type ControlComponentsData = {
   activePage: number;
@@ -16,6 +17,7 @@ type ControlComponentsData = {
 
 const UsersList = () => {
   const [page, setPage] = useState<SpringPage<User>>();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [controlComponentsData, setControlComponentsData] =
     useState<ControlComponentsData>({ activePage: 0 });
@@ -42,9 +44,14 @@ const UsersList = () => {
       },
     };
 
-    requestBackend(config).then((response) => {
-      setPage(response.data);
-    });
+    setIsLoading(true);
+    requestBackend(config)
+      .then((response) => {
+        setPage(response.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [
     controlComponentsData.activePage,
     controlComponentsData.filterData?.name,
@@ -66,7 +73,9 @@ const UsersList = () => {
         <UserFilter onSubmitFilter={handleSubmitFilter} />
       </div>
       <div className="container">
-        {page ? (
+        {isLoading ? (
+          <AppLoader />
+        ) : page ? (
           <div className="row px-xl-5 justify-content-sm-between">
             {page.content.map((user) => (
               <UsersCrudCard user={user} onDelete={getUsers} key={user.id} />

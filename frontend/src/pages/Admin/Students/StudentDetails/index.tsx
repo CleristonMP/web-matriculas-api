@@ -19,6 +19,7 @@ import { history } from "util/history";
 
 import "./styles.css";
 import GoBackButton from "components/GoBackButton";
+import AppLoader from "components/AppLoader";
 
 type UrlParams = {
   studentId: string;
@@ -32,6 +33,7 @@ const StudentDetails = () => {
   const [parent, setParent] = useState<Parent>();
   const [address, setAddress] = useState<Address>();
   const [county, setCounty] = useState<County>();
+  const [isLoading, setIsLoading] = useState(false);
 
   /* Get Student */
   useEffect(() => {
@@ -40,6 +42,7 @@ const StudentDetails = () => {
       withCredentials: true,
     };
 
+    setIsLoading(true);
     requestBackend(studentRequestConfig).then((studentResponse) => {
       const student = studentResponse.data as Student;
       setStudent(studentResponse.data);
@@ -80,9 +83,13 @@ const StudentDetails = () => {
           withCredentials: true,
         };
 
-        requestBackend(countyRequestConfig).then((countyResponse) => {
-          setCounty(countyResponse.data);
-        });
+        requestBackend(countyRequestConfig)
+          .then((countyResponse) => {
+            setCounty(countyResponse.data);
+          })
+          .finally(() => {
+            setIsLoading(false);
+          });
       });
     });
   }, [studentId]);
@@ -120,60 +127,64 @@ const StudentDetails = () => {
 
   return (
     <div className="container mt-3 mb-5 py-lg-3">
-      <div className="card base-card std-details-card">
-        <div className="card-body p-4">
-          <div className="mb-3 d-flex align-items-center justify-content-between">
-            <h2 className="card-title m-0">
-              {student?.name + " " + student?.lastName}
-            </h2>
-            <GoBackButton />
-          </div>
-          <h5 className="card-subtitle mb-2">
-            Matrícula: {student?.enrollment}
-          </h5>
-          <p className="card-text d-flex flex-column flex-sm-row">
-            <span className="fw-bold me-sm-1">Data de nascimento:</span>{" "}
-            <span>{student ? formatDate(student.birthDate) : <></>}</span>
-          </p>
-          <p className="card-text">
-            <span className="fw-bold">CPF:</span>{" "}
-            {student ? formatCpf(student.cpf) : <></>}
-          </p>
-          <p className="card-text">
-            <span className="fw-bold">Turma:</span>{" "}
-            {schoolClass?.name + " - " + schoolClass?.period}
-          </p>
-          <p className="card-text">
-            <span className="fw-bold">Responsável:</span>{" "}
-            {parent?.name + " " + parent?.lastName} &#47;
-            <span className="fw-bold"> Telefone:</span>{" "}
-            {parent ? formatPhoneNumber(parent.phone) : <></>}
-          </p>
-          <p className="card-text">
-            <span className="fw-bold">Endereço:</span> {address?.publicPlace},{" "}
-            {address?.complement}, nº {address?.number}, CEP:{" "}
-            {address ? formatCep(address.zipCode.toString()) : <></>}, Bairro:{" "}
-            {address?.district}, {county?.name} - {county?.state}
-          </p>
-          <div className="mt-4 mt-sm-5 d-flex justify-content-between justify-content-sm-around">
-            <Link to={`form`} className="card-link">
+      {isLoading ? (
+        <AppLoader />
+      ) : (
+        <div className="card base-card std-details-card">
+          <div className="card-body p-4">
+            <div className="mb-3 d-flex align-items-center justify-content-between">
+              <h2 className="card-title m-0">
+                {student?.name + " " + student?.lastName}
+              </h2>
+              <GoBackButton />
+            </div>
+            <h5 className="card-subtitle mb-2">
+              Matrícula: {student?.enrollment}
+            </h5>
+            <p className="card-text d-flex flex-column flex-sm-row">
+              <span className="fw-bold me-sm-1">Data de nascimento:</span>{" "}
+              <span>{student ? formatDate(student.birthDate) : <></>}</span>
+            </p>
+            <p className="card-text">
+              <span className="fw-bold">CPF:</span>{" "}
+              {student ? formatCpf(student.cpf) : <></>}
+            </p>
+            <p className="card-text">
+              <span className="fw-bold">Turma:</span>{" "}
+              {schoolClass?.name + " - " + schoolClass?.period}
+            </p>
+            <p className="card-text">
+              <span className="fw-bold">Responsável:</span>{" "}
+              {parent?.name + " " + parent?.lastName} &#47;
+              <span className="fw-bold"> Telefone:</span>{" "}
+              {parent ? formatPhoneNumber(parent.phone) : <></>}
+            </p>
+            <p className="card-text">
+              <span className="fw-bold">Endereço:</span> {address?.publicPlace},{" "}
+              {address?.complement}, nº {address?.number}, CEP:{" "}
+              {address ? formatCep(address.zipCode.toString()) : <></>}, Bairro:{" "}
+              {address?.district}, {county?.name} - {county?.state}
+            </p>
+            <div className="mt-4 mt-sm-5 d-flex justify-content-between justify-content-sm-around">
+              <Link to={`form`} className="card-link">
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary custom-btn me-2"
+                >
+                  Editar
+                </button>
+              </Link>
               <button
+                onClick={() => handleDelete(student?.id!)}
                 type="button"
-                className="btn btn-outline-secondary custom-btn me-2"
+                className="btn btn-outline-danger custom-btn"
               >
-                Editar
+                Excluir
               </button>
-            </Link>
-            <button
-              onClick={() => handleDelete(student?.id!)}
-              type="button"
-              className="btn btn-outline-danger custom-btn"
-            >
-              Excluir
-            </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

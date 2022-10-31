@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 
 import "./styles.css";
 import GoBackButton from "components/GoBackButton";
+import AppLoader from "components/AppLoader";
 
 type UrlParams = {
   userId: string;
@@ -18,6 +19,7 @@ type UrlParams = {
 const UserDetails = () => {
   const { userId } = useParams<UrlParams>();
   const [user, setUser] = useState<User>();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const config: AxiosRequestConfig = {
@@ -25,9 +27,14 @@ const UserDetails = () => {
       withCredentials: true,
     };
 
-    requestBackend(config).then((response) => {
-      setUser(response.data);
-    });
+    setIsLoading(true);
+    requestBackend(config)
+      .then((response) => {
+        setUser(response.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [userId]);
 
   const handleDelete = (userId: number) => {
@@ -59,41 +66,45 @@ const UserDetails = () => {
 
   return (
     <div className="container mt-3 mb-5 py-lg-3">
-      <div className="card base-card user-details-card">
-        <div className="card-body">
-          <div className="d-flex align-items-center justify-content-between">
-            <h2 className="card-title">{`${user?.name} ${user?.lastName}`}</h2>
-            <GoBackButton />
-          </div>
-          <h5 className="card-subtitle mb-2 text-muted">{user?.email}</h5>
-          <p className="card-text">
-            <span className="fw-bold">Funções: </span>
-            {user?.roles.map((role) => (
-              <span key={role.id}>
-                {formatRole(role.authority)}
-                {user.roles.length > 1 ? " / " : ""}
-              </span>
-            ))}
-          </p>
-          <div className="mt-4 mt-sm-5 d-flex justify-content-between justify-content-sm-around">
-            <Link to="form" className="card-link">
+      {isLoading ? (
+        <AppLoader />
+      ) : (
+        <div className="card base-card user-details-card">
+          <div className="card-body">
+            <div className="d-flex align-items-center justify-content-between">
+              <h2 className="card-title">{`${user?.name} ${user?.lastName}`}</h2>
+              <GoBackButton />
+            </div>
+            <h5 className="card-subtitle mb-2 text-muted">{user?.email}</h5>
+            <p className="card-text">
+              <span className="fw-bold">Funções: </span>
+              {user?.roles.map((role) => (
+                <span key={role.id}>
+                  {formatRole(role.authority)}
+                  {user.roles.length > 1 ? " / " : ""}
+                </span>
+              ))}
+            </p>
+            <div className="mt-4 mt-sm-5 d-flex justify-content-between justify-content-sm-around">
+              <Link to="form" className="card-link">
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary custom-btn me-2"
+                >
+                  Editar
+                </button>
+              </Link>
               <button
+                onClick={() => handleDelete(user?.id!)}
                 type="button"
-                className="btn btn-outline-secondary custom-btn me-2"
+                className="btn btn-outline-danger custom-btn"
               >
-                Editar
+                Excluir
               </button>
-            </Link>
-            <button
-              onClick={() => handleDelete(user?.id!)}
-              type="button"
-              className="btn btn-outline-danger custom-btn"
-            >
-              Excluir
-            </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
