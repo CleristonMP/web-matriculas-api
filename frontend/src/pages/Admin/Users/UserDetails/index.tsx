@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import "./styles.css";
 import GoBackButton from "components/GoBackButton";
 import AppLoader from "components/AppLoader";
+import AppModal from "components/AppModal";
 
 type UrlParams = {
   userId: string;
@@ -20,6 +21,7 @@ const UserDetails = () => {
   const { userId } = useParams<UrlParams>();
   const [user, setUser] = useState<User>();
   const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const config: AxiosRequestConfig = {
@@ -38,9 +40,7 @@ const UserDetails = () => {
   }, [userId]);
 
   const handleDelete = (userId: number) => {
-    if (!window.confirm("Tem certeza de que deseja excluir este usuário(a)?")) {
-      return;
-    }
+    setOpen(false);
 
     const config: AxiosRequestConfig = {
       method: "DELETE",
@@ -95,7 +95,7 @@ const UserDetails = () => {
                 </button>
               </Link>
               <button
-                onClick={() => handleDelete(user?.id!)}
+                onClick={() => setOpen(true)}
                 type="button"
                 className="btn btn-outline-danger custom-btn"
               >
@@ -105,6 +105,12 @@ const UserDetails = () => {
           </div>
         </div>
       )}
+      <AppModal
+        open={open}
+        onClose={() => setOpen(false)}
+        text="Tem certeza de que deseja excluir este usuário?"
+        onConfirmation={() => handleDelete(user?.id!)}
+      />
     </div>
   );
 };

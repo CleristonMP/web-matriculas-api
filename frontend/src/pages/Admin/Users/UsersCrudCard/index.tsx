@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { User } from "types/user";
 import { requestBackend } from "util/requests";
 import { toast } from "react-toastify";
+import AppModal from "components/AppModal";
+import { useState } from "react";
 
 type Props = {
   user: User;
@@ -10,10 +12,10 @@ type Props = {
 };
 
 const UsersCrudCard = ({ user, onDelete }: Props) => {
+  const [open, setOpen] = useState(false);
+
   const handleDelete = (userId: number) => {
-    if (!window.confirm("Tem certeza de que deseja excluir este usuário?")) {
-      return;
-    }
+    setOpen(false);
 
     const config: AxiosRequestConfig = {
       method: "DELETE",
@@ -43,7 +45,7 @@ const UsersCrudCard = ({ user, onDelete }: Props) => {
         <div className="d-flex justify-content-center">
           <button
             className="btn btn-outline-danger me-4"
-            onClick={() => handleDelete(user.id)}
+            onClick={() => setOpen(true)}
           >
             EXCLUIR
           </button>
@@ -52,6 +54,12 @@ const UsersCrudCard = ({ user, onDelete }: Props) => {
           </Link>
         </div>
       </div>
+      <AppModal
+        open={open}
+        onClose={() => setOpen(false)}
+        text="Tem certeza de que deseja excluir este usuário?"
+        onConfirmation={() => handleDelete(user.id)}
+      />
     </div>
   );
 };

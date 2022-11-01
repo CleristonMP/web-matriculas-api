@@ -1,0 +1,39 @@
+.ui.fullscreen.active.custom-modal {
+  height: auto;
+  width: 80vw !important;
+  position: fixed;
+  top: 10vh;
+  left: 10vw;
+}
+
+.ui.fullscreen.modal > .header {
+  font-size: 1.25rem;
+}
+
+.modal-text {
+  font-size: 1.15rem;
+}
+
+@media (min-width: 576px) {
+  .ui.fullscreen.modal > .header {
+    font-size: 1.35rem;
+  }
+
+  .modal-text {
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .ui.fullscreen.active.custom-modal {
+    width: 60vw !important;
+    left: 20vw;
+  }
+  .ui.fullscreen.modal > .header {
+    font-size: 1.65rem;
+  }
+
+  .modal-text {
+    font-size: 1.5rem;
+  }
+}

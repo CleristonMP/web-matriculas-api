@@ -1,8 +1,10 @@
 import { AxiosRequestConfig } from "axios";
+import AppModal from "components/AppModal";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { SchoolClass } from "types/schoolClass";
 import { requestBackend } from "util/requests";
+import { useState } from "react";
 
 import "./styles.css";
 
@@ -12,13 +14,13 @@ type Props = {
 };
 
 const SchoolClassesCrudCard = ({ schollClass, onDelete }: Props) => {
+  const [open, setOpen] = useState(false);
+
   const handleDelete = (schoolClassId: number) => {
-    if (!window.confirm('Tem certeza de que deseja excluir esta turma?')) {
-      return;
-    }
+    setOpen(false);
 
     const config: AxiosRequestConfig = {
-      method: 'DELETE',
+      method: "DELETE",
       url: `/school-classes/${schoolClassId}`,
       withCredentials: true,
     };
@@ -42,7 +44,7 @@ const SchoolClassesCrudCard = ({ schollClass, onDelete }: Props) => {
       <div className="d-flex justify-content-center justify-content-sm-between justify-content-md-center">
         <button
           className="btn btn-outline-danger me-4 me-sm-0 me-md-4"
-          onClick={() => handleDelete(schollClass.id!)}
+          onClick={() => setOpen(true)}
         >
           EXCLUIR
         </button>
@@ -50,6 +52,12 @@ const SchoolClassesCrudCard = ({ schollClass, onDelete }: Props) => {
           <button className="btn btn-outline-secondary">EDITAR</button>
         </Link>
       </div>
+      <AppModal
+        open={open}
+        onClose={() => setOpen(false)}
+        text="Tem certeza de que deseja excluir esta turma?"
+        onConfirmation={() => handleDelete(schollClass.id!)}
+      />
     </div>
   );
 };

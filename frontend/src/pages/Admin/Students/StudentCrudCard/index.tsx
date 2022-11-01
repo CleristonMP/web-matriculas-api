@@ -1,9 +1,11 @@
-import { AxiosRequestConfig } from "axios";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import { Student } from "types/student";
 import { formatCpf, formatDate } from "util/formatters";
 import { requestBackend } from "util/requests";
+import { AxiosRequestConfig } from "axios";
+import AppModal from "components/AppModal";
+import { Student } from "types/student";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useState } from "react";
 
 import "./styles.css";
 
@@ -13,10 +15,10 @@ type Props = {
 };
 
 const StudentCrudCard = ({ student, onDelete }: Props) => {
+  const [open, setOpen] = useState(false);
+
   const handleDelete = (studentId: number) => {
-    if (!window.confirm("Tem certeza de que deseja excluir este aluno(a)?")) {
-      return;
-    }
+    setOpen(false);
 
     const config: AxiosRequestConfig = {
       method: "DELETE",
@@ -54,12 +56,18 @@ const StudentCrudCard = ({ student, onDelete }: Props) => {
       <div className="d-flex justify-content-center">
         <button 
           className="btn btn-outline-danger me-4"
-          onClick={() => handleDelete(student.id!)}
+          onClick={() => setOpen(true)}
           >EXCLUIR</button>
         <Link to={`${student.id}/form`}>
           <button className="btn btn-outline-secondary">EDITAR</button>
         </Link>
       </div>
+      <AppModal
+        open={open}
+        onClose={() => setOpen(false)}
+        text="Tem certeza de que deseja excluir este aluno(a)?"
+        onConfirmation={() => handleDelete(student.id!)}
+      />
     </div>
   );
 };

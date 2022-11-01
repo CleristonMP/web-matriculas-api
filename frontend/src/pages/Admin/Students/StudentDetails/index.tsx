@@ -20,6 +20,7 @@ import { history } from "util/history";
 import "./styles.css";
 import GoBackButton from "components/GoBackButton";
 import AppLoader from "components/AppLoader";
+import AppModal from "components/AppModal";
 
 type UrlParams = {
   studentId: string;
@@ -34,6 +35,7 @@ const StudentDetails = () => {
   const [address, setAddress] = useState<Address>();
   const [county, setCounty] = useState<County>();
   const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
   /* Get Student */
   useEffect(() => {
@@ -95,9 +97,7 @@ const StudentDetails = () => {
   }, [studentId]);
 
   const handleDelete = (studentId: number) => {
-    if (!window.confirm("Tem certeza de que deseja excluir este aluno(a)?")) {
-      return;
-    }
+    setOpen(false);
 
     const config: AxiosRequestConfig = {
       method: "DELETE",
@@ -175,7 +175,7 @@ const StudentDetails = () => {
                 </button>
               </Link>
               <button
-                onClick={() => handleDelete(student?.id!)}
+                onClick={() => setOpen(true)}
                 type="button"
                 className="btn btn-outline-danger custom-btn"
               >
@@ -185,6 +185,12 @@ const StudentDetails = () => {
           </div>
         </div>
       )}
+      <AppModal
+        open={open}
+        onClose={() => setOpen(false)}
+        text="Tem certeza de que deseja excluir este aluno(a)?"
+        onConfirmation={() => handleDelete(student?.id!)}
+      />
     </div>
   );
 };
