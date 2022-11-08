@@ -7,6 +7,8 @@ import { getTokenData } from "util/token";
 import { removeAuthData } from "util/storage";
 import { history } from "util/history";
 
+import "./styles.css";
+
 const Navbar = () => {
   const { authContextData, setAuthContextData } = useContext(AuthContext);
 
@@ -53,35 +55,39 @@ const Navbar = () => {
           id="navbarCollapse"
         >
           <ul className="navbar-nav font-weight-bold mx-auto py-0">
-            <li>
-              <NavLink end to="/" className="nav-item nav-link">
+            <li className="nav-item me-5">
+              <NavLink end to="/" className="nav-link">
                 Home
               </NavLink>
             </li>
-            <li>
-              <NavLink to="/about" className="nav-item nav-link">
+            <li className="nav-item me-5">
+              <NavLink to="/about" className="nav-link">
                 Sobre
               </NavLink>
             </li>
-            <li>
-              <a href="link" className="nav-item nav-link disabled">
+            {/*
+            <li className="nav-item">
+              <a href="link" className="nav-link disabled">
                 Professores
               </a>
             </li>
-            <li>
-              <a href="link" className="nav-item nav-link disabled">
+            <li className="nav-item">
+              <a href="link" className="nav-link disabled">
                 Galeria
               </a>
             </li>
-            <li>
-              <a href="link" className="nav-item nav-link disabled">
+            <li className="nav-item">
+              <a href="link" className="nav-link disabled">
                 Contato
               </a>
             </li>
+            */}
             {isAuthenticated() ? (
-              <NavLink to="admin/welcome" className="nav-item nav-link">
-                Admin
-              </NavLink>
+              <li className="nav-item">
+                <NavLink to="admin/welcome" className="nav-link fw-bold text-uppercase">
+                  <span>Admin</span>
+                </NavLink>
+              </li>
             ) : (
               <></>
             )}

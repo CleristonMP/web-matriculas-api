@@ -10,7 +10,7 @@ type Props = {
 };
 
 const UserFilter = ({ onSubmitFilter }: Props) => {
-  const { register, handleSubmit, setValue, getValues } =
+  const { register, handleSubmit, setValue } =
     useForm<UserFilterData>();
 
   const onSubmit = (formData: UserFilterData) => {
@@ -21,16 +21,6 @@ const UserFilter = ({ onSubmitFilter }: Props) => {
     setValue("name", "");
   };
 
-  const handleChangeName = (value: string) => {
-    setValue("name", value);
-
-    const obj: UserFilterData = {
-      name: getValues("name"),
-    };
-
-    onSubmitFilter(obj);
-  };
-
   return (
     <div className="base-card filter-ctr">
       <form onSubmit={handleSubmit(onSubmit)} className="filter-form">
@@ -39,9 +29,8 @@ const UserFilter = ({ onSubmitFilter }: Props) => {
             {...register("name")}
             type="text"
             className={"form-control"}
-            placeholder="Nome do usuário"
+            placeholder="Buscar usuário(a)"
             name="name"
-            onChange={(value) => handleChangeName(value.target.value)}
           />
           <button className="filter-search-icon">
             <SearchIcon />

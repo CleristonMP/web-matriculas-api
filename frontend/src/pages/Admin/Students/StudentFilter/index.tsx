@@ -31,17 +31,6 @@ const StudentFilter = ({ onSubmitFilter }: Props) => {
     setValue("schoolClass", null);
   };
 
-  const handleChangeName = (value: string) => {
-    setValue("name", value);
-
-    const obj: StudentFilterData = {
-      name: getValues("name"),
-      schoolClass: getValues("schoolClass"),
-    };
-
-    onSubmitFilter(obj);
-  };
-
   const handleChangeSchoolClass = (value: SchoolClass) => {
     setValue("schoolClass", { ...value });
 
@@ -69,9 +58,8 @@ const StudentFilter = ({ onSubmitFilter }: Props) => {
             {...register("name")}
             type="text"
             className={"form-control"}
-            placeholder="Nome do aluno"
+            placeholder="Buscar aluno(a)"
             name="name"
-            onChange={(value) => handleChangeName(value.target.value)}
           />
           <button className="filter-search-icon">
             <SearchIcon />

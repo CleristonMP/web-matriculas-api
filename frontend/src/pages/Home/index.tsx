@@ -10,7 +10,7 @@ const Home = () => {
             Novo sistema de matrículas
           </h1>
           <p className="text-white mb-4">
-            Sistema desenvolvido com o objetivo de agilizar o
+            Sistema desenvolvido com o objetivo de facilitar e automatizar o
             processo de matrículas escolares.
           </p>
           <a href="link" className="btn btn-secondary mt-1 py-3 px-5">
@@ -18,7 +18,7 @@ const Home = () => {
           </a>
         </div>
         <div className="col-lg-6 text-center text-lg-right mb-5">
-          <img className="img-fluid mt-5" src={HomeImg} alt="" />
+          <img className="img-fluid mt-5" src={HomeImg} alt="Criança lendo um livro em uma biblioteca" />
         </div>
       </div>
     </section>

@@ -34,17 +34,6 @@ const SchoolClassFilter = ({ onSubmitFilter }: Props) => {
     setValue("period.name", "");
   };
 
-  const handleChangeName = (value: string) => {
-    setValue("name", value);
-
-    const obj: SchoolClassFilterData = {
-      name: getValues("name"),
-      period: getValues("period"),
-    };
-
-    onSubmitFilter(obj);
-  };
-
   const handleChangePeriod = (value: Period) => {
     setValue("period", value);
 
@@ -64,9 +53,8 @@ const SchoolClassFilter = ({ onSubmitFilter }: Props) => {
             {...register("name")}
             type="text"
             className={"form-control"}
-            placeholder="Nome da turma"
+            placeholder="Buscar turma"
             name="name"
-            onChange={(value) => handleChangeName(value.target.value)}
           />
           <button className="filter-search-icon">
             <SearchIcon />
@@ -76,7 +64,6 @@ const SchoolClassFilter = ({ onSubmitFilter }: Props) => {
           <div className="filter-period-ctr">
             <Controller
               name="period"
-              rules={{ required: true }}
               control={control}
               render={({ field }) => (
                 <Select
