@@ -36,7 +36,7 @@ const Navbar = () => {
 
   return (
     <header className="container-fluid bg-light position-relative shadow">
-      <nav className="navbar navbar-expand-md bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5">
+      <nav className="navbar navbar-expand-md bg-light navbar-light py-3 py-lg-0 px-4 px-lg-5 custom-navbar">
         <NavLink to="/" className="navbar-brand fw-bold text-secondary">
           <span className="text-primary">WebMatrículas</span>
         </NavLink>

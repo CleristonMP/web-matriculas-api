@@ -1,13 +1,14 @@
 import { useContext, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useLocation } from "react-router-dom";
 import { requestBackendLogin } from "util/requests";
 import { saveAuthData } from "util/storage";
 import { getTokenData } from "util/token";
+import { useLocation } from "react-router-dom";
 import { AuthContext } from "contexts/AuthContext";
+import { useForm } from "react-hook-form";
+import { history } from "util/history";
+import { Link } from "react-router-dom";
 
 import "./styles.css";
-import { history } from "util/history";
 
 type CredentialsDTO = {
   username: string;
@@ -47,7 +48,7 @@ const Login = () => {
 
   return (
     <div className="base-card login-card">
-      <h1 className="my-4">LOGIN</h1>
+      <h2 className="my-4 h1 text-center">LOGIN</h2>
 
       {hasError && (
         <div className="alert alert-danger">
@@ -100,9 +101,9 @@ const Login = () => {
             Logar
           </button>
         </div>
-        <a href="link" className="text-center">
+        <Link to="/auth/recover" className="text-center">
           Esqueci a senha
-        </a>
+        </Link>
       </form>
     </div>
   );

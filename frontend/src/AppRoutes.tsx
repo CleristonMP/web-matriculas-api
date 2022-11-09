@@ -22,6 +22,7 @@ import PrivateRoutes from "components/PrivateRoutes";
 import SchoolClassForm from "pages/Admin/SchoolClasses/SchoolClassForm";
 import StudentForm from "pages/Admin/Students/StudentForm";
 import UserForm from "pages/Admin/Users/UserForm";
+import Recover from "pages/Admin/Auth/Recover";
 
 const AppRoutes = () => {
   return (
@@ -34,7 +35,7 @@ const AppRoutes = () => {
             <Route path="login" element={<Login />} />
             <Route
               path="recover"
-              element={<h2 style={styles}>Under construction!</h2>}
+              element={<Recover />}
             />
           </Route>
 
