@@ -120,6 +120,7 @@ const SchoolClassForm = () => {
                 placeholder="Nome identificador da Turma"
                 id="name"
               />
+              <div className="invalid-feedback">{errors.name?.message}</div>
             </div>
             <div className="mt-3 col-12">
               <label htmlFor="period" className="form-label">
@@ -127,7 +128,7 @@ const SchoolClassForm = () => {
               </label>
               <Controller
                 name="period"
-                rules={{ required: true }}
+                rules={{ required: "Campo obrigatório" }}
                 control={control}
                 render={({ field }) => (
                   <Select
@@ -142,7 +143,7 @@ const SchoolClassForm = () => {
                   />
                 )}
               />
-              <div className="invalid-feedback">Campo obrigatório.</div>
+             <span className="text-danger">{errors.period?.message}</span>
             </div>
 
             <hr className="my-4" />

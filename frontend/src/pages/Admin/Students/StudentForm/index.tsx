@@ -63,8 +63,8 @@ const StudentForm = () => {
     );
   }, []);
 
-  const handleCepChange = (inputValue: React.ChangeEvent<HTMLInputElement>) => {
-    const value = String(inputValue.target.value).replace(/[^0-9]/g, "");
+  const handleZipCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = String(event.target.value).replace(/[^0-9]/g, "");
     if (value.length === 8) {
       const cep = value;
       axios({
@@ -86,7 +86,7 @@ const StudentForm = () => {
         setValue("address.district", viaCepData.bairro);
       });
     }
-    inputValue.target.value = maskZipCodeNumber(inputValue.target.value);
+    event.target.value = maskZipCodeNumber(event.target.value);
   };
 
   //Get Student for editing
@@ -253,14 +253,16 @@ const StudentForm = () => {
                   Nome
                 </label>
                 <input
-                  {...register("name", { required: true })}
+                  {...register("name", { required: "Campo obrigatório" })}
                   type={"text"}
-                  className="form-control"
+                  className={`form-control base-input ${
+                    errors.name ? "is-invalid" : ""
+                  }`}
                   id="name"
                   placeholder="Digite o primeiro nome do aluno"
                 />
                 {errors.name && (
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="invalid-feedback">{errors.name?.message}</div>
                 )}
               </div>
 
@@ -269,14 +271,18 @@ const StudentForm = () => {
                   Sobrenome
                 </label>
                 <input
-                  {...register("lastName", { required: true })}
+                  {...register("lastName", { required: "Campo obrigatório" })}
                   type={"text"}
-                  className="form-control"
+                  className={`form-control base-input ${
+                    errors.lastName ? "is-invalid" : ""
+                  }`}
                   id="lastName"
                   placeholder="Digite o(s) sobrenome(s) do aluno"
                 />
                 {errors.lastName && (
-                  <div className="invalid-feedback">Campo obrigatório.</div>
+                  <div className="invalid-feedback">
+                    {errors.lastName.message}
+                  </div>
                 )}
               </div>
 
@@ -286,19 +292,17 @@ const StudentForm = () => {
                 </label>
                 <div className="input-group has-validation">
                   <input
-                    {...register("cpf", { required: true })}
+                    {...register("cpf", {
+                      onChange(event) {
+                        event.target.value = maskCpfNumber(event.target.value);
+                      },
+                    })}
                     type={"text"}
-                    className="form-control"
                     id="cpf"
                     maxLength={14}
                     placeholder="Digite o CPF nome do aluno"
-                    onChange={(event) =>
-                      (event.target.value = maskCpfNumber(event.target.value))
-                    }
+                    className="form-control base-input"
                   />
-                  {errors.cpf && (
-                    <div className="invalid-feedback">Campo obrigatório.</div>
-                  )}
                 </div>
               </div>
 
@@ -309,7 +313,9 @@ const StudentForm = () => {
                 <input
                   {...register("birthDate", { required: true })}
                   type={"date"}
-                  className="form-control"
+                  className={`form-control base-input ${
+                    errors.birthDate ? "is-invalid" : ""
+                  }`}
                   id="birthDate"
                 />
                 {errors.birthDate && (
@@ -322,16 +328,23 @@ const StudentForm = () => {
                   Nº Matrícula
                 </label>
                 <input
-                  {...register("enrollment", { required: true })}
+                  {...register("enrollment", {
+                    required: true,
+                    onChange(event) {
+                      event.target.value = event.target.value.replace(
+                        /\D/g,
+                        ""
+                      );
+                    },
+                  })}
                   type={"text"}
                   inputMode={"numeric"}
-                  className="form-control"
+                  className={`form-control base-input ${
+                    errors.enrollment ? "is-invalid" : ""
+                  }`}
                   id="enrollment"
                   placeholder="Informe a matrícula do aluno"
                   maxLength={8}
-                  onChange={(event) =>
-                    (event.target.value = event.target.value.replace(/\D/g, ""))
-                  }
                 />
                 {errors.enrollment && (
                   <div className="invalid-feedback">Campo obrigatório.</div>
@@ -351,7 +364,9 @@ const StudentForm = () => {
                 <input
                   {...register("parent.name", { required: true })}
                   type={"text"}
-                  className="form-control"
+                  className={`form-control base-input ${
+                    errors.parent?.name ? "is-invalid" : ""
+                  }`}
                   id="parent.name"
                   placeholder="Digite o primeiro nome do responsável pelo aluno"
                 />
@@ -367,7 +382,9 @@ const StudentForm = () => {
                 <input
                   {...register("parent.lastName", { required: true })}
                   type={"text"}
-                  className="form-control"
+                  className={`form-control base-input ${
+                    errors.parent?.lastName ? "is-invalid" : ""
+                  }`}
                   id="parent.lastName"
                   placeholder="Digite o(s) sobrenome(s) do responsável pelo aluno"
                 />
@@ -383,20 +400,16 @@ const StudentForm = () => {
                 <div className="input-group has-validation">
                   <input
                     {...register("parent.cpf", {
-                      required: true,
+                      onChange(event) {
+                        event.target.value = maskCpfNumber(event.target.value);
+                      },
                     })}
                     type={"text"}
-                    className="form-control"
+                    className="form-control base-input"
                     id="parent.cpf"
                     placeholder="Digite o CPF do responsável pelo aluno"
                     maxLength={14}
-                    onChange={(event) =>
-                      (event.target.value = maskCpfNumber(event.target.value))
-                    }
                   />
-                  {errors.parent?.cpf && (
-                    <div className="invalid-feedback">Campo obrigatório.</div>
-                  )}
                 </div>
               </div>
 
@@ -405,19 +418,17 @@ const StudentForm = () => {
                   Telefone
                 </label>
                 <input
-                  {...register("parent.phone", { required: true })}
+                  {...register("parent.phone", {
+                    onChange(event) {
+                      event.target.value = maskPhoneNumber(event.target.value);
+                    },
+                  })}
                   type={"tel"}
-                  className="form-control"
+                  className="form-control base-input"
                   id="parent.phone"
                   placeholder="Informe um telefone para contato"
                   maxLength={16}
-                  onChange={(event) =>
-                    (event.target.value = maskPhoneNumber(event.target.value))
-                  }
                 />
-                {errors.parent?.phone && (
-                  <div className="invalid-feedback">Campo obrigatório.</div>
-                )}
               </div>
             </div>
 
@@ -433,7 +444,9 @@ const StudentForm = () => {
                 <input
                   {...register("address.publicPlace", { required: true })}
                   type={"text"}
-                  className="form-control"
+                  className={`form-control base-input ${
+                    errors.address?.publicPlace ? "is-invalid" : ""
+                  }`}
                   id="address.publicPlace"
                   placeholder="Rua, avenida, travessa..."
                 />
@@ -447,12 +460,17 @@ const StudentForm = () => {
                   Número
                 </label>
                 <input
-                  {...register("address.number")}
+                  {...register("address.number", { required: true })}
                   type={"text"}
-                  className="form-control"
+                  className={`form-control base-input ${
+                    errors.address?.number ? "is-invalid" : ""
+                  }`}
                   id="address.number"
                   placeholder="Nº ..."
                 />
+                {errors.address?.number && (
+                  <div className="invalid-feedback">Campo obrigatório.</div>
+                )}
               </div>
 
               <div className="col-12 col-sm-4">
@@ -462,7 +480,7 @@ const StudentForm = () => {
                 <input
                   {...register("address.complement")}
                   type={"text"}
-                  className="form-control"
+                  className="form-control base-input"
                   id="address.complement"
                   placeholder="Quadra, bloco..."
                 />
@@ -474,14 +492,23 @@ const StudentForm = () => {
                 </label>
 
                 <input
-                  {...register("address.zipCode")}
+                  {...register("address.zipCode", {
+                    required: true,
+                    onChange(event) {
+                      handleZipCodeChange(event);
+                    },
+                  })}
                   type={"text"}
-                  className="form-control"
+                  className={`form-control base-input ${
+                    errors.address?.zipCode ? "is-invalid" : ""
+                  }`}
                   id="address.zipCode"
                   placeholder="65.000-000"
-                  onChange={handleCepChange}
                   maxLength={10}
                 />
+                {errors.address?.zipCode && (
+                  <div className="invalid-feedback">Campo obrigatório.</div>
+                )}
               </div>
 
               <div className="col-12 col-sm-4">
@@ -489,12 +516,17 @@ const StudentForm = () => {
                   Bairro
                 </label>
                 <input
-                  {...register("address.district")}
+                  {...register("address.district", { required: true })}
                   type={"text"}
-                  className="form-control"
+                  className={`form-control base-input ${
+                    errors.address?.district ? "is-invalid" : ""
+                  }`}
                   id="address.district"
                   placeholder="Cohatrac, Trizidela..."
                 />
+                {errors.address?.district && (
+                  <div className="invalid-feedback">Campo obrigatório.</div>
+                )}
               </div>
 
               <div className="col-12 col-sm-4">
@@ -509,19 +541,22 @@ const StudentForm = () => {
                     <Select
                       {...field}
                       options={counties}
-                      classNamePrefix="counties-crud-select"
+                      classNamePrefix="custom-select"
                       getOptionLabel={(county) => county.name}
                       getOptionValue={(county) => String(county.id)}
                       inputId="address.county"
                       placeholder="Município"
+                      isClearable
                     />
                   )}
                 />
+                
                 {errors.address?.county && (
                   <div className="invalid-feedback d-block">
                     Campo obrigatório
                   </div>
                 )}
+              
               </div>
 
               <div className="col-3 col-sm-2">
