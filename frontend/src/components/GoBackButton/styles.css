@@ -18,8 +18,8 @@
     visibility: hidden;
     position: absolute;
     width: 72px;
-    background-color: #555;
-    color: #fff;
+    background-color: var(--gray-dark);
+    color: var(--white);
     text-align: center;
     padding: 5px 0;
     border-radius: 6px;

@@ -1,10 +1,10 @@
 import { AxiosRequestConfig } from "axios";
-import AppModal from "components/AppModal";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { SchoolClass } from "types/schoolClass";
 import { requestBackend } from "util/requests";
 import { useState } from "react";
+import AppModal from "components/AppModal";
 
 import "./styles.css";
 

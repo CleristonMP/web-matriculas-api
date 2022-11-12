@@ -1,4 +1,5 @@
 import GoBackButton from "components/GoBackButton";
+
 import "./styles.css";
 
 const Recover = () => {

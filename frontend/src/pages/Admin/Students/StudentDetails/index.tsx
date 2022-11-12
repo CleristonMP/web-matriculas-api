@@ -16,11 +16,11 @@ import { County } from "types/county";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { history } from "util/history";
-
-import "./styles.css";
 import GoBackButton from "components/GoBackButton";
 import AppLoader from "components/AppLoader";
 import AppModal from "components/AppModal";
+
+import "./styles.css";
 
 type UrlParams = {
   studentId: string;

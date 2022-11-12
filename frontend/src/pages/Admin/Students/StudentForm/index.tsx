@@ -1,5 +1,6 @@
+import { ReactComponent as AddIcon } from "assets/images/add-icon.svg";
 import axios, { AxiosRequestConfig } from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { requestBackend } from "util/requests";
@@ -14,14 +15,15 @@ import { Student } from "types/student";
 import { toast } from "react-toastify";
 import GoBackButton from "components/GoBackButton";
 import Select from "react-select";
-
-import "./styles.css";
 import {
   maskCpfNumber,
   maskPhoneNumber,
   maskZipCodeNumber,
 } from "util/maskers";
 import AppLoader from "components/AppLoader";
+import AddCountyModal from "./AddCountyModal";
+
+import "./styles.css";
 
 type UrlParams = {
   studentId: string;
@@ -32,6 +34,7 @@ const StudentForm = () => {
   const [schoolClasses, setSchoolClasses] = useState<SchoolClass[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const { studentId } = useParams<UrlParams>();
 
@@ -46,13 +49,17 @@ const StudentForm = () => {
   } = useForm<StudentToForm>();
 
   // Get Counties
-  useEffect(() => {
+  const getCounties = useCallback(() => {
     requestBackend({ url: "/counties", withCredentials: true }).then(
       (response) => {
         setCounties(response.data.content);
       }
     );
   }, []);
+
+  useEffect(() => {
+    getCounties();
+  }, [getCounties]);
 
   // Get School Classes
   useEffect(() => {
@@ -550,13 +557,11 @@ const StudentForm = () => {
                     />
                   )}
                 />
-                
                 {errors.address?.county && (
                   <div className="invalid-feedback d-block">
                     Campo obrigatório
                   </div>
                 )}
-              
               </div>
 
               <div className="col-3 col-sm-2">
@@ -566,11 +571,19 @@ const StudentForm = () => {
                 <input
                   {...register("address.county.state")}
                   type={"text"}
-                  className="form-control"
+                  className="form-control base-input"
                   id="address.county.state"
                   value={"MA"}
                   disabled
                 />
+              </div>
+
+              <div
+                onClick={() => setIsOpen(true)}
+                className="col-3 col-sm-2 add-county-btn-ctr"
+              >
+                <span className="add-county-tooltip-text">Adicionar Município</span>
+                <AddIcon />
               </div>
             </div>
 
@@ -627,6 +640,12 @@ const StudentForm = () => {
           </div>
         </div>
       )}
+      <AddCountyModal
+        open={isOpen}
+        setOpen={setIsOpen}
+        updateCounties={getCounties}
+        onClose={() => setIsOpen(false)}
+      />
     </form>
   );
 };

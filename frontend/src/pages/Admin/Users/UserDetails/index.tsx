@@ -7,11 +7,11 @@ import { requestBackend } from "util/requests";
 import { Link } from "react-router-dom";
 import { history } from "util/history";
 import { toast } from "react-toastify";
-
-import "./styles.css";
+import AppModal from "components/AppModal";
 import GoBackButton from "components/GoBackButton";
 import AppLoader from "components/AppLoader";
-import AppModal from "components/AppModal";
+
+import "./styles.css";
 
 type UrlParams = {
   userId: string;

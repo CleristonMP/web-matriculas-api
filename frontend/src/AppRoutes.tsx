@@ -14,7 +14,6 @@ import StudentDetails from "pages/Admin/Students/StudentDetails";
 import StudentsList from "pages/Admin/Students/StudentsList";
 import UserDetails from "pages/Admin/Users/UserDetails";
 import UsersList from "pages/Admin/Users/UsersList";
-import Welcome from "pages/Admin/Welcome";
 import Home from "pages/Home";
 import { styles } from "util/styles";
 import { history } from "util/history";
@@ -41,7 +40,6 @@ const AppRoutes = () => {
 
           <Route element={<PrivateRoutes />}>
             <Route path="admin" element={<Admin />}>
-              <Route path="welcome" element={<Welcome />} />
               <Route
                 path="schoolClasses/:schoolClassId/form"
                 element={<SchoolClassForm />}

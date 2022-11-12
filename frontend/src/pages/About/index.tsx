@@ -1,8 +1,8 @@
 import AboutImg from "assets/images/about-img.jpg";
 import AboutImg2 from "assets/images/about-img-2.jpg";
+import { Link } from "react-router-dom";
 
 import "./styles.css";
-import { Link } from "react-router-dom";
 
 const About = () => {
   return (

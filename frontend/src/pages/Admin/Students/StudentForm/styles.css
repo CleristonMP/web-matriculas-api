@@ -1,3 +1,41 @@
+.add-county-btn-ctr {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 0;
+  margin: 0;
+}
+
+.add-county-btn-ctr .add-county-tooltip-text {
+  visibility: hidden;
+  position: absolute;
+  background-color: var(--gray-dark);
+  color: var(--white);
+  border-radius: 6px;
+  padding: 5px;
+  z-index: 1;
+  top: -22%;
+  max-width: 58px;
+  font-size: 0.75rem;
+}
+
+.add-county-btn-ctr:hover .add-county-tooltip-text {
+  visibility: visible;
+}
+
+.add-county-btn-ctr svg {
+  cursor: pointer;
+  transition: 0.25s ease-in 0.125s;
+}
+
+.add-county-btn-ctr svg:hover {
+  transition: 0.25s ease-out 0.125s;
+  fill: var(--white);
+  stroke: var(--white);
+  background-color: var(--primary);
+  border-radius: 50%;
+}
+
 .school-class-custom-ctr {
   max-width: 230px !important;
 }

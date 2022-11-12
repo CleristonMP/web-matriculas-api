@@ -7,11 +7,11 @@ import { AxiosRequestConfig } from "axios";
 import { history } from "util/history";
 import { useState } from "react";
 import Select from "react-select";
-
-import "./styles.css";
 import { toast } from "react-toastify";
 import GoBackButton from "components/GoBackButton";
 import AppLoader from "components/AppLoader";
+
+import "./styles.css";
 
 type UrlParams = {
   schoolClassId: string;

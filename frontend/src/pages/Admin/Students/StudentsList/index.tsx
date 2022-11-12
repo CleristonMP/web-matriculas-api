@@ -7,8 +7,6 @@ import { useEffect, useState, useCallback } from "react";
 import StudentFilter, { StudentFilterData } from "../StudentFilter";
 import StudentCrudCard from "../StudentCrudCard";
 import Pagination from "components/Pagination";
-
-import "./styles.css";
 import GoBackButton from "components/GoBackButton";
 import AppLoader from "components/AppLoader";
 

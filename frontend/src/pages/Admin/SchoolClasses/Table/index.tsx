@@ -5,11 +5,11 @@ import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "util/requests";
 import { formatCpf, formatDate } from "util/formatters";
 import { Link } from "react-router-dom";
-
-import "./styles.css";
 import GoBackButton from "components/GoBackButton";
 import AppLoader from "components/AppLoader";
 import PrintSchoolClassButton from "components/PrintSchoolClassButton";
+
+import "./styles.css";
 
 type UrlParams = {
   schoolClassId: string;

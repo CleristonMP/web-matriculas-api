@@ -84,7 +84,7 @@ const Navbar = () => {
             */}
             {isAuthenticated() ? (
               <li className="nav-item">
-                <NavLink to="admin/welcome" className="nav-link fw-bold text-uppercase">
+                <NavLink to="admin" className="nav-link fw-bold text-uppercase">
                   <span>Admin</span>
                 </NavLink>
               </li>

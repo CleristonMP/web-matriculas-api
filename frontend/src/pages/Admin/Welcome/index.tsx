@@ -1,4 +1,4 @@
-import { ReactComponent as WelcomeImg } from "../../../assets/images/welcome-image.svg";
+import { ReactComponent as WelcomeImg } from "assets/images/welcome-image.svg";
 
 const Welcome = () => {
   return (

@@ -9,9 +9,9 @@ import { history } from "util/history";
 import { toast } from "react-toastify";
 import GoBackButton from "components/GoBackButton";
 import Select from "react-select";
+import AppLoader from "components/AppLoader";
 
 import "./styles.css";
-import AppLoader from "components/AppLoader";
 
 const options: Role[] = [
   { id: 1, authority: "Operador" },
