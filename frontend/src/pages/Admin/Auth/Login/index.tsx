@@ -19,7 +19,7 @@ type CredentialsDTO = {
 const Login = () => {
   const location = useLocation();
 
-  const { from } = location.state || { from: { pathname: "admin" } };
+  const { from } = location.state || { from: { pathname: "/admin" } };
 
   const { setAuthContextData } = useContext(AuthContext);
 
