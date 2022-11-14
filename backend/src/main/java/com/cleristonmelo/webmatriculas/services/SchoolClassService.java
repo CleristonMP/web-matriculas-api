@@ -31,8 +31,8 @@ public class SchoolClassService {
 	private StudentRepository studentRepository;
 	
 	@Transactional(readOnly = true)
-	public Page<SchoolClassDTO> findAllPaged(Pageable pageable) {
-		Page<SchoolClass> page = repository.findAll(pageable);
+	public Page<SchoolClassDTO> findAllPaged(Pageable pageable, String name) {
+		Page<SchoolClass> page = repository.find(pageable, name);
 		return page.map(x -> new SchoolClassDTO(x));
 	}
 	
@@ -82,7 +82,7 @@ public class SchoolClassService {
 		
 		entity.getStudents().clear();
 		for (StudentDTO stuDto : dto.getStudents()) {
-			Student student = studentRepository.getOne(stuDto.getEnrollment());
+			Student student = studentRepository.getOne(stuDto.getId());
 			entity.getStudents().add(student);
 		}
 	}	

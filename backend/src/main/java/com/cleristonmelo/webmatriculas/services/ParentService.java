@@ -84,7 +84,7 @@ public class ParentService {
 		
 		entity.getStudents().clear();
 		for (StudentDTO aluDto : dto.getStudents()) {
-			Student student = studentRepository.getOne(aluDto.getEnrollment());
+			Student student = studentRepository.getOne(aluDto.getId());
 			entity.getStudents().add(student);
 		}
 	}	

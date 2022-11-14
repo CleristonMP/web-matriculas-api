@@ -1,0 +1,11 @@
+@media (min-width: 576px) {
+  .card.school-class-card {
+    width: 48%;
+  }
+}
+
+@media (min-width: 992px) {
+    .card.school-class-card {
+      width: 32%;
+    }
+  }

@@ -40,8 +40,8 @@ public class UserService implements UserDetailsService {
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Transactional(readOnly = true)
-	public Page<UserDTO> findAllPaged(Pageable pageable) {
-		Page<User> page = repository.findAll(pageable);
+	public Page<UserDTO> findAllPaged(Pageable pageable, String name) {
+		Page<User> page = repository.find(pageable, name);
 		return page.map(x -> new UserDTO(x));
 	}
 	

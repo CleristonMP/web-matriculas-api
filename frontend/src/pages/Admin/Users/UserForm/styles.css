@@ -1,0 +1,25 @@
+.password-pattern-advice {
+  font-size: 14px;
+  letter-spacing: -0.015em;
+  color: var(--blue);
+}
+
+.user-crud-select__control {
+  border-radius: 10px !important;
+  font-size: 1em;
+  letter-spacing: -0.015em;
+  color: var(--gray-dark);
+  height: 50px;
+}
+
+.user-crud-select__placeholder {
+  color: var(--gray) !important;
+}
+
+.user-crud-select__indicator-separator {
+  display: none;
+}
+
+.user-crud-select__value-container {
+  flex-wrap: nowrap !important;
+}

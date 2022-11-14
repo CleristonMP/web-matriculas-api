@@ -1,0 +1,8 @@
+.custom-navbar {
+  margin-right: 0;
+}
+
+.adm-border {
+  border-inline: var(--bs-border-width) var(--bs-border-style)
+    var(--bs-border-color);
+}

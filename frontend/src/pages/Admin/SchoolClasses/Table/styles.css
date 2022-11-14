@@ -1,0 +1,9 @@
+.tb-caption {
+  caption-side: top;
+}
+
+@media (min-width: 992px) {
+  .table-font {
+    font-size: 1.15rem;
+  }
+}

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -29,34 +30,36 @@ public class StudentResource {
 	private StudentService service;
 	
 	@GetMapping
-	public ResponseEntity<Page<StudentDTO>> findAll(Pageable pageable) {
-		Page<StudentDTO> page = service.findAllPaged(pageable);
+	public ResponseEntity<Page<StudentDTO>> findAll(Pageable pageable,
+			@RequestParam(value = "schoolClassId", defaultValue = "") Long schoolClassId,
+			@RequestParam(value = "name", defaultValue = "") String name) {
+		Page<StudentDTO> page = service.findAllPaged(pageable, schoolClassId, name);
 		return ResponseEntity.ok().body(page);
 	}
 	
-	@GetMapping(value = "/{enrollment}")
-	public ResponseEntity<StudentDTO> findByEnrollment(@PathVariable Long enrollment){
-		StudentDTO dto = service.findByEnrollment(enrollment);	
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<StudentDTO> findById(@PathVariable Long id){
+		StudentDTO dto = service.findById(id);	
 		return ResponseEntity.ok().body(dto);
 	}
 	
 	@PostMapping
 	public ResponseEntity<StudentDTO> insert(@Valid @RequestBody StudentDTO dto){
 		dto = service.insert(dto);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{enrollment}")
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(dto.getEnrollment()).toUri();		
 		return ResponseEntity.created(uri).body(dto);
 	}
 	
-	@PutMapping(value = "/{enrollment}")
-	public ResponseEntity<StudentDTO> update(@PathVariable Long enrollment, @Valid @RequestBody StudentDTO dto) {
-		dto = service.update(enrollment, dto);
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<StudentDTO> update(@PathVariable Long id, @Valid @RequestBody StudentDTO dto) {
+		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}
 	
-	@DeleteMapping(value = "/{enrollment}")
-	public ResponseEntity<Void> delete(@PathVariable Long enrollment) {
-		service.delete(enrollment);
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
+		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 }

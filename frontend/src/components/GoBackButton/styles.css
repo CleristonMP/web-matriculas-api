@@ -1,0 +1,47 @@
+.goback-btn-ctr {
+  display: none;
+}
+
+@media (min-width: 576px) {
+  .goback-btn-ctr {
+    display: inline-block;
+    margin-right: 10px;
+    position: relative;
+  }
+
+  .goback-btn-ctr button {
+    border: unset;
+    background-color: unset;
+  }
+
+  .goback-btn-ctr .tooltip-text {
+    visibility: hidden;
+    position: absolute;
+    width: 72px;
+    background-color: var(--gray-dark);
+    color: var(--white);
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    z-index: 1;
+    bottom: 105%;
+    left: 50%;
+    margin-left: -36px;
+  }
+
+  .goback-btn-ctr:hover .tooltip-text {
+    visibility: visible;
+  }
+
+  .goback-btn-ctr svg:hover {
+    transition: 0.25s ease-out 0.125s;
+    fill: var(--white);
+    stroke: var(--white);
+  }
+
+  .goback-btn-ctr svg {
+    transition: 0.25s ease-in 0.125s;
+    fill: var(--primary);
+    stroke: var(--primary);
+  }
+}

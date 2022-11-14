@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 
@@ -12,8 +13,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class StudentDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	private Long id;
 
-	private Long enrollment;
+	@NotNull(message = "Campo requerido")
+	private Integer enrollment;
 
 	@Size(min = 3, max = 15, message = "O nome do aluno deve ter entre 3 e 15 caracteres")
 	@NotBlank(message = "Campo requerido")
@@ -24,7 +28,7 @@ public class StudentDTO implements Serializable {
 	private String lastName;
 	private String cpf;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT")
 	@PastOrPresent(message = "A data de nascimento não pode ser futura")
 	private Date birthDate;
 
@@ -37,8 +41,9 @@ public class StudentDTO implements Serializable {
 	public StudentDTO() {
 	}
 
-	public StudentDTO(Long enrollment, String name, String lastName, String cpf, Date birthDate, Long addressId,
+	public StudentDTO(Long id, Integer enrollment, String name, String lastName, String cpf, Date birthDate, Long addressId,
 			Long schoolClassId, Long parentId) {
+		this.id = id;
 		this.enrollment = enrollment;
 		this.name = name;
 		this.lastName = lastName;
@@ -50,6 +55,7 @@ public class StudentDTO implements Serializable {
 	}
 
 	public StudentDTO(Student entity) {
+		this.id = entity.getId();
 		this.enrollment = entity.getEnrollment();
 		this.name = entity.getName();
 		this.lastName = entity.getLastName();
@@ -60,11 +66,19 @@ public class StudentDTO implements Serializable {
 		this.parentId = entity.getParent().getId();
 	}
 
-	public Long getEnrollment() {
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Integer getEnrollment() {
 		return enrollment;
 	}
 
-	public void setEnrollment(Long enrollment) {
+	public void setEnrollment(Integer enrollment) {
 		this.enrollment = enrollment;
 	}
 

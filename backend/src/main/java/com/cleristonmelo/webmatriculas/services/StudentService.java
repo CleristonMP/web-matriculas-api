@@ -37,14 +37,14 @@ public class StudentService {
 	private ParentRepository parentRepository;
 	
 	@Transactional(readOnly = true)
-	public Page<StudentDTO> findAllPaged(Pageable pageable) {
-		Page<Student> page = repository.findAll(pageable);
+	public Page<StudentDTO> findAllPaged(Pageable pageable, Long schoolClassId, String name) {
+		Page<Student> page = repository.find(pageable, schoolClassId, name);
 		return page.map(x -> new StudentDTO(x));
 	}
 	
 	@Transactional(readOnly = true)
-	public StudentDTO findByEnrollment(Long enrollment) {
-		Optional<Student> obj = repository.findById(enrollment);
+	public StudentDTO findById(Long id) {
+		Optional<Student> obj = repository.findById(id);
 		Student entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
 		return new StudentDTO(entity);
 	}
@@ -58,24 +58,24 @@ public class StudentService {
 	}
 
 	@Transactional
-	public StudentDTO update(Long enrollment, StudentDTO dto) {
+	public StudentDTO update(Long id, StudentDTO dto) {
 		try {
-			Student entity = repository.getOne(enrollment);
+			Student entity = repository.getOne(id);
 			copyDtoToEntity(dto, entity);
 			entity = repository.save(entity);
 			return new StudentDTO(entity);
 		}
 		catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundException("Id not found " + enrollment);
+			throw new ResourceNotFoundException("Id not found " + id);
 		}
 	}
 
-	public void delete(Long enrollment) {
+	public void delete(Long id) {
 		try {
-			repository.deleteById(enrollment);
+			repository.deleteById(id);
 		}
 		catch (EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException("Id not found " + enrollment);
+			throw new ResourceNotFoundException("Id not found " + id);
 		}
 		catch (DataIntegrityViolationException e) {
 			throw new DatabaseException("Integrity violation");
@@ -83,6 +83,7 @@ public class StudentService {
 	}
 	
 	private void copyDtoToEntity(StudentDTO dto, Student entity) {
+		entity.setEnrollment(dto.getEnrollment());
 		entity.setName(dto.getName());
 		entity.setLastName(dto.getLastName());
 		entity.setCpf(dto.getCpf());
