@@ -1,88 +1,41 @@
-# WebMatriculas - Backend
+# WebMatriculas - Monorepo
 
-O WebMatriculas é um projeto desenvolvido utilizando Spring e React, que tem como objetivo gerenciar o processo de matrículas em uma instituição de ensino. Esta parte do documento aborda os detalhes do backend da aplicação.
+O **WebMatriculas** é um sistema para gestão de matrículas em instituições de ensino, composto por duas partes: um **frontend** em React e um **backend** em Spring Boot. Ambos se comunicam por meio de uma API RESTful.
 
-## Sobre o Projeto
+## Tecnologias
 
-O backend do WebMatriculas é responsável por fornecer a API RESTful que será consumida pelo frontend. Algumas das principais funcionalidades implementadas no backend incluem:
+- **Backend**: 
+  - **Spring Boot**, **Spring Security**, **PostgreSQL**
+- **Frontend**: 
+  - **React**, **TypeScript**, **Bootstrap**, **Semantic UI**, **JWT**, **Axios**
 
-- Autenticação e autorização de usuários
-- Gerenciamento de alunos, cursos e matrículas
-- Geração de relatórios e estatísticas
+## Estrutura do Projeto
 
-## Tecnologias Utilizadas
+Este monorepo é composto por duas partes principais:
 
-O backend do projeto WebMatriculas foi construído utilizando as seguintes tecnologias:
+- **[Backend](./backend/README.md)**: O backend da aplicação, responsável pela API RESTful.
+- **[Frontend](./frontend/README.md)**: A interface do usuário, com funcionalidades de autenticação, gestão de matrículas e integração com o backend.
 
-- **Spring Boot 2.4.4**: Framework Java para desenvolvimento de aplicações web
-- **Spring Data JPA**: Módulo do Spring para acesso a bancos de dados relacionais
-- **Spring Security**: Módulo do Spring para autenticação e autorização
-- **Spring Security OAuth2**: Módulo do Spring para implementação de OAuth2
-- **PostgreSQL**: Banco de dados relacional utilizado para armazenar os dados do sistema
+## Como Rodar o Projeto
 
-## Versões e Requisitos
-
-O backend do WebMatriculas foi desenvolvido utilizando:
-
-- **Java 11**: Linguagem de programação utilizada
-- **Maven 3.x**: Gerenciador de dependências e build do projeto
-- **Spring Boot 2.4.4**: Versão do framework Spring Boot utilizada
-
-## Estrutura de Pacotes e Classes
-
-O backend do WebMatriculas está organizado da seguinte forma:
-
-- `com.example.webmatriculas`
-  - `config`: Classes de configuração da aplicação
-  - `controller`: Classes que implementam os endpoints da API REST
-  - `dto`: Classes de transferência de dados (Data Transfer Objects)
-  - `entity`: Entidades do modelo de domínio
-  - `repository`: Interfaces que definem os métodos de acesso ao banco de dados
-  - `service`: Classes que implementam a lógica de negócio da aplicação
-
-## Endpoints da API
-
-As principais rotas da API REST do backend são:
-
-| Método | Rota | Descrição |
-| --- | --- | --- |
-| `POST` | `/auth/login` | Realiza autenticação de usuário |
-| `GET` | `/students` | Retorna a lista de alunos matriculados |
-| `POST` | `/students` | Cadastra um novo aluno |
-| `GET` | `/courses` | Retorna a lista de cursos oferecidos |
-| `POST` | `/courses` | Cadastra um novo curso |
-| `GET` | `/enrollments` | Retorna a lista de matrículas realizadas |
-| `POST` | `/enrollments` | Realiza uma nova matrícula |
-
-Essa tabela reflete as rotas definidas nos seguintes controladores:
-
-- `AuthResource`: Responsável pela autenticação de usuários
-- `StudentResource`: Responsável pelo gerenciamento de alunos
-- `CourseResource`: Responsável pelo gerenciamento de cursos
-- `EnrollmentResource`: Responsável pelo gerenciamento de matrículas
-
-## Segurança
-
-O backend do WebMatriculas implementa mecanismos de segurança, incluindo:
-
-- **Autenticação**: Usando Spring Security, o sistema possui suporte a autenticação de usuários via token JWT.
-- **Autorização**: O acesso aos endpoints da API é controlado com base nas permissões dos usuários.
-
-## Configuração do Banco de Dados
-
-O projeto está configurado para utilizar o banco de dados PostgreSQL. As informações de acesso ao banco de dados estão definidas no arquivo `application.properties`.
-
-## Configuração e Execução
-
-Para executar o backend localmente, siga estas etapas:
-
-1. Certifique-se de ter o Java 11 e o Maven instalados em sua máquina.
-2. Clone o repositório do projeto: `git clone https://github.com/CleristonMP/web-matriculas-api.git`
-3. Navegue até o diretório do projeto: `cd web-matriculas-api`
-4. Execute o comando `mvn spring-boot:run` para iniciar a aplicação.
+### Backend
+1. Clone o repositório do backend: `git clone https://github.com/CleristonMP/web-matriculas-api.git`
+2. Navegue até a pasta `backend`: `cd backend`
+3. Execute o backend com o Maven: `mvn spring-boot:run`
 
 O backend estará disponível em `http://localhost:8080`.
 
-## Contribuição
+### Frontend
+1. Navegue até a pasta `frontend`: `cd frontend`
+2. Instale as dependências: `npm install` ou `yarn`
+3. Execute o frontend: `npm start`
 
-Contribuições são bem-vindas! Caso encontre algum problema ou tenha sugestões de melhoria, sinta-se à vontade para abrir uma issue ou enviar um pull request.
+O frontend estará disponível em `http://localhost:3000`.
+
+## Licença
+
+Este projeto está licenciado sob a **MIT License**. Veja o texto completo da licença [aqui](https://opensource.org/licenses/MIT).
+
+## Contato
+
+Para feedback, sugestões ou contribuições, entre em contato pelo e-mail: [cleriston.melo.pereira@gmail.com](mailto:cleriston.melo.pereira@gmail.com).
